@@ -3,24 +3,46 @@ from django.db import models
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User)
-    phone = models.CharField(max_length=30)
-    company=models.CharField(max_length=100)
-    alipay=models.CharField(max_length=50)
-    bank=models.CharField(max_length=50)
+    telephone = models.CharField(max_length=30)
+    address=models.CharField(max_length=50)
     level=models.CharField(max_length=10)
 
-class  Factories(models.Model):
-    name=models.CharField(max_length=30)	
+class  Factory(models.Model):
+    name=models.CharField(max_length=30)    
     province=models.CharField(max_length=50)
+    state=models.CharField(max_length=50)
+    country=models.CharField(max_length=50)
     city=models.CharField(max_length=50)
+    contact=models.CharField(max_length=30)
+    telephone=models.CharField(max_length=30)
     email=models.EmailField()
+    user=models.ForeignKey(User,unique=True)
+    bank_account=models.CharField(max_length=30)
     def __unicode__(self):
-        return self.name
+       return self.name
 
-class  PowerStations(models.Model):
+class  PowerStation(models.Model):
+    name=models.CharField(max_length=30)
+    province=models.CharField(max_length=50)
+    country=models.CharField(max_length=50)
+    city=models.CharField(max_length=50)
+    contact=models.CharField(max_length=30)
+    telephone=models.CharField(max_length=30)
+    email=models.EmailField()
+    user=models.ForeignKey(User,unique=True)
+    bank_account=models.CharField(max_length=30)
+    factory=models.ForeignKey(Factory) 
+    def __unicode__(self):
+       return self.name
+
+class WindTurbine(models.Model):
     name=models.CharField(max_length=30)
     longitude=models.CharField(max_length=12)
     latitude=models.CharField(max_length=12)
-    factory=models.ForeignKey(Factories)
+    contact=models.CharField(max_length=30)
+    telephone=models.CharField(max_length=30)
+    email=models.EmailField()
+    user=models.ForeignKey(User,unique=True)
+    powerstation=models.ForeignKey(PowerStation)
     def __unicode__(self):
-        return self.name             
+       return self.name

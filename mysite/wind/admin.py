@@ -17,5 +17,6 @@ class UserAdmin(UserAdmin):
 admin.site.unregister(User)
 admin.site.register(User, UserAdmin)
 
-admin.site.register(models.PowerStations)
-admin.site.register(models.Factories)
+admin.site.register(models.PowerStation)
+admin.site.register(models.Factory)
+admin.site.register(models.WindTurbine)

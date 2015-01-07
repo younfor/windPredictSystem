@@ -9,11 +9,12 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
+        ('wind', '0001_initial'),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Factories',
+            name='Factory',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('name', models.CharField(max_length=30)),
@@ -32,7 +33,7 @@ class Migration(migrations.Migration):
             bases=(models.Model,),
         ),
         migrations.CreateModel(
-            name='PowerStations',
+            name='PowerStation',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('name', models.CharField(max_length=30)),
@@ -43,7 +44,7 @@ class Migration(migrations.Migration):
                 ('telephone', models.CharField(max_length=30)),
                 ('email', models.EmailField(max_length=75)),
                 ('bank_account', models.CharField(max_length=30)),
-                ('factory', models.ForeignKey(to='wind.Factories')),
+                ('factory', models.ForeignKey(to='wind.Factory')),
                 ('user', models.ForeignKey(to=settings.AUTH_USER_MODEL, unique=True)),
             ],
             options={
@@ -51,20 +52,7 @@ class Migration(migrations.Migration):
             bases=(models.Model,),
         ),
         migrations.CreateModel(
-            name='UserProfile',
-            fields=[
-                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('telephone', models.CharField(max_length=30)),
-                ('address', models.CharField(max_length=50)),
-                ('level', models.CharField(max_length=10)),
-                ('user', models.OneToOneField(to=settings.AUTH_USER_MODEL)),
-            ],
-            options={
-            },
-            bases=(models.Model,),
-        ),
-        migrations.CreateModel(
-            name='WindTurbines',
+            name='WindTurbine',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('name', models.CharField(max_length=30)),
@@ -73,11 +61,40 @@ class Migration(migrations.Migration):
                 ('contact', models.CharField(max_length=30)),
                 ('telephone', models.CharField(max_length=30)),
                 ('email', models.EmailField(max_length=75)),
-                ('powerstation', models.ForeignKey(to='wind.PowerStations')),
+                ('powerstation', models.ForeignKey(to='wind.PowerStation')),
                 ('user', models.ForeignKey(to=settings.AUTH_USER_MODEL, unique=True)),
             ],
             options={
             },
             bases=(models.Model,),
+        ),
+        migrations.RemoveField(
+            model_name='factories',
+            name='user',
+        ),
+        migrations.RemoveField(
+            model_name='powerstations',
+            name='factory',
+        ),
+        migrations.DeleteModel(
+            name='Factories',
+        ),
+        migrations.RemoveField(
+            model_name='powerstations',
+            name='user',
+        ),
+        migrations.RemoveField(
+            model_name='windturbines',
+            name='powerstation',
+        ),
+        migrations.DeleteModel(
+            name='PowerStations',
+        ),
+        migrations.RemoveField(
+            model_name='windturbines',
+            name='user',
+        ),
+        migrations.DeleteModel(
+            name='WindTurbines',
         ),
     ]
