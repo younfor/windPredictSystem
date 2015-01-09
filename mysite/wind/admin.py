@@ -12,11 +12,11 @@ class UserProfileInline(admin.StackedInline):
 # Define a new User admin
 class UserAdmin(UserAdmin):
     inlines = (UserProfileInline, )
-
+    list_display = ('username', 'is_staff')
 # Re-register UserAdmin
 admin.site.unregister(User)
 admin.site.register(User, UserAdmin)
-
+# register Models
 admin.site.register(models.PowerStation)
 admin.site.register(models.Factory)
 admin.site.register(models.WindTurbine)

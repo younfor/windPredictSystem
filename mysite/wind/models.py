@@ -6,6 +6,9 @@ class UserProfile(models.Model):
     telephone = models.CharField(max_length=30)
     address=models.CharField(max_length=50)
     level=models.CharField(max_length=10)
+    father=models.ForeignKey('self',default=None,null=True,blank=True)
+    def __unicode__(self):
+       return self.user.username
 
 class  Factory(models.Model):
     name=models.CharField(max_length=30)    
