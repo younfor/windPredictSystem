@@ -1,11 +1,12 @@
 from django.contrib.auth.models import User
 from django.db import models
+from django.db.models import signals
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User)
-    telephone = models.CharField(max_length=30)
-    address=models.CharField(max_length=50)
-    level=models.CharField(max_length=10)
+    telephone = models.CharField(max_length=30,null=True)
+    address=models.CharField(max_length=50,null=True)
+    level=models.CharField(max_length=10,null=True)
     father=models.ForeignKey('self',default=None,null=True,blank=True)
     def __unicode__(self):
        return self.user.username
