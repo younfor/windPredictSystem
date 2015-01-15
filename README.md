@@ -2,5 +2,5 @@ windPredictSystem
 =================
 Requirements:
 -django-suit
-youyou
+youyou333
 etc..
