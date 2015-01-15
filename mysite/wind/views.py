@@ -33,9 +33,12 @@ def  login(request):
 def  portal(request):
     username=request.session.get('username','anybody')
     return render_to_response('portal.html',{'username':username}) 
+<<<<<<< HEAD
 
 
 def echart(request):
     list1=excel_table()
     print list1
     return render_to_response('echart.html',{'list1':list1}) 
+=======
+>>>>>>> younfor/master
