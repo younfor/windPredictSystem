@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 from django.contrib import auth
 from wind.models import UserProfile
 from django.core.context_processors import csrf  
+from file import excel_table
 # Create your views here.
 '''
 index
@@ -32,3 +33,12 @@ def  login(request):
 def  portal(request):
     username=request.session.get('username','anybody')
     return render_to_response('portal.html',{'username':username}) 
+<<<<<<< HEAD
+
+
+def echart(request):
+    list1=excel_table()
+    print list1
+    return render_to_response('echart.html',{'list1':list1}) 
+=======
+>>>>>>> younfor/master

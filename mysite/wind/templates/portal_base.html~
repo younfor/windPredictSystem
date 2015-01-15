@@ -14,10 +14,7 @@
 <!--引入脚本是一定要先引入jquery,因为bootstrap.js是基于jquery.js的-->
 <script language="JavaScript" type="text/javascript" src="{% static 'wind/js/jquery-1.10.2.min.js' %}"></script>
 <script language="JavaScript" type="text/javascript" src="{% static 'wind/js/bootstrap.min.js' %}"></script>
-<<<<<<< HEAD
 <script language="JavaScript" type="text/javascript" src="{% static 'wind/js/echarts-all.js' %}"></script>
-=======
->>>>>>> younfor/master
 <script
 src="http://maps.googleapis.com/maps/api/js?key=AIzaSyAleMoQ_WF66fQRIRfGzVNoYLTnxoJb4c4&sensor=false">
 </script>
@@ -52,47 +49,11 @@ var infowindow = new google.maps.InfoWindow({
 infowindow.open(map,marker_chongqing);
 //点击事件
 google.maps.event.addListener(marker,'click',function(event) {
-<<<<<<< HEAD
   document.getElementById("loc").innerHTML="lat:"+event.latLng.lat()+" lng:"+event.latLng.lng();
   });
 google.maps.event.addListener(marker_chongqing,'click',function(event) {
   document.getElementById("loc").innerHTML="lat:"+event.latLng.lat()+" lng:"+event.latLng.lng();
   });
-=======
-  document.getElementById("loc").innerHTML="Chengdu<br/>"+"lat:"+event.latLng.lat()+" lng:"+event.latLng.lng();
-  });
-google.maps.event.addListener(marker_chongqing,'click',function(event) {
-  document.getElementById("loc").innerHTML="Chongqing<br/>"+"lat:"+event.latLng.lat()+" lng:"+event.latLng.lng();
-  });
-var geocoder = new google.maps.Geocoder();	
-//地图查询事件
-function codeAddress(allAddress) {
-	
-	if (geocoder) {
-		geocoder.geocode({
-			'address' : allAddress
-		},
-		function(results, status) {
-			if (status == google.maps.GeocoderStatus.OK) {
-				map.setCenter(results[0].geometry.location);
-				map.setZoom(5);
-				//beachMarker.setPosition(results[0].geometry.location);//显示图钉
-				//填值
-				//$('#lng').val(results[0].geometry.location.lng());
-				//$('#lat').val(results[0].geometry.location.lat());
-			} else {
-				alert("加载地图失败，原因为: "
-						+ status);
-			}
-		});
-	}
-}
-//搜索按钮点击
-$('#searchMap').click(function(){
-	codeAddress($('#searchTxt').val());
-});
-
->>>>>>> younfor/master
 }
 
 google.maps.event.addDomListener(window, 'load', initialize);
@@ -180,8 +141,4 @@ google.maps.event.addDomListener(window, 'load', initialize);
 	
 	
 </body>
-<<<<<<< HEAD
 </html>
-=======
-</html>
->>>>>>> younfor/master
