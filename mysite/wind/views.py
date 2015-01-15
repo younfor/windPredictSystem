@@ -26,3 +26,9 @@ def  login(request):
     else:
         context={'result':'login failed!'}
     return render_to_response('wind/index.html',context,context_instance=RequestContext(request) )
+
+
+
+def  portal(request):
+    username=request.session.get('username','anybody')
+    return render_to_response('portal.html',{'username':username}) 

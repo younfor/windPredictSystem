@@ -1,0 +1,143 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+{% load staticfiles %}
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+
+<title>Portal</title>
+<link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet" type="text/css"/>
+<link href="{% static 'wind/css/bootstrap.css' %}" rel="stylesheet" type="text/css">
+<link href="{% static 'wind/css/bootstrap-theme.css' %}" rel="stylesheet" type="text/css">
+<link href="{% static 'wind/css/mystyle.css' %}" rel="stylesheet" type="text/css">
+<link href="{% static 'wind/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
+<!--引入脚本是一定要先引入jquery,因为bootstrap.js是基于jquery.js的-->
+<script language="JavaScript" type="text/javascript" src="{% static 'wind/js/jquery-1.10.2.min.js' %}"></script>
+<script language="JavaScript" type="text/javascript" src="{% static 'wind/js/bootstrap.min.js' %}"></script>
+<script
+src="http://maps.googleapis.com/maps/api/js?key=AIzaSyAleMoQ_WF66fQRIRfGzVNoYLTnxoJb4c4&sensor=false">
+</script>
+
+<script>
+function initialize()
+{
+var mapProp = {
+  center:new google.maps.LatLng(30.67,104.06),
+  zoom:5,
+  mapTypeId:google.maps.MapTypeId.ROADMAP
+  };
+var map=new google.maps.Map(document.getElementById("googleMap"),mapProp);
+var myCenter=new google.maps.LatLng(30.67,104.06);
+var chongqing=new google.maps.LatLng(29.35,106.33)
+var marker=new google.maps.Marker({
+  position:myCenter,
+  });
+var marker_chongqing=new google.maps.Marker({
+  position:chongqing,
+  });
+marker.setMap(map);
+marker_chongqing.setMap(map);
+var infowindow = new google.maps.InfoWindow({
+  content:"成都发电厂"
+  });
+
+infowindow.open(map,marker);
+var infowindow = new google.maps.InfoWindow({
+  content:"重庆发电厂"
+  });
+infowindow.open(map,marker_chongqing);
+//点击事件
+google.maps.event.addListener(marker,'click',function(event) {
+  document.getElementById("loc").innerHTML="lat:"+event.latLng.lat()+" lng:"+event.latLng.lng();
+  });
+google.maps.event.addListener(marker_chongqing,'click',function(event) {
+  document.getElementById("loc").innerHTML="lat:"+event.latLng.lat()+" lng:"+event.latLng.lng();
+  });
+}
+
+google.maps.event.addDomListener(window, 'load', initialize);
+</script>
+
+</head>
+
+<body>
+   <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container-fluid">
+	  <!--header-->
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">WindPredictSystem</a>
+        </div>
+		
+        <div id="navbar" class="navbar-collapse collapse">
+		
+          <ul class="nav navbar-nav navbar-right">
+		  
+		  <!--userinformationBegin-->
+            <li class="dropdown">
+     		 <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+               UserInfo<span class="caret"></span> </a>
+              <ul class="dropdown-menu" >
+                <li><a href="#">UserInfo</a></li>
+				<li><a href="#">Settings</a></li>
+             </ul>
+           </li>
+		   <!--userinformationEnd-->
+		   
+		    <li><a href="#">Logout</a></li>
+          </ul>
+         
+        </div>
+      </div>
+    </nav>
+	
+	
+	<!-- containerBegin-->
+	<div class="container-fluid">
+		<div class="row">
+			 <div class="col-sm-3 col-md-2 sidebar ">
+			       <ul class="nav nav-sidebar">				
+           		   	 <li><a href="#">Home</a></li>
+          			 <li class="sidebar-menu">
+						<a href="#WindPredict" class="nav-header menu-first collapsed" data-toggle="collapse">WindPredict</a>
+						<ul id="WindPredict" class="nav nav-list collapse menu-second">
+							<li><a href="#">4hours</a></li>
+							<li><a href="#">24hours</a></li>
+							<li><a href="#">72hours</a></li>						
+						</ul>
+					 </li>
+					 
+					  <li class="sidebar-menu">
+						<a href="#WeatherForcast" class="nav-header menu-first collapsed" data-toggle="collapse">WeatherForcast</span></a>
+						<ul id="WeatherForcast" class="nav nav-list collapse menu-second">
+							<li><a href="#">WindSpeed</a></li>
+							<li><a href="#">Temperature</a></li>
+							<li><a href="#">Dampness</a></li>
+							<li><a href="#">Pressure</a></li>
+							
+						</ul>
+					</li>
+					
+					 <li class="sidebar-menu">
+						<a href="#userMeun" class="nav-header menu-first collapsed" data-toggle="collapse">UserManagement</a>
+						<ul id="userMeun" class="nav nav-list collapse menu-second">
+							<li><a href="#">Add Users</a></li>
+							<li><a href="#">Delete Users</a></li>
+							
+						</ul>
+					</li>
+           				 </ul>		
+			</div>
+		 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+			{% block content %}
+
+    	 	{% endblock content %}
+
+		</div>	
+	      </div>
+         </div>
+	<!--containerEnd-->
+	
+	
+	
+</body>
+</html>

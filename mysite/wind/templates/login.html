@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+
+<title>Login</title>
+<link rel="stylesheet" href="{% static 'css/bootstrap.css' %}" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="{% static 'css/bootstrap-theme.css' %}" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="{% static 'css/mystyle.css' %}" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="{% static 'css/bootstrap-social.css' %}" rel="stylesheet" type="text/css">
+<style type="text/css">
+body{
+	font-family: Arial, Helvetica, sans-serif;
+	background-color:#333333
+}
+
+</style>
+</head>
+
+<body>
+		<div class="container">
+		<div class="col-md-12">
+				<form class="form-horizontal templatemo-login-form" role="form" action="#" method="post">
+				  {% csrf_token %}
+				    <!--  login form title-->
+					<div class="row">
+						<div class="col-md-12">
+							<h1>Login Form</h1>
+						</div>
+					</div>
+					
+					<!--username input-->	
+					<div class="row" >
+					 <div class="templatemo-one-signin col-md-12">
+				        <div class="form-group">
+				          <div class="col-md-12">		          	
+				            <label for="username" class="control-label">Username</label>
+				            <div class="templatemo-input-icon-container">						
+								<input type="text" class="form-control" id="username" name="username"placeholder="">			            	
+				            </div>		            		            		            
+				          </div>              
+				        </div>
+					<!-- password-->	
+					 <div class="form-group">
+				          <div class="col-md-12">
+				            <label for="password" class="control-label">Password</label>
+				            <div class="templatemo-input-icon-container">
+				            	<input type="password" class="form-control" id="password" name="password" placeholder="">
+				            </div>
+				          </div>
+				      </div>
+					  
+					  <!-- login button -->
+					   <div class="form-group">
+				          <div class="col-md-12">
+				            <input type="submit" value="LOG IN" class="btn btn-warning">
+				          </div>
+				        </div>
+						
+					</div>				
+			</div>
+		</form>
+	</div>
+</div>
+</body>
+</html>

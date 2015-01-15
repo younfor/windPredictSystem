@@ -1,0 +1,53 @@
+<html>
+<head>
+<script
+src="http://maps.googleapis.com/maps/api/js?key=AIzaSyAleMoQ_WF66fQRIRfGzVNoYLTnxoJb4c4&sensor=false">
+</script>
+
+<script>
+function initialize()
+{
+var mapProp = {
+  center:new google.maps.LatLng(30.67,104.06),
+  zoom:5,
+  mapTypeId:google.maps.MapTypeId.ROADMAP
+  };
+var map=new google.maps.Map(document.getElementById("googleMap"),mapProp);
+var myCenter=new google.maps.LatLng(30.67,104.06);
+var chongqing=new google.maps.LatLng(29.35,106.33)
+var marker=new google.maps.Marker({
+  position:myCenter,
+  });
+var marker_chongqing=new google.maps.Marker({
+  position:chongqing,
+  });
+marker.setMap(map);
+marker_chongqing.setMap(map);
+var infowindow = new google.maps.InfoWindow({
+  content:"成都发电厂"
+  });
+
+infowindow.open(map,marker);
+var infowindow = new google.maps.InfoWindow({
+  content:"重庆发电厂"
+  });
+infowindow.open(map,marker_chongqing);
+//点击事件
+google.maps.event.addListener(marker,'click',function(event) {
+  document.getElementById("loc").innerHTML="lat:"+event.latLng.lat()+" lng:"+event.latLng.lng();
+  });
+google.maps.event.addListener(marker_chongqing,'click',function(event) {
+  document.getElementById("loc").innerHTML="lat:"+event.latLng.lat()+" lng:"+event.latLng.lng();
+  });
+}
+
+google.maps.event.addDomListener(window, 'load', initialize);
+</script>
+</head>
+
+<body>
+<div id="googleMap" style="width:500px;height:380px;"></div>
+<div id="loc"></div>
+</body>
+</html>
+			
