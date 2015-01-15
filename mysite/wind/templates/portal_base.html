@@ -48,11 +48,39 @@ var infowindow = new google.maps.InfoWindow({
 infowindow.open(map,marker_chongqing);
 //点击事件
 google.maps.event.addListener(marker,'click',function(event) {
-  document.getElementById("loc").innerHTML="lat:"+event.latLng.lat()+" lng:"+event.latLng.lng();
+  document.getElementById("loc").innerHTML="Chengdu<br/>"+"lat:"+event.latLng.lat()+" lng:"+event.latLng.lng();
   });
 google.maps.event.addListener(marker_chongqing,'click',function(event) {
-  document.getElementById("loc").innerHTML="lat:"+event.latLng.lat()+" lng:"+event.latLng.lng();
+  document.getElementById("loc").innerHTML="Chongqing<br/>"+"lat:"+event.latLng.lat()+" lng:"+event.latLng.lng();
   });
+var geocoder = new google.maps.Geocoder();	
+//地图查询事件
+function codeAddress(allAddress) {
+	
+	if (geocoder) {
+		geocoder.geocode({
+			'address' : allAddress
+		},
+		function(results, status) {
+			if (status == google.maps.GeocoderStatus.OK) {
+				map.setCenter(results[0].geometry.location);
+				map.setZoom(5);
+				//beachMarker.setPosition(results[0].geometry.location);//显示图钉
+				//填值
+				//$('#lng').val(results[0].geometry.location.lng());
+				//$('#lat').val(results[0].geometry.location.lat());
+			} else {
+				alert("加载地图失败，原因为: "
+						+ status);
+			}
+		});
+	}
+}
+//搜索按钮点击
+$('#searchMap').click(function(){
+	codeAddress($('#searchTxt').val());
+});
+
 }
 
 google.maps.event.addDomListener(window, 'load', initialize);
