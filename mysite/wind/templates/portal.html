@@ -10,11 +10,33 @@
 	PortalPage <small>WindPredict & WeatherForcast</small></h3>
 	<hr>
 	<p><h5>Welcome to the PortalHome</h5>
+	<div id="map" style="width: 500px; height: 380px"></div>
+<script>
+var data = [
+{"loc":[30.67,104.06],"title":"发电厂一"},
+{"loc":[30.767,104.04],"title":"发电厂二"},
+{"loc":[30.867,104.05],"title":"发电厂三"},
+{"loc":[30.167,104.109],"title":"发电厂四"},
+{"loc":[30.367,104.208],"title":"发电厂五"},
+{"loc":[30.567,104.07],"title":"发电厂六"},
+];
+var map = new L.Map('map', {zoom: 10, center: new L.latLng([30.67,104.06]) });
+map.addLayer(new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'));	//base layer
 
-		<input type="text" id="searchTxt"/>
-		<input type='button' id='searchMap' value='搜索地址'/>
-		<br/><br/>
-		<div id="loc">show locations</div>
-  		<div id="googleMap" style="width:500px;height:380px;"></div>
- 		 
+var markersLayer = new L.LayerGroup();	//layer contain searched elements
+	map.addLayer(markersLayer);
+map.addControl( new L.Control.Search({
+minLength: 2,
+zoom:10,
+layer: markersLayer, initial: false
+}) );
+////////////populate map with markers from sample data
+for(i in data) {
+	var title = data[i].title,	//value searched
+		loc = data[i].loc,		//position found
+		marker = new L.Marker(new L.latLng(loc), {title: title} );//se property searched
+	marker.bindPopup('title: '+ title );
+	markersLayer.addLayer(marker);
+}
+</script>
 {% endblock content %}
