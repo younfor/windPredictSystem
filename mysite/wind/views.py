@@ -16,23 +16,25 @@ def  index(request):
 '''
 login 
 '''
-def  login(request):
-    username = request.POST['username']
-    password = request.POST['password']
-    user=auth.authenticate(username=username,password=password)
-    if user is not None:
-        if user.is_active:
-        	auth.login(request,user)
-        	context={'result':'login success!'}
-    else:
-        context={'result':'login failed!'}
-    return render_to_response('wind/index.html',context,context_instance=RequestContext(request) )
+def login(request):
+	if request.method == 'POST':
+		username = request.POST['username']
+		password = request.POST['password']
+		user=auth.authenticate(username=username,password=password)
+		if user is not None:
+			if user.is_active:
+				auth.login(request,user)
+				context={'result':'login success!','username':username}
+				print 'login success'
+		else:
+			context={'result':'login failed!'}
+		return render_to_response('wind/portal.html',context)
+	return render_to_response('wind/login.html',{},context_instance=RequestContext(request))
 
 
-
-def  portal(request):
+def portal(request):
     username=request.session.get('username','anybody')
-    return render_to_response('portal.html',{'username':username}) 
+    return render_to_response('wind/portal.html',{'username':username}) 
 def echart(request):
     list1=excel_table()
     print list1
