@@ -43,8 +43,8 @@
 		xAxis:[
 			{
 			type:'category',
-			data:[{% for l in list1 %}'{{l}}',{% endfor %}]
-		
+			data:[{% for value in week%}'{{value}}',{% endfor %}]
+			/*data:['x','x','x','x','x','x','x']*/
 			}
 		],
 
@@ -62,7 +62,8 @@
 			{
 			name:'平均气温',
 			type:'line',
-			data:[{% for l in list2 %}{{l}},{% endfor %}],
+			data:[{% for value in temper %}{{value}},{% endfor %}],
+			/*data:[11,1,1,1,1,1,1],*/
 			markPoint : {
                			 data : [
                     			{type : 'max', name: '最大值'},

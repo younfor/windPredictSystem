@@ -14,10 +14,81 @@
 <script language="JavaScript" type="text/javascript" src="{% static 'wind/js/jquery-1.10.2.min.js' %}"></script>
 <script language="JavaScript" type="text/javascript" src="{% static 'wind/js/bootstrap.min.js' %}"></script>
 <script language="JavaScript" type="text/javascript" src="{% static 'wind/js/echarts-all.js' %}"></script>
-<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
-<script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
-<link rel="stylesheet" href="http://labs.easyblog.it/maps/leaflet-search/src/leaflet-search.css" />
-<script src="http://labs.easyblog.it/maps/leaflet-search/src/leaflet-search.js"></script>
+<!--
+<script
+src="http://maps.googleapis.com/maps/api/js?key=AIzaSyAleMoQ_WF66fQRIRfGzVNoYLTnxoJb4c4&sensor=false">
+</script>
+
+<script>
+function initialize()
+{
+	var mapProp = {
+	  center:new google.maps.LatLng(30.67,104.06),
+	  zoom:5,
+	  mapTypeId:google.maps.MapTypeId.ROADMAP
+	  };
+	var map=new google.maps.Map(document.getElementById("googleMap"),mapProp);
+	var myCenter=new google.maps.LatLng(30.67,104.06);
+	var chongqing=new google.maps.LatLng(29.35,106.33)
+	var marker=new google.maps.Marker({
+  		position:myCenter,
+ 	 });
+	var marker_chongqing=new google.maps.Marker({
+  		position:chongqing,
+ 	 });
+
+	marker.setMap(map);
+	marker_chongqing.setMap(map);
+	var infowindow = new google.maps.InfoWindow({
+	  	content:"成都发电厂"
+	  });
+
+	infowindow.open(map,marker);
+	var infowindow = new google.maps.InfoWindow({
+		  content:"重庆发电厂"
+	  });
+	infowindow.open(map,marker_chongqing);
+	//点击事件
+	google.maps.event.addListener(marker,'click',function(event) {
+	  document.getElementById("loc").innerHTML="Chengdu<br/>"+"lat:"+event.latLng.lat()+" lng:"+event.latLng.lng();
+	  });
+
+	google.maps.event.addListener(marker_chongqing,'click',function(event) {
+	  document.getElementById("loc").innerHTML="Chongqing<br/>"+"lat:"+event.latLng.lat()+" lng:"+event.latLng.lng();
+	  });
+
+	 var geocoder = new google.maps.Geocoder();	
+	//地图查询事件
+	function codeAddress(allAddress) {
+		
+		if (geocoder) {
+			geocoder.geocode({
+				'address' : allAddress
+			},
+			function(results, status) {
+				if (status == google.maps.GeocoderStatus.OK) {
+					map.setCenter(results[0].geometry.location);
+					map.setZoom(8);
+					//beachMarker.setPosition(results[0].geometry.location);//显示图钉
+					//填值
+					//$('#lng').val(results[0].geometry.location.lng());
+					//$('#lat').val(results[0].geometry.location.lat());
+				} else {
+					alert("加载地图失败，原因为: "
+							+ status);
+				}
+			});
+		}
+	}
+	//搜索按钮点击
+	$('#searchMap').click(function(){
+		codeAddress($('#searchTxt').val());
+	});
+}
+google.maps.event.addDomListener(window, 'load', initialize);
+
+</script>
+-->
 
 </head>
 

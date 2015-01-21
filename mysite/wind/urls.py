@@ -6,5 +6,6 @@ urlpatterns= patterns('wind.views',
             url(r'^index/','index',name='index'),
             url(r'^portal/','portal',name='portal'),
             url(r'^echart','echart',name='echart'),
+            url(r'^chartout','chartout',name='chartout'),
 
             )
