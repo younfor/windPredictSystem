@@ -1,13 +1,14 @@
 from django.contrib.auth.models import User
 from django.db import models
 from django.db.models import signals
+
 class UserProfile(models.Model):
     user = models.OneToOneField(User)
     telephone = models.CharField(max_length=30,null=True)
     address=models.CharField(max_length=50,null=True)
     level=models.CharField(max_length=10,null=True)
     father=models.ForeignKey('self',default=None,null=True,blank=True)
-    def __unicode__(self): 
+    def __unicode__(self):
        return self.user.username
 
 class  Factory(models.Model):
@@ -18,7 +19,7 @@ class  Factory(models.Model):
     city=models.CharField(max_length=50)
     contact=models.CharField(max_length=30)
     telephone=models.CharField(max_length=30)
-    email=models.EmailField() 
+    email=models.EmailField()
     user=models.ForeignKey(User,unique=True)
     bank_account=models.CharField(max_length=30)
     def __unicode__(self):

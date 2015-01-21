@@ -3,8 +3,10 @@ from django.contrib import admin
 
 urlpatterns= patterns('wind.views',
             url(r'^login/','login',name='login'),
+            url(r'^signup/','signup',name='signup'),
             url(r'^index/','index',name='index'),
             url(r'^portal/','portal',name='portal'),
             url(r'^echart','echart',name='echart'),
+            url(r'^chartout','chartout',name='chartout'),
 
             )
