@@ -10,7 +10,7 @@ from file import excel_table
 '''
 index
 '''
-def  index(request):
+def index(request):
     context={"js":"hello baby"}
     return render_to_response('wind/index.html',context,context_instance=RequestContext(request) )
 '''
@@ -31,6 +31,11 @@ def login(request):
 		return render_to_response('wind/portal.html',context)
 	return render_to_response('wind/login.html',{},context_instance=RequestContext(request))
 
+'''
+register
+'''
+def register(request):
+	pass 
 
 def portal(request):
     username=request.session.get('username','anybody')
