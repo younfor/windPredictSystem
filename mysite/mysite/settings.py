@@ -94,16 +94,16 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 
 DATABASES = {
 
-        'default': {  
-        'ENGINE': 'django.db.backends.mysql',    
-        'NAME': 'Wind',                        
-        
-        'USER': 'root',  
-        'PASSWORD':'199288',  
-        'HOST': '127.0.0.1',                       
-        'PORT': '3306',                      
-        }
-  
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'Wind',
+
+        'USER': 'root',
+        'PASSWORD': '199288',
+        'HOST': '127.0.0.1',
+        'PORT': '3306',
+    }
+
 }
 
 # Internationalization
@@ -126,16 +126,16 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 
-STATICFILES_DIRS=(
-    os.path.join(BASE_DIR,'static'),
-    )
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
 
-STATICFILES_FINDERS=(
+STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 
-    )
+)
 
-TEMPLATE_DIRS=(
-     os.path.join(os.path.dirname(__file__),'templates'),
+TEMPLATE_DIRS = (
+    os.path.join(os.path.dirname(__file__), 'templates'),
 )
