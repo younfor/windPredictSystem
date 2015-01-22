@@ -14,11 +14,13 @@ class UserProfileInline(admin.StackedInline):
     model = UserProfile
     can_delete = False
     verbose_name_plural = 'UserProfile'
+
     def get_fields(self, request, obj=None):
-        form = super(UserProfileInline,self).get_formset(request, obj, fields=None).form
-        #if 'level' in form.base_fields:
+        form = super(UserProfileInline, self).get_formset(
+            request, obj, fields=None).form
+        # if 'level' in form.base_fields:
         #   print 'yes level'
-        #else:
+        # else:
         #   print 'no level'
         return list(form.base_fields) + list(self.get_readonly_fields(request, obj))
 
@@ -27,7 +29,7 @@ class UserProfileInline(admin.StackedInline):
 
 class UserAdmin(UserAdmin):
     inlines = (UserProfileInline, )
-    list_display = ('username', 'is_staff')
+    list_display = ('username', 'is_staff', 'get_UserProfile')
     fieldsets = (
         (None, {'fields': ('username', 'password')}),
         (_('Personal info'), {'fields': ('first_name', 'last_name', 'email')}),
@@ -35,6 +37,9 @@ class UserAdmin(UserAdmin):
                                        'groups', 'user_permissions')}),
         (_('Important dates'), {'fields': ('last_login', 'date_joined')}),
     )
+
+    def get_UserProfile(self,obj):
+        return obj.userprofile
 
     def get_form(self, request, obj=None, **kwargs):
         # Get form from original UserAdmin.
