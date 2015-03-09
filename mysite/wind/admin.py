@@ -29,7 +29,7 @@ class UserProfileInline(admin.StackedInline):
 
 class UserAdmin(UserAdmin):
     inlines = (UserProfileInline, )
-    list_display = ('username', 'is_staff', 'get_UserProfile')
+    list_display = ('username', 'is_staff','get_UserLevel')
     fieldsets = (
         (None, {'fields': ('username', 'password')}),
         (_('Personal info'), {'fields': ('first_name', 'last_name', 'email')}),
@@ -38,17 +38,19 @@ class UserAdmin(UserAdmin):
         (_('Important dates'), {'fields': ('last_login', 'date_joined')}),
     )
 
-    def get_UserProfile(self,obj):
-        return obj.userprofile
+    def get_UserLevel(self,obj):
+        return obj.userprofile.level
 
     def get_form(self, request, obj=None, **kwargs):
         # Get form from original UserAdmin.
         form = super(UserAdmin, self).get_form(request, obj, **kwargs)
         # here is according to the system
+        '''
         if 'user_permissions' in form.base_fields:
             permissions = form.base_fields['user_permissions']
             permissions.queryset = permissions.queryset.filter(
                 content_type__name='log entry')
+        '''
         return form
 
     def save_model(self, request, obj, form, change):
@@ -66,7 +68,7 @@ class UserAdmin(UserAdmin):
     def get_queryset(self, request):
         qs = super(UserAdmin, self).get_queryset(request)
         print 'ps:get_queryset'  # If super-user, show all
-        if request.user.is_superuser:
+        if request.user.is_superuser or request.user.userprofile.level==1:
             return qs
         return qs.filter(userprofile__father=request.user.userprofile)
 # Re-register UserAdmin
@@ -76,3 +78,4 @@ admin.site.register(User, UserAdmin)
 admin.site.register(models.PowerStation)
 admin.site.register(models.Factory)
 admin.site.register(models.WindTurbine)
+admin.site.register(models.PowerData)

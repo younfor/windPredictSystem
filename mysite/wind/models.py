@@ -13,6 +13,12 @@ class UserProfile(models.Model):
     def __unicode__(self):
         return self.user.username
 
+class Location(models.Model):
+    province = models.CharField(max_length=30)
+    city = models.CharField(max_length=30)
+    country = models.CharField(max_length=30)
+    def __unicode__(self):
+        return self.province,self.city,self.country
 
 class Factory(models.Model):
     name = models.CharField(max_length=30)
@@ -25,7 +31,9 @@ class Factory(models.Model):
     email = models.EmailField()
     user = models.ForeignKey(User, unique=True)
     bank_account = models.CharField(max_length=30)
-
+    location = models.ForeignKey(Location, unique=True,null=True)
+    begintime = models.DateTimeField(null=True) 
+    endtime = models.DateTimeField(null=True)
     def __unicode__(self):
         return self.name
 
@@ -44,7 +52,9 @@ class PowerStation(models.Model):
     user = models.ForeignKey(User, unique=True)
     bank_account = models.CharField(max_length=30)
     factory = models.ForeignKey(Factory)
-
+    location = models.ForeignKey(Location, unique=True,null=True)
+    begintime = models.DateTimeField(null=True) 
+    endtime = models.DateTimeField(null=True)
     def __unicode__(self):
         return self.name
 
@@ -58,6 +68,22 @@ class WindTurbine(models.Model):
     email = models.EmailField()
     user = models.ForeignKey(User, unique=True)
     powerstation = models.ForeignKey(PowerStation)
-
+    location = models.ForeignKey(Location, unique=True,null=True)
+    begintime = models.DateTimeField(null=True) 
+    endtime = models.DateTimeField(null=True)
     def __unicode__(self):
         return self.name
+
+
+
+class PowerData(models.Model):
+    turbine = models.ForeignKey(WindTurbine, unique=True)
+    time = models.CharField(max_length=30)
+    NWP_speed =models.CharField(max_length=30)
+    CFD_speed =models.CharField(max_length=30)
+    Observed_speed=models.CharField(max_length=30)
+    Observed_power=models.CharField(max_length=30)
+    Predicted_speed=models.CharField(max_length=30)
+    Speed_dev=models.CharField(max_length=30)
+    Predicted_power=models.CharField(max_length=30)
+    Power_dev=models.CharField(max_length=30)
