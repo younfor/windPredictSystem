@@ -7,7 +7,7 @@ from django.contrib import auth
 from wind.models import UserProfile
 from django.core.context_processors import csrf
 from excel import excel_table
-from netcdf import netcdf as nc
+
 # Create your views here.
 
 
@@ -51,14 +51,7 @@ def echart(request):
 
 def chartout(request):
 
-    root, is_new = nc.open('temper.nc')
-    print root.files
-    temper = nc.getvar(root, 'temperature')[0]
-    week = nc.getvar(root, 'week')[0]
-    print "temperature: ", temper
-    print "Matrix shape: ", week
-   # print "Matrix values: ", data[:]
-    return render_to_response('wind/chartout.html', {'week': week, 'temper': temper})
+    return render_to_response('wind/chartout.html', {'week': None, 'temper': None})
 
 
 def signup(request):
