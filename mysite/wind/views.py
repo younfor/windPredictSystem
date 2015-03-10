@@ -4,9 +4,10 @@ from django.http import HttpResponse
 from django.contrib.auth.models import User
 from django.contrib import auth
 from wind.models import UserProfile, UploadFileForm
+from wind import models
 from django.core.context_processors import csrf
 from excel import excel_table
-
+from DBadapter import DBhelper
 
 # Create your views here.
 
@@ -94,29 +95,32 @@ def uploadfiles(request):
             fstyle = fname[suffix:]      # to know if xls
             if fstyle == '.xls':
 
-                 print fname[suffix:]
-                 # print files.size
-                 fp = file('wind/upload/' + fname, 'wb')
-                 s = files.read()
-                 fp.write(s)
-                 fp.close()
-                 form = UploadFileForm()
-                 if_success = 1
-                 return render_to_response('wind/uploadfiles.html', {
-                     'form': form, 'if_success': if_success, 'filename': files.name})
+                print fname[suffix:]
+                # print files.size
+                fp = file('wind/upload/' + fname, 'wb')
+                s = files.read()
+                fp.write(s)
+                fp.close()
+                form = UploadFileForm()
+                if_success = 1
+                # add Powerdata
+                pdata = models.PowerData.objects.create(
+                    time='1-8', NWP_speed=files.name)
+                DBhelper.getIns().addPowerData(pdata)
+                return render_to_response('wind/uploadfiles.html', {
+                    'form': form, 'if_success': if_success, 'filename': files.name})
             else:
-                 form = UploadFileForm()
-                 if_xls = 1
-                 return render_to_response('wind/uploadfiles.html', {
-                     'form': form, 'if_xls': if_xls})
+                form = UploadFileForm()
+                if_xls = 1
+                return render_to_response('wind/uploadfiles.html', {
+                    'form': form, 'if_xls': if_xls})
         else:
             if_addfile = 1
             return render_to_response('wind/uploadfiles.html', {
                 'form': form, 'if_addfile': if_addfile})
             # return HttpResponse('Upload,Successful!')
     else:
-                form = UploadFileForm()
-    return render_to_response('wind/uploadfiles.html', { 
-                'form':form,
-                'if_success': if_success})
-                       
+        form = UploadFileForm()
+    return render_to_response('wind/uploadfiles.html', {
+        'form': form,
+        'if_success': if_success})

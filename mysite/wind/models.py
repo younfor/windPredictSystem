@@ -77,16 +77,16 @@ class WindTurbine(models.Model):
 
 
 class PowerData(models.Model):
-    turbine = models.ForeignKey(WindTurbine, unique=True)
-    time = models.CharField(max_length=30)
-    NWP_speed =models.CharField(max_length=30)
-    CFD_speed =models.CharField(max_length=30)
-    Observed_speed=models.CharField(max_length=30)
-    Observed_power=models.CharField(max_length=30)
-    Predicted_speed=models.CharField(max_length=30)
-    Speed_dev=models.CharField(max_length=30)
-    Predicted_power=models.CharField(max_length=30)
-    Power_dev=models.CharField(max_length=30)
+    turbine = models.ForeignKey(WindTurbine, unique=True,null=True)
+    time = models.CharField(max_length=30,null=True)
+    NWP_speed =models.CharField(max_length=30,null=True)
+    CFD_speed =models.CharField(max_length=30,null=True)
+    Observed_speed=models.CharField(max_length=30,null=True)
+    Observed_power=models.CharField(max_length=30,null=True)
+    Predicted_speed=models.CharField(max_length=30,null=True)
+    Speed_dev=models.CharField(max_length=30,null=True)
+    Predicted_power=models.CharField(max_length=30,null=True)
+    Power_dev=models.CharField(max_length=30,null=True)
 
 class UploadFileForm(forms.Form):
     file = forms.FileField()
