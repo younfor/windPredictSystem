@@ -1,0 +1,16 @@
+本地操作shinne
+
+git add .
+git commit -m '注释'
+git push
+
+
+远程同步younfor
+
+git clone younfor younfor的git
+git fetch younfor
+git merge younfor/master
+可能有冲突
+git add
+git commit -m '...'
+git push

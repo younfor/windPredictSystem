@@ -1,6 +1,6 @@
 {% extends 'wind/portal_base.html' %}
 {% block content %}
-  <h3>平均气温</h3>
+  <h3>风速信息</h3>
 
  <div id="main" style="height:400px;width:800px;border:1px solid #ccc;padding:10px;"></div> 
     <script type="text/javascript">
@@ -10,7 +10,7 @@
 	option={
 
 		title:{
-			text:'平均气温'
+			text:'风速信息'
 		},
 		tooltip : {
               		  trigger: 'axis'
@@ -18,7 +18,7 @@
 		legend:{
 			//orient:'horizontal',
 			//backgroundColor:'#eee',
-			data:['平均气温']
+			data:['平均风速']
 			},
 
 		calculable : true,
@@ -43,8 +43,8 @@
 		xAxis:[
 			{
 			type:'category',
-			data:[{% for value in week%}'{{value}}',{% endfor %}]
-			/*data:['x','x','x','x','x','x','x']*/
+			data:[{% for time in list1 %}'{{time}}',{% endfor %}]
+		
 			}
 		],
 
@@ -52,7 +52,7 @@
 			{
 			type:'value',
 			axisLabel:{
-				formatter:'{value} °C'},
+				formatter:'{value} 米/秒'},
 			},
 
 			
@@ -60,10 +60,9 @@
 		
 		series:[
 			{
-			name:'平均气温',
+			name:'平均风速',
 			type:'line',
-			data:[{% for value in temper %}{{value}},{% endfor %}],
-			/*data:[11,1,1,1,1,1,1],*/
+			data:[{% for speed in list2 %}{{speed}},{% endfor %}],
 			markPoint : {
                			 data : [
                     			{type : 'max', name: '最大值'},
@@ -84,4 +83,6 @@
 	myChart.setOption(option);
 
     </script>
+    
+
 {% endblock content %}
