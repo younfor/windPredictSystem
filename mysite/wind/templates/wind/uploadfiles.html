@@ -1,0 +1,29 @@
+
+<html>
+{% extends 'wind/portal_base.html' %}
+{% block content %}
+
+  <!--<h3 class="page-title">
+	Visual Charts <small>visual charts & graphs</small></h3>
+	-->
+	<h3>
+	PortalPage <small>WindPredict & WeatherForcast</small></h3>
+	<hr>
+	<form enctype="multipart/form-data" method="POST" action=""> 
+		{% csrf_token %}
+   		<input type="file" name="file" />
+ 		  <br /> 
+  		 <input type="submit" value="上传文件" /> 
+  		 {% if if_success%}
+  		 {{filename}} Upload,Successful!
+  		 {% endif%}
+  		 {% if if_addfile%}
+  		please add the file to upload!
+  		 {% endif%}
+  		 {% if if_xls%}
+  		 not excel,please upload again
+  		 {% endif%}
+	</form>
+ 		
+ 		 
+{% endblock content %}

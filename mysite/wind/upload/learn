@@ -1,0 +1,32 @@
+2015.2.6
+1.在一个页面中，可以使用 {% include "my_blog/aa.html" %} include标签将另外一个页面的内容载入到另一个页面中，这样就可以实现多个页面的整合。这在blog2中得到了实现。
+
+2.在view中使用视图类，可以向页面中添加多个model中的数据，同时向页面中添加一些其他的不相关数据。在blog2中得到实现。
+
+
+
+2015.2.7
+
+1.python中的@classmethod
+python中的@classmethod，使得不需要对对象进行实例化就可以调用里面的函数。例如：
+class Hello(object):
+    def __init__:
+        ...
+
+    def print_hello(self):
+        print "Hello"
+
+ 要用 print_hello() 就得：
+hlo = Hello()    hlo.print_hello()输出的是Hello
+
+如果用了 @classmethod 就简单了。
+class Hello(object):
+    def __init__:
+        ...
+    @classmethod
+    def print_hello(cls):
+        print "Hello"
+要用的话直接：Hello.print_hello()输出的是Hello
+
+
+

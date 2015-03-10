@@ -4,7 +4,7 @@ from django.template import RequestContext
 from django.http import HttpResponse
 from django.contrib.auth.models import User
 from django.contrib import auth
-from wind.models import UserProfile
+from wind.models import UserProfile,UploadFileForm
 from django.core.context_processors import csrf
 from excel import excel_table
 
@@ -39,20 +39,27 @@ def portal(request):
     print 'user where'
     return render_to_response('wind/portal.html', {'username': user.username})
 
+def speed(request):
+    list1=[]
+    list2=[]
+    excel= excel_table('wind/excel_file/speed.xls', u'sheet1')
+    list1=excel.get_list1
+    list2=excel.get_list2
 
-def echart(request):
-    excel = excel_table('weather.xls', u'sheet1')
-    list1 = excel.get_list1()
-    list2 = excel.get_list2()
+    print list1
+    print list2
+    return render_to_response('wind/speed.html', {'list1': list1, 'list2': list2})
 
-    print list1[0]
-    return render_to_response('wind/echart.html', {'list1': list1, 'list2': list2})
+def power(request):
+    list1=[]
+    list2=[]
+    excel= excel_table('wind/excel_file/power.xls', u'sheet1')
+    list1=excel.get_list1
+    list2=excel.get_list2
 
-
-def chartout(request):
-
-    return render_to_response('wind/chartout.html', {'week': None, 'temper': None})
-
+    print list1
+    print list2
+    return render_to_response('wind/power.html', {'list1': list1, 'list2': list2})
 
 def signup(request):
     if request.method == 'POST':
@@ -70,3 +77,41 @@ def signup(request):
         # print info
         return HttpResponse('sucessful signup')
     return render(request, 'wind/signup.html')
+
+def uploadfiles(request):
+    if_success=0
+    if request.method == 'POST': 
+        form = UploadFileForm(request.POST,request.FILES) 
+        if form.is_valid(): 
+            files=request.FILES['file']
+            fname=files.name 
+            suffix=fname.find('.')
+            #print files.name
+            print suffix
+            fstyle=fname[suffix:]      # to know if xls
+            if fstyle=='.xls':
+
+                 print fname[suffix:]
+                 #print files.size
+                 fp=file('wind/upload/'+fname,'wb')
+                 s=files.read()
+                 fp.write(s)
+                 fp.close()                 
+                 form = UploadFileForm()  
+                 if_success=1
+                 return render_to_response('wind/uploadfiles.html', {
+                 'form': form,'if_success':if_success,'filename':files.name})
+            else:
+                 form = UploadFileForm()
+                 if_xls=1
+                 return render_to_response('wind/uploadfiles.html', {
+                 'form': form,'if_xls':if_xls})
+        else:
+            if_addfile=1
+            return render_to_response('wind/uploadfiles.html', {
+                'form': form,'if_addfile':if_addfile})
+            #return HttpResponse('Upload,Successful!') 
+    else:
+                form = UploadFileForm()           
+    return render_to_response('wind/uploadfiles.html', {
+                'form': form,'if_success':if_success})

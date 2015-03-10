@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 from django.db import models
 from django.db.models import signals
-
+from django import forms
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User)
@@ -87,3 +87,6 @@ class PowerData(models.Model):
     Speed_dev=models.CharField(max_length=30)
     Predicted_power=models.CharField(max_length=30)
     Power_dev=models.CharField(max_length=30)
+
+class UploadFileForm(forms.Form):
+    file = forms.FileField()

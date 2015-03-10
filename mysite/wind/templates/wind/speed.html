@@ -1,0 +1,88 @@
+{% extends 'wind/portal_base.html' %}
+{% block content %}
+  <h3>风速信息</h3>
+
+ <div id="main" style="height:400px;width:800px;border:1px solid #ccc;padding:10px;"></div> 
+    <script type="text/javascript">
+        // Step:3 echarts & zrender as a Global Interface by the echarts-plain.js.
+        // Step:3 echarts和zrender被echarts-plain.js写入为全局接口
+	var myChart = echarts.init(document.getElementById('main'));
+	option={
+
+		title:{
+			text:'风速信息'
+		},
+		tooltip : {
+              		  trigger: 'axis'
+            		},
+		legend:{
+			//orient:'horizontal',
+			//backgroundColor:'#eee',
+			data:['平均风速']
+			},
+
+		calculable : true,
+		toolbox: {
+                show : true,
+                feature : {
+                    mark : {show: true},
+                    dataView : {show: true, readOnly: false},
+                    magicType : {show: true, type: ['line', 'bar']},
+                    restore : {show: true},
+                    saveAsImage : {show: true}
+                }
+            },
+
+		/*xAxis:[
+			{
+			type:'category',
+			data:['{{list1.0}}','周二','周三','周四','周五','周六','周日']
+		
+			}
+		],*/
+		xAxis:[
+			{
+			type:'category',
+			data:[{% for time in list1 %}'{{time}}',{% endfor %}]
+		
+			}
+		],
+
+		yAxis:[			
+			{
+			type:'value',
+			axisLabel:{
+				formatter:'{value} 米/秒'},
+			},
+
+			
+		],
+		
+		series:[
+			{
+			name:'平均风速',
+			type:'line',
+			data:[{% for speed in list2 %}{{speed}},{% endfor %}],
+			markPoint : {
+               			 data : [
+                    			{type : 'max', name: '最大值'},
+                    			{type : 'min', name: '最小值'}
+               				 ]
+          			   },
+			 markLine : {
+              			  data : [
+                   			 {type : 'average', name: '平均值'}
+               				 ]
+         			   }
+			},
+		
+
+		],
+};
+
+	myChart.setOption(option);
+
+    </script>
+    
+
+{% endblock content %}
