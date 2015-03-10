@@ -6,7 +6,7 @@ from django.contrib import auth
 from wind.models import UserProfile,UploadFileForm
 from django.core.context_processors import csrf
 from excel import excel_table
-from netcdf import netcdf as nc
+
 
 # Create your views here.
 
@@ -65,19 +65,6 @@ def power(request):
     return render_to_response('wind/power.html', {'list1': list1, 'list2': list2})
 
 
-
-def chartout(request):
-
-    root, is_new = nc.open('temper.nc')
-    print root.files
-    temper = nc.getvar(root, 'temperature')[0]
-    week = nc.getvar(root, 'week')[0]
-    print "temperature: ", temper
-    print "Matrix shape: ", week
-   # print "Matrix values: ", data[:]
-    return render_to_response('wind/chartout.html', {'week': week, 'temper': temper})
-
-
 def signup(request):
     if request.method == 'POST':
         username = request.POST.get('username')
@@ -132,6 +119,6 @@ def uploadfiles(request):
     else:
                 form = UploadFileForm()           
     return render_to_response('wind/uploadfiles.html', {
-                'form': form,'if_success':if_success})
+                'form': form,'if_success':if_success},context_instance=RequestContext(request))
 
 
