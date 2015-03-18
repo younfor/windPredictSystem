@@ -21,3 +21,9 @@ class DBhelper:
         print 'get scope'
         scope = models.Factory.objects.get(user=request.user).scope
         print 'data,scope:', scope
+        print 'decoding'
+        scope = scope.split(':')
+        s = []
+        for sc in scope:
+            s.append(sc.split(','))
+        print s
