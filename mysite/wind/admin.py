@@ -14,20 +14,22 @@ from django.contrib.admin.util import flatten_fieldsets
 
 class ReadOnlyAdmin(admin.ModelAdmin):
 
-
     def get_readonly_fields(self, request, obj=None):
-        return self.model._meta.get_all_field_names()
+        if request.user.userprofile.level == '1':
+            return self.model._meta.get_all_field_names()
+        else:
+            return []
 
     def has_add_permission(self, request):
         # Nobody is allowed to add
-        if request.user.userprofile.level == 1:
+        if request.user.userprofile.level == '1':
             return False
         else:
             return super(ReadOnlyAdmin, self).has_add_permission(request)
 
     def has_delete_permission(self, request, obj=None):
         # Nobody is allowed to delete
-        if request.user.userprofile.level == 1:
+        if request.user.userprofile.level == '1':
             return False
         else:
             return super(ReadOnlyAdmin, self).has_delete_permission(request)
@@ -98,11 +100,22 @@ class UserAdmin(UserAdmin, ReadOnlyAdmin):
         if request.user.is_superuser or (request.user.userprofile.level == '1'):
             return qs
         return qs.filter(userprofile__father=request.user.userprofile)
+
+
+class FactoryAdmin(ReadOnlyAdmin):
+    
+
+    def get_form(self, request, obj=None, **kwargs):
+        form = super(FactoryAdmin, self).get_form(request, obj, **kwargs)
+        form.base_fields['user'].initial = request.user
+        return form
+    
 # Re-register UserAdmin
 admin.site.unregister(User)
 admin.site.register(User, UserAdmin)
 # register Models
 admin.site.register(models.PowerStation, ReadOnlyAdmin)
-admin.site.register(models.Factory, ReadOnlyAdmin)
+admin.site.register(models.Factory, FactoryAdmin)
 admin.site.register(models.WindTurbine, ReadOnlyAdmin)
 admin.site.register(models.PowerData, ReadOnlyAdmin)
+admin.site.register(models.Location, ReadOnlyAdmin)

@@ -16,3 +16,8 @@ class DBhelper:
     def addPowerData(self, data):
         print 'save powerdata'
         data.save()
+
+    def getScope(self, request):
+        print 'get scope'
+        scope = models.Factory.objects.get(user=request.user).scope
+        print 'data,scope:', scope

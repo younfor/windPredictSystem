@@ -7,7 +7,7 @@ from wind.models import UserProfile, UploadFileForm
 from wind import models
 from django.core.context_processors import csrf
 from excel import excel_table
-from DBadapter import DBhelper
+from DBhelper import DBhelper
 
 # Create your views here.
 
@@ -38,6 +38,7 @@ def portal(request):
     user = request.user
     print user
     print 'user where'
+    DBhelper.getIns().getScope(request)
     return render_to_response('wind/portal.html', {'username': user.username})
 
 
