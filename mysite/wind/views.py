@@ -38,20 +38,23 @@ def portal(request):
     user = request.user
     print user
     print 'user where'
-    DBhelper.getIns().getScope(request)
-    return render_to_response('wind/portal.html', {'username': user.username})
-
+    data = [[41.875330, 14.102411, "helloworld"],
+            [41.85330, 14.502411, "hello"]]
+    #circle = DBhelper.getIns().getScope(request)
+    circle = [[41.675330, 14.102411, 4000], [41.45330, 14.502411, 5000]]
+    return render_to_response('wind/portal.html', {'username': user.username, "data": data, "circle": circle})
 
 def speed(request):
     list1 = []
     list2 = []
+    list3=['aaa','bbbb','ccccc','dddd','eeeee','fffff']
     excel = excel_table('wind/excel_file/speed.xls', u'sheet1')
     list1 = excel.get_list1
     list2 = excel.get_list2
 
     print list1
     print list2
-    return render_to_response('wind/speed.html', {'list1': list1, 'list2': list2})
+    return render_to_response('wind/speed.html', {'list1': list1, 'list2': list2,'list3':list3})
 
 
 def power(request):

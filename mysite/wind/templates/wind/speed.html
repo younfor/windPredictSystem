@@ -1,28 +1,82 @@
 {% extends 'wind/portal_base.html' %}
 {% block content %}
-  <h3>风速信息</h3>
 
- <div id="main" style="height:400px;width:800px;border:1px solid #ccc;padding:10px;"></div> 
+<h3>WindPredictSystem/<small>Wind Speed</small></h3>
+<hr>
+<style type="text/css">
+#main{
+    height:400px;
+    width:800px;
+    border:1px solid #ccc;
+    padding:10px;
+    }
+</style>
+<div class="col-sm-9 col-sm-offset-7 col-md-9 col-md-offset-1 " >
+    <script>
+    $(function() {
+        $( "#datepicker" ).datepicker();
+        /*$( "#anim" ).change(function() {
+            $( "#datepicker" ).datepicker( "option", "showAnim", $( this ).val() );*/
+        });
+    });
+    </script>
+</head>
+<body>
+<form>
+    <label>Time：</label><input type="text" id="datepicker" size="23">
+    <label>Windturbine：</label>
+        <select id="anim">
+            {% for value in list3%}
+            <option value="show">{{value}}</option>
+            <!-- <option value="slideDown">滑下</option>
+            <option value="fadeIn">淡入</option>
+            <option value="blind">Blind (UI 百叶窗特效)</option>
+            <option value="bounce">Bounce (UI 反弹特效)</option>
+            <option value="clip">Clip (UI 剪辑特效)</option>
+            <option value="drop">Drop (UI 降落特效)</option>
+            <option value="fold">Fold (UI 折叠特效)</option>
+            <option value="slide">Slide (UI 滑动特效)</option>
+            <option value="">无</option>-->
+            {%endfor%}
+ 
+        </select>
+    <input type="submit" value="submit"/>
+ </form>
+ <hr>
+ <div id="main"></div> 
+ </div> 
+<script type="text/javascript">
+ $('.form_date').datetimepicker({
+        language:  'fr',
+        weekStart: 1,
+        todayBtn:  1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 2,
+        minView: 2,
+        forceParse: 0
+    });
+</script>
     <script type="text/javascript">
         // Step:3 echarts & zrender as a Global Interface by the echarts-plain.js.
         // Step:3 echarts和zrender被echarts-plain.js写入为全局接口
-	var myChart = echarts.init(document.getElementById('main'));
-	option={
+    var myChart = echarts.init(document.getElementById('main'));
+    option={
 
-		title:{
-			text:'风速信息'
-		},
-		tooltip : {
-              		  trigger: 'axis'
-            		},
-		legend:{
-			//orient:'horizontal',
-			//backgroundColor:'#eee',
-			data:['平均风速']
-			},
+        title:{
+            text:'风速信息'
+        },
+        tooltip : {
+                      trigger: 'axis'
+                    },
+        legend:{
+            //orient:'horizontal',
+            //backgroundColor:'#eee',
+            data:['平均风速']
+            },
 
-		calculable : true,
-		toolbox: {
+        calculable : true,
+        toolbox: {
                 show : true,
                 feature : {
                     mark : {show: true},
@@ -33,54 +87,54 @@
                 }
             },
 
-		/*xAxis:[
-			{
-			type:'category',
-			data:['{{list1.0}}','周二','周三','周四','周五','周六','周日']
-		
-			}
-		],*/
-		xAxis:[
-			{
-			type:'category',
-			data:[{% for time in list1 %}'{{time}}',{% endfor %}]
-		
-			}
-		],
+        /*xAxis:[
+            {
+            type:'category',
+            data:['{{list1.0}}','周二','周三','周四','周五','周六','周日']
+        
+            }
+        ],*/
+        xAxis:[
+            {
+            type:'category',
+            data:[{% for time in list1 %}'{{time}}',{% endfor %}]
+        
+            }
+        ],
 
-		yAxis:[			
-			{
-			type:'value',
-			axisLabel:{
-				formatter:'{value} 米/秒'},
-			},
+        yAxis:[         
+            {
+            type:'value',
+            axisLabel:{
+                formatter:'{value} 米/秒'},
+            },
 
-			
-		],
-		
-		series:[
-			{
-			name:'平均风速',
-			type:'line',
-			data:[{% for speed in list2 %}{{speed}},{% endfor %}],
-			markPoint : {
-               			 data : [
-                    			{type : 'max', name: '最大值'},
-                    			{type : 'min', name: '最小值'}
-               				 ]
-          			   },
-			 markLine : {
-              			  data : [
-                   			 {type : 'average', name: '平均值'}
-               				 ]
-         			   }
-			},
-		
+            
+        ],
+        
+        series:[
+            {
+            name:'平均风速',
+            type:'line',
+            data:[{% for speed in list2 %}{{speed}},{% endfor %}],
+            markPoint : {
+                         data : [
+                                {type : 'max', name: '最大值'},
+                                {type : 'min', name: '最小值'}
+                             ]
+                       },
+             markLine : {
+                          data : [
+                             {type : 'average', name: '平均值'}
+                             ]
+                       }
+            },
+        
 
-		],
+        ],
 };
 
-	myChart.setOption(option);
+    myChart.setOption(option);
 
     </script>
     
