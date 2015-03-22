@@ -5,15 +5,22 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
 <title>Portal</title>
-<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
 <link href="{% static 'wind/css/bootstrap.css' %}" rel="stylesheet" type="text/css">
 <link href="{% static 'wind/css/bootstrap-theme.css' %}" rel="stylesheet" type="text/css">
-<link href="{% static 'wind/css/mystyleportal.css' %}" rel="stylesheet" type="text/css">
+<link href="{% static 'wind/css/mystyleportal.css' %}" rel="stylesheet" type="text/css"> 
 <link href="{% static 'wind/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
+<link href="{% static 'wind/css/mapstyle.css' %}" rel="stylesheet" type="text/css"/>
+<link rel="stylesheet" href="{% static 'wind/css/jquery-ui.css' %}"/>
 <!--引入脚本是一定要先引入jquery,因为bootstrap.js是基于jquery.js的-->
 <script language="JavaScript" type="text/javascript" src="{% static 'wind/js/jquery-1.10.2.min.js' %}"></script>
 <script language="JavaScript" type="text/javascript" src="{% static 'wind/js/bootstrap.min.js' %}"></script>
 <script language="JavaScript" type="text/javascript" src="{% static 'wind/js/echarts-all.js' %}"></script>
+<script language="JavaScript" type="text/javascript" src="{% static 'wind/js/bootstrap-datetimepicker.fr.js"></script>
+<script language="JavaScript" type="text/javascript" src="{% static 'wind/js/jquery-ui.js' %}"></script>
+<script language="JavaScript" type="text/javascript" src="{% static 'wind/js/bootstrap-datetimepicker.js' %}"></script>
+
+
+
 <!--
 <script
 src="http://maps.googleapis.com/maps/api/js?key=AIzaSyAleMoQ_WF66fQRIRfGzVNoYLTnxoJb4c4&sensor=false">
@@ -128,25 +135,25 @@ google.maps.event.addDomListener(window, 'load', initialize);
 		<div class="row">
 			 <div class="col-sm-3 col-md-2 sidebar ">
 			       <ul class="nav nav-sidebar">				
-           		   	 <li><a href="#">Home</a></li>
+           		   	 <li><a href="{% url 'portal'%}">Home</a></li>
            		   	 <li><a href="{% url 'wind.views.uploadfiles'%}">Upload Files </a></li>
-          			 <li class="sidebar-menu">
+          		<!-- 	 <li class="sidebar-menu">
 						<a href="#WindPredict" class="nav-header menu-first collapsed" data-toggle="collapse">WindPredict</a>
 						<ul id="WindPredict" class="nav nav-list collapse menu-second">
 							<li><a href="#">4hours</a></li>
 							<li><a href="#">24hours</a></li>
 							<li><a href="#">72hours</a></li>						
 						</ul>
-					 </li>
+					 </li> -->
 					 
-					  <li class="sidebar-menu" id="WeatherForcast1">
-						<a href="#WeatherForcast" class="nav-header menu-first collapsed" data-toggle="collapse">WeatherForcast</a>
-						<ul id="WeatherForcast" class="nav nav-list collapse  menu-second">
-							<li class='selected'><a href="{% url 'wind.views.speed'%}?id=WeatherForcast">WindSpeed</a></li>
+					  <li class="sidebar-menu">
+						<a href="#WindPredict" class="nav-header menu-first collapsed" data-toggle="collapse">WindPredict</a>
+						<ul id="WindPredict" class="nav nav-list collapse  menu-second">
+							<li  ><a id="WindPredict1" href="{% url 'wind.views.speed'%}?id=WindPredict1">WindSpeed</a></li>
 
-							<li><a href="{% url 'wind.views.power'%}?id=WeatherForcast">WindPower</a></li>
-							<li><a href="?id=WeatherForcast">Dampness</a></li>
-							<li><a href="?id=WeatherForcast">Pressure</a></li>
+							<li><a id="WindPredict2" href="{% url 'wind.views.power'%}?id=WindPredict2">WindPower</a></li>
+							<li><a href="?id=WindPredict2">Dampness</a></li>
+							<li><a href="?id=WindPredict3">Pressure</a></li>
 							
 						</ul>
 					</li>
@@ -161,7 +168,7 @@ google.maps.event.addDomListener(window, 'load', initialize);
 					</li>
            				 </ul>		
 			</div>
-		 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+		 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 "> <!-- main -->
 			{% block content %}
 
     	 	{% endblock content %}
@@ -187,10 +194,33 @@ google.maps.event.addDomListener(window, 'load', initialize);
 	    return parames;
 	  }
 	}
+
+
 	var type = parse_url(location.search);
 	if (type) {
-	    $('#'+type['id']).attr('class','nav nav-list  menu-second');
-	    $('#'+type['id']+'1').attr('class','sidebar-menu active');
+		var menutype=type['id'];
+		menutype=menutype.substring(0,menutype.length-1);
+		  $('#'+menutype).attr('class','nav nav-list menu-second');
+		  $('#'+type['id']).css('display','block');
+	  	  $('#'+type['id']).css('background-color','#aac3ec');
+	 	  $('#'+type['id']).css('color','#322227');
+
+
+		/*alert('type['id']');
+	   var type1=type['id'].substring(0,type['id'].Length-1)；
+
+			alert(type1);*/
+	   /* $('#'+type['id']).attr('class','nav nav-list menu-second');*/
+	/*    $('#'+type['id']+'2').css('display','block');
+	   $('#'+type['id']+'2').css('background-color','#dddddd');
+	   
+	    $('#'+type['id']+'2').css('color','#111111');*/
+	  /* alert(type['id']);*/
+	/*  alert(type['id']+'2');*/
+	  /*  $('#'+type['id']+'1').attr('class','sidebar-menu active');*/
+	/*alert('#'+type['id']+'2');*/
+             /*    $('#'+type['id']+'2').attr('class','selected');
+	*/
 	}
 </script>
 </html>

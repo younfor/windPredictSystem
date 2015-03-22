@@ -2,12 +2,231 @@
 <html>
 {% extends 'wind/portal_base.html' %}
 {% block content %}
-
-  <!--<h3 class="page-title">
-	Visual Charts <small>visual charts & graphs</small></h3>
-	-->
-	<h3>
-	PortalPage <small>WindPredict & WeatherForcast</small></h3>
-	<hr>
+<head> 
+<title></title> 
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="http://labs.easyblog.it/maps/leaflet/dist/leaflet.css" />
+<link rel="stylesheet" href="http://labs.easyblog.it/maps/leaflet-search/src/leaflet-search.css" />
+</head>
+<body>
+<h3>WindPredictSystem/<small>Home</small></h3>
+<hr>
+ <div class="col-sm-9 col-sm-offset-7col-md-9 col-md-offset-1 " >
  
+<label class="ddd">你可以输入经纬度，检查该发电厂是否在限定范围内</br></label>
+    <form  id="search-form">        
+        <label >纬度值</label>
+        <input id="latitude" type="text" />
+        <label >经度值</label>
+        <input id="longtitude" type="text" />
+        <button id="btn"><strong>查询</strong></button>
+        <label id="result"></label>
+    </form>
+<b>已有发电厂有:</b>
+  {% for title in data%}{{title.2}},{% endfor %}
+
+<div id="findbox"></div>
+
+<div id="map"></div>
+</div>  
+
+
+<script src="http://labs.easyblog.it/maps/leaflet/dist/leaflet.js"></script>
+<script src="http://labs.easyblog.it/maps/leaflet-search/src/leaflet-search.js"></script>
+
+<script>
+
+    //sample data values for populate map
+    /*var data = [
+        {"loc":[41.575330,13.102411], "title":"aquamarine"},
+        {"loc":[41.575730,13.002411], "title":"black"},
+        {"loc":[41.807149,13.162994], "title":"blue"},
+        {"loc":[41.507149,13.172994], "title":"chocolate"},
+        {"loc":[41.847149,14.132994], "title":"coral"},
+        {"loc":[41.219190,13.062145], "title":"cyan"},
+        {"loc":[41.344190,13.242145], "title":"darkblue"},  
+        {"loc":[41.679190,13.122145], "title":"darkred"},
+        {"loc":[41.329190,13.192145], "title":"darkgray"},
+        {"loc":[41.379290,13.122545], "title":"dodgerblue"},
+        {"loc":[41.409190,13.362145], "title":"gray"},
+        {"loc":[41.794008,12.583884], "title":"green"}, 
+        {"loc":[41.805008,12.982884], "title":"greenyellow"},
+        {"loc":[41.536175,13.273590], "title":"red"},
+        {"loc":[41.516175,13.373590], "title":"rosybrown"},
+        {"loc":[41.506175,13.173590], "title":"royalblue"},
+        {"loc":[41.836175,13.673590], "title":"salmon"},
+        {"loc":[41.796175,13.570590], "title":"seagreen"},
+        {"loc":[41.436175,13.573590], "title":"seashell"},
+        {"loc":[41.336175,13.973590], "title":"silver"},
+        {"loc":[41.236175,13.273590], "title":"skyblue"},
+        {"loc":[41.546175,13.473590], "title":"yellow"},
+        {"loc":[41.239190,13.032145], "title":"white"}
+    ];*/
+
+
+
+//////////////////////////////////////////////////To get the location array()////////////////////////////////////////////////////
+    function get_loc()
+    {
+        var loc=new Array();
+        var i=0;
+        var j=0;
+        {% for value in data%} 
+             j=0;
+             loc[i]=new Array();
+            {% for v in value  %}       
+                   //alert('{{v}}');
+            loc[i][j]='{{v}}';
+            ++j;
+                    {% endfor %}
+                    ++i;
+                 {% endfor %}
+                 return loc;
+    }
+////////////////////////////////////////////////To get the location array()////////////////////////////////////////////////////
+
+
+
+/////////////////////////////////////////////layer contain searched elements////////////////////////////////////////////////////
+    var loc=get_loc();
+    var lat=parseFloat(loc[0][0]);
+    var lon=parseFloat(loc[0][1]);
+     var map = new L.Map('map', {zoom: 9, center: new L.latLng(lat,lon)});  //set center from first location
+    map.addLayer(new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png')); //base layer
+    var markersLayer = new L.LayerGroup();  //
+    var markersLayers = new L.LayerGroup();
+    
+    map.addLayer(markersLayer);
+    map.addLayer(markersLayers);
+
+/////////////////////////////////////////////layer contain searched elements////////////////////////////////////////////////////
+
+
+
+////////////////////////////////////////////////To display the marker /////////////////////////////////////////////////////////////
+    var loc_len=loc.length;
+    var k=0;
+    for(k=0;k<loc_len;k++) {
+        var title=loc[k][2];
+                  lat=parseFloat(loc[k][0]);
+                  lon=parseFloat(loc[k][1]);
+        marker = new L.Marker(new L.latLng(lat,lon), {title: title} );//se property searched
+        marker.bindPopup(title );     //to open a bindPopup
+        markersLayer.addLayer(marker);
+    }
+////////////////////////////////////////////////To display the marker /////////////////////////////////////////////////////////////
+
+
+////////////////////////////////////////////////To get the circle array()////////////////////////////////////////////////////////////
+function get_circle()
+    {
+        var circle=new Array();
+        var i=0;
+        var j=0;
+        {% for value in circle%} 
+             j=0;
+            circle[i]=new Array();
+            {% for v in value  %}       
+                   //alert('{{v}}');
+            circle[i][j]='{{v}}';
+            ++j;
+                    {% endfor %}
+                    ++i;
+                 {% endfor %}
+                 return circle;
+    }
+
+/////////////////////////////////////////////////To get the circle array()////////////////////////////////////////////////////////////
+
+
+
+
+
+
+//////////////////////////////////////////////////To display the circles//////////////////////////////////////////////////////////////
+    var circles=get_circle();
+    var circle_len=circles.length;
+    for(k=0;k<2;k++)
+    {   
+        var aa=parseFloat(circles[k][0]);           
+        var bb=parseFloat(circles[k][1]);       
+        var cc=parseFloat(circles[k][2]);
+        var circler =new  L.circle([aa,bb], cc, {
+          color: 'blue',
+         fillColor: 'blue',
+         fillOpacity: 0.5
+        });
+         circler.bindPopup("allowed!");
+             markersLayers.addLayer(circler);           //add a circle  to layer
+        }
+////////////////////////////////////////////////To display the circles//////////////////////////////////////////////////////////////
+    
+
+
+////////////////////////////////////////////////////inizialize search control/////////////////////////////////////////////////////////
+    map.addControl( new L.Control.Search({
+        wrapper: 'findbox',
+        layer: markersLayer,
+        initial: false,
+        collapsed: false
+    }) );
+/////////////////////////////////////////////////////inizialize search control/////////////////////////////////////////////////////////
+
+
+////////////////////////////////////////////////////response to th button//////////////////////////////////////////////////////////
+
+$(document).ready(function(){
+    $("#btn").click(function(){
+    var latitude=$("#latitude").val();
+    var longtitude=$("#longtitude").val();  
+     var scope=get_circle();
+    var scope_len=scope.length;
+    var title="mememe";
+    var allowed=0
+    var refused=0;
+    alert(scope[1][2]/10000);
+    var newmarkersLayer = new L.LayerGroup();   
+    map.addLayer(newmarkersLayer);
+    for(i=0;i<scope_len;i++)
+     {  
+        if( latitude>=(scope[i][0]-scope[i][2]/10000)  && latitude<=(scope[i][0]+scope[i][2]/10000) 
+        && longtitude<=(scope[i][1]-scope[i][2]/10000) && longtitude<=(scope[i][1]+scope[i][2]/10000))
+        {
+            var marker = L.marker([latitude,longtitude]).addTo(map);
+            marker.bindPopup("allowed place"+allowed+"\n"+"latitude:"+latitude+ "\n" +"longtitude:"+longtitude).openPopup();
+            newmarkersLayer.addLayer(marker); //  like this can add a place*/
+            var form=confirm("latitude:"+latitude+ "\n" +"longtitude:"+longtitude+"\n"+"您所查询的地址在限定范围内，可在后台进行添加");
+            allowed++;
+            if(form==true)
+            {   
+                window.location.href="http://www.baidu.com";   //点击确定,跳转到后台进行加添
+                    window.open("http://www.baidu.com");
+                    window.event.returnValue = false;
+                alert("OK");
+                return false;
+            }
+        }
+
+        else
+        {   
+            var marker = L.marker([latitude,longtitude]).addTo(map);
+            marker.bindPopup("Refused Place"+"\t"+refused+"\n"+"latitude:"+latitude+ "\n" +"longtitude:"+longtitude).openPopup();
+            newmarkersLayer.addLayer(marker); //  like this can add a place*/
+            alert("latitude:"+latitude+ "\n" +"longtitude:"+longtitude+"\n"+"您所查询的地址超出限定范围，请重新尝试","警告对话框");
+            refused++;
+            return false;               
+        }
+    }
+    });
+////////////////////////////////////////////////////response to th button//////////////////////////////////////////////////////////
+});
+    /*var marker = L.marker([41.239190,14.032145]).addTo(map);
+    marker.bindPopup("sdafffffffffff").openPopup(); 
+    markersLayer.addLayer(marker); //  like this can add a place*/
+ 
+
+</script>
+    
+</body>
+</html>
 {% endblock content %}

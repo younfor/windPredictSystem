@@ -152,7 +152,6 @@ body {
 			
 		}
 		
-
 		/*二级菜单鼠标划过样式*/
 		.menu-second li a:hover {
 			text-decoration: none;
@@ -162,6 +161,9 @@ body {
 			border-right: 3px solid #f8881c;
 			border-left: 3px solid #66c3ec;
 		}
+
+
+	
 		/*二级菜单选中状态*/
 		.menu-second-selected {
 			background-color: #66c3ec;
@@ -172,6 +174,7 @@ body {
 			border-right: 3px solid #f8881c;
 			border-left: 3px solid #66c3ec;
 			text-align:center;
+			
 		}
 		/*覆盖bootstrap的样式*/
 		.nav-list,.nav-list li a{
