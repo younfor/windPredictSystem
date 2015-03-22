@@ -35,7 +35,7 @@ def login(request):
 
 
 def portal(request):
-    user = request.user
+    user = auth.get_user(request)
     print user
     print 'user where'
     DBhelper.getIns().getScope(request)

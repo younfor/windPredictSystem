@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from wind import models
+from django.contrib import auth
 
 
 class DBhelper:
