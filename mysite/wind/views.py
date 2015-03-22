@@ -10,6 +10,33 @@ from excel import excel_table
 from DBhelper import DBhelper
 
 # Create your views here.
+from django.views.generic import TemplateView
+
+
+class CommMixin(object):
+
+    def get_context_data(self, **kwargs):
+        context = super(CommMixin, self).get_context_data(**kwargs)
+        context['username']='y'
+        return context
+
+
+
+
+class PortalView(CommMixin, TemplateView):
+
+    template_name = 'wind/portal.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(PortalView, self).get_context_data(**kwargs)
+        print 'user where'
+        data = [[41.875330, 14.102411, "helloworld"],
+                [41.85330, 14.502411, "hello"]]
+        #circle = DBhelper.getIns().getScope(request)
+        circle = [[41.675330, 14.102411, 4000], [41.45330, 14.502411, 5000]]
+        context['data'] = data
+        context['circle'] = circle
+        return context
 
 
 def index(request):
@@ -44,17 +71,18 @@ def portal(request):
     circle = [[41.675330, 14.102411, 4000], [41.45330, 14.502411, 5000]]
     return render_to_response('wind/portal.html', {'username': user.username, "data": data, "circle": circle})
 
+
 def speed(request):
     list1 = []
     list2 = []
-    list3=['aaa','bbbb','ccccc','dddd','eeeee','fffff']
+    list3 = ['aaa', 'bbbb', 'ccccc', 'dddd', 'eeeee', 'fffff']
     excel = excel_table('wind/excel_file/speed.xls', u'sheet1')
     list1 = excel.get_list1
     list2 = excel.get_list2
 
     print list1
     print list2
-    return render_to_response('wind/speed.html', {'list1': list1, 'list2': list2,'list3':list3})
+    return render_to_response('wind/speed.html', {'list1': list1, 'list2': list2, 'list3': list3})
 
 
 def power(request):
