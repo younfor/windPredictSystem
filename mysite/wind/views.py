@@ -17,10 +17,12 @@ class CommMixin(object):
 
     def get_context_data(self, **kwargs):
         context = super(CommMixin, self).get_context_data(**kwargs)
-        context['username']='y'
+        context['username'] = '3'
+        if self.request.user.is_authenticated():
+            context['username'] = self.request.user
+        else:
+            context['username'] = 'undefined'
         return context
-
-
 
 
 class PortalView(CommMixin, TemplateView):
@@ -39,37 +41,21 @@ class PortalView(CommMixin, TemplateView):
         return context
 
 
-def index(request):
-    context = {"js": "hello baby"}
-    return render_to_response('wind/index.html', context, context_instance=RequestContext(request))
+class LoginView(TemplateView):
 
+    template_name = 'wind/login.html'
 
-def login(request):
-    if request.method == 'POST':
+    def post(self, request, *args, **kwargs):
         username = request.POST['username']
         password = request.POST['password']
         user = auth.authenticate(username=username, password=password)
         if user is not None:
             if user.is_active:
                 auth.login(request, user)
-                context = {'result': 'login success!', 'username': username}
                 print 'login success'
+                return HttpResponseRedirect('/wind/portal')
         else:
-            context = {'result': 'login failed!'}
-        return HttpResponseRedirect('/wind/portal')
-        # return render_to_response('wind/portal.html',context)
-    return render_to_response('wind/login.html', {}, context_instance=RequestContext(request))
-
-
-def portal(request):
-    user = auth.get_user(request)
-    print user
-    print 'user where'
-    data = [[41.875330, 14.102411, "helloworld"],
-            [41.85330, 14.502411, "hello"]]
-    #circle = DBhelper.getIns().getScope(request)
-    circle = [[41.675330, 14.102411, 4000], [41.45330, 14.502411, 5000]]
-    return render_to_response('wind/portal.html', {'username': user.username, "data": data, "circle": circle})
+            print 'login failed'
 
 
 def speed(request):
