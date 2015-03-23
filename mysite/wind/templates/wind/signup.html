@@ -5,70 +5,61 @@
 <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
 
 <title>Signup</title>
-<link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet" type="text/css"/>
-<link rel="stylesheet" href="{% static 'wind/css/bootstrap.css' %}" rel="stylesheet" type="text/css">
-<link rel="stylesheet" href="{% static 'wind/css/bootstrap-theme.css' %}" rel="stylesheet" type="text/css">
-<link rel="stylesheet" href="{% static 'wind/css/loginsign.css' %}" rel="stylesheet" type="text/css">
-<link rel="stylesheet" href="{% static 'wind/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
+
+<link rel="stylesheet" href="{% static 'wind/css/signuplogin.css' %}" rel="stylesheet" type="text/css">
+<script language="JavaScript" type="text/javascript" src="{% static 'wind/js/jquery-1.10.2.min.js' %}"></script>
+<script language="JavaScript" type="text/javascript" src="{% static 'wind/js/easyform.js' %}"></script>
 <style type="text/css">
 
 </style>
 </head>
 
+</head>
 <body>
-		<div class="container">
-		<div class="col-md-12">
-				<form class="form-horizontal templatemo-login-form" role="form" action="#" method="post">
-				  {% csrf_token %}
-				    <!--  login form title-->
-					<div class="row">
-						<div class="col-md-12">
-							<h1>SIGN UP</h1>
-						</div>
-					</div>
-					
-					<!--username input-->	
-					<div class="row" >
-					 <div class="templatemo-one-signin col-md-12">
-				        <div class="form-group">
-				          <div class="col-md-12">		          	
-				            <label for="username" class="control-label">Username</label>
-				            <div class="templatemo-input-icon-container">						
-						<input type="text" class="form-control" id="username" name="username"placeholder="">			            	
-				            </div>		            		            		            
-				          </div>              
-				        </div>
-					<!-- password-->	
-					 <div class="form-group">
-				          <div class="col-md-12">
-				            <label for="password" class="control-label">Password</label>
-				            <div class="templatemo-input-icon-container">
-				            	<input type="password" class="form-control" id="password" name="password" placeholder="">
-				            </div>
-				          </div>
-				      </div>
+<br>
+<div class="form-div">
+    <form  id="reg-form" action="" method="post">
+	
+        <table>
+			<caption class="caption" align="top"><strong>Sign Up</strong></caption>		
+            <tr>
+                <td>Username</td>
+                <td><input name="username" type="text" id="username" easyform="length:4-16;char-normal;real-time;" message="Username must be 4—16 letters" easytip="disappear:lost-focus;theme:blue;" ajax-message="用户名已存在!">
+                </td>
+            </tr>
+            <tr>
+                <td>Password</td>
+                <td><input name="psw1" type="password" id="psw1" easyform="length:6-16;" message="password must be 6—16 letters" easytip="disappear:lost-focus;theme:blue;"></td>
+            </tr>
+            <tr>
+                <td>Confirm</td>
+                <td><input name="psw2" type="password" id="psw2" easyform="length:6-16;equal:#psw1;" message="Please confirm the password" easytip="disappear:lost-focus;theme:blue;"></td>
+            </tr>
+            <tr>
+                <td>Email</td>
+                <td><input name="email" type="text" id="email" easyform="email;real-time;" message="Email is not available" easytip="disappear:lost-focus;theme:blue;" ajax-message="这个Email地址已经被注册过，请换一个吧!"></td>
+            </tr>
+           <!-- <tr>
+                <td>昵称</td>
+                <td><input name="nickname" type="text" id="nickname" easyform="length:2-16" message="昵称必须为2—16位" easytip="disappear:lost-focus;theme:blue;"></td>
+            </tr>       -->     
+        </table>
 
-				       <!-- email-->	
-					 <div class="form-group">
-				          <div class="col-md-12">
-				            <label for="email" class="control-label">Email</label>
-				            <div class="templatemo-input-icon-container">
-				            	<input type="text" class="form-control" id="password"  name="email" placeholder="">
-				            </div>
-				          </div>
-				      </div>
-					  
-					  <!-- login button -->
-					   <div class="form-group">
-				          <div class="col-md-12">
-				            <input type="submit" value="SIGN UP" class="btn btn-warning">
-				          </div>
-				        </div>
-						
-					</div>				
-			</div>
-		</form>
-	</div>
+		<div class="buttons">
+			<input value="Signup" type="submit" style="margin-right:42px; margin-top:20px;width:80px;">
+	
+        </div>
+		
+        <br class="clear">
+    </form>
+</div>
+
+<script type="text/javascript">
+$(document).ready(function(){
+	$('#reg-form').easyform();
+});
+</script>
+
 </div>
 </body>
 </html>

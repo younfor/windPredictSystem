@@ -5,58 +5,43 @@
 <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
 
 <title>Login</title>
-<link rel="stylesheet" href="{% static 'wind/css/bootstrap.css' %}" rel="stylesheet" type="text/css">
-<link rel="stylesheet" href="{% static 'wind/css/bootstrap-theme.css' %}" rel="stylesheet" type="text/css">
-<link rel="stylesheet" href="{% static 'wind/css/loginsign.css' %}" rel="stylesheet" type="text/css">
-<link rel="stylesheet" href="{% static 'wind/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
-<link rel="stylesheet" href="{% static 'wind/css/bootstrap-social.css' %}" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="{% static 'wind/css/signuplogin.css' %}" rel="stylesheet" type="text/css">
+<script language="JavaScript" type="text/javascript" src="{% static 'wind/js/jquery-1.10.2.min.js' %}"></script>
+<script language="JavaScript" type="text/javascript" src="{% static 'wind/js/easyform.js' %}"></script>
 
 </head>
 
 <body>
-		<div class="container">
-		<div class="col-md-12">
-				<form class="form-horizontal templatemo-login-form" role="form" action="" method="post">
-				  {% csrf_token %}
-				    <!--  login form title-->
-					<div class="row">
-						<div class="col-md-12">
-							<h1>Login Form</h1>
-						</div>
-					</div>
-					
-					<!--username input-->	
-					<div class="row" >
-					 <div class="templatemo-one-signin col-md-12">
-				        <div class="form-group">
-				          <div class="col-md-12">		          	
-				            <label for="username" class="control-label">Username</label>
-				            <div class="templatemo-input-icon-container">						
-								<input type="text" class="form-control" id="username" name="username"placeholder="">			            	
-				            </div>		            		            		            
-				          </div>              
-				        </div>
-					<!-- password-->	
-					 <div class="form-group">
-				          <div class="col-md-12">
-				            <label for="password" class="control-label">Password</label>
-				            <div class="templatemo-input-icon-container">
-				            	<input type="password" class="form-control" id="password" name="password" placeholder="">
-				            </div>
-				          </div>
-				      </div>
-					  
-					  <!-- login button -->
-					   <div class="form-group">
-				          <div class="col-md-12">
-				            <input type="submit" value="LOG IN" class="btn btn-warning">
-				          </div>
-				        </div>
-						
-					</div>				
-			</div>
-		</form>
-	</div>
-</div>
+<br>
+<div class="form-div">
+    <form  id="reg-form" action="" method="post">
+	
+        <table>
+			<caption class="caption" align="top"><strong>Login in</strong></caption>		
+            <tr>
+                <td>Username</td>
+                <td><input name="username" type="text" id="username" easyform="length:4-16;char-normal;real-time;" message="Username must be 4—16 letters" easytip="disappear:lost-focus;theme:blue;">
+                </td>
+            </tr>
+            <tr>
+                <td>Password</td>
+                 <td><input name="psw1" type="password" id="psw1" easyform="length:6-16;" message="password must be 6—16 letters" easytip="disappear:lost-focus;theme:blue;"></td>
+            </tr>
+      
+        </table>
+
+		<div class="buttons">
+			<input value="Signup" type="submit" style="margin-right:42px; margin-top:20px;width:80px;">
+	
+        </div>
+		
+        <br class="clear">
+    </form>
+<script type="text/javascript">
+$(document).ready(function(){
+	$('#reg-form').easyform();
+	return false;
+});
+</script>
 </body>
 </html>

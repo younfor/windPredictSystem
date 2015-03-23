@@ -1,6 +1,6 @@
 body {
 	background:#f6f6f6;
-	color:#285585;
+	/*color:#285585;*/
 	font-family:Arial;
 }
 
@@ -11,14 +11,14 @@ a {
 a:hover {
 	color:#fff;
 }
-h2, h3, h4 {
+/*h2, h3, h4 {
 	white-space:nowrap;
 	margin:1em 0 0 0;
-}
-h3 a,
+}*/
+/*h3 a,
 h3 a:hover {
 	text-decoration:none;
-}
+}*/
 #desc {
 	float: left;
 	margin-bottom: 1em;
@@ -28,8 +28,8 @@ h3 a:hover {
 }
 #map {
 	border-radius:.125em;
-	border:2px solid #1978cf;
-	box-shadow: 0 0 8px #999;
+	/*border:2px solid #1978cf;*/
+	box-shadow: 0 0 2px #999;
 	float:left;
 	width:750px;
 	height:350px;	
@@ -85,26 +85,27 @@ h3 a:hover {
 }
 
 #findbox {
-	background: #eee;
+	background: #f6f6f6;
 	border-radius:.125em;
-	border:1px solid #5998af;
-	box-shadow: 0 0 8px #999;	
+	border:1px solid #dddddd;
+	box-shadow: 0 0 1px #f6f6f6;	
 	margin-bottom: 10px;
 	padding: 2px 2px;
 	width: 750px;
 	height: 32px;
+	margin-top:1px;
 }
 
 #search-form{
-	background: #eee;
+	background: #f6f6f6;
 	border-radius:.125em;
-	border:1px solid #5998af !important;
-	box-shadow: 0 0 8px #999;	
-	margin-bottom: 10px;
+	/*border:1px solid #5998af !important;
+	box-shadow: 0 0 2px #aaaaaa;	*/
+	/*margin-bottom: 6px;*/
 	padding: 2px 0;
 	width: 750px;
 	height: 32px;
-	margin-top:4px;
+	margin-top:1px;
 }
 
 #latitude{

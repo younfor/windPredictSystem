@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
-<title>Portal</title>
+<!-- <title>Portal</title> -->
 <link href="{% static 'wind/css/bootstrap.css' %}" rel="stylesheet" type="text/css">
 <link href="{% static 'wind/css/bootstrap-theme.css' %}" rel="stylesheet" type="text/css">
 <link href="{% static 'wind/css/mystyleportal.css' %}" rel="stylesheet" type="text/css"> 
@@ -135,8 +135,8 @@ google.maps.event.addDomListener(window, 'load', initialize);
 		<div class="row">
 			 <div class="col-sm-3 col-md-2 sidebar ">
 			       <ul class="nav nav-sidebar">				
-           		   	 <li><a href="{% url 'portal'%}">Home</a></li>
-           		   	 <li><a href="{% url 'wind.views.uploadfiles'%}">Upload Files </a></li>
+           		   	 <li><a id="Home" href="{% url 'portal'%}?id=Home">Home</a></li>
+           		   	 <li><a id="UploadFiles" href="{% url 'wind.views.uploadfiles'%}?id=UploadFiles">Upload Files </a></li>
           		<!-- 	 <li class="sidebar-menu">
 						<a href="#WindPredict" class="nav-header menu-first collapsed" data-toggle="collapse">WindPredict</a>
 						<ul id="WindPredict" class="nav nav-list collapse menu-second">
@@ -152,8 +152,8 @@ google.maps.event.addDomListener(window, 'load', initialize);
 							<li  ><a id="WindPredict1" href="{% url 'wind.views.speed'%}?id=WindPredict1">WindSpeed</a></li>
 
 							<li><a id="WindPredict2" href="{% url 'wind.views.power'%}?id=WindPredict2">WindPower</a></li>
-							<li><a href="?id=WindPredict2">Dampness</a></li>
-							<li><a href="?id=WindPredict3">Pressure</a></li>
+							<!-- <li><a href="?id=WindPredict2">Dampness</a></li>
+							<li><a href="?id=WindPredict3">Pressure</a></li> -->
 							
 						</ul>
 					</li>
@@ -161,8 +161,8 @@ google.maps.event.addDomListener(window, 'load', initialize);
 					 <li class="sidebar-menu" id="userMeun1">
 						<a href="#userMeun" class="nav-header menu-first collapsed" data-toggle="collapse">UserManagement</a>
 						<ul id="userMeun" class="nav nav-list collapse menu-second">
-							<li><a href="?id=userMeun">Add Users</a></li>
-							<li><a href="?id=userMeun">Delete Users</a></li>
+							<li><a href="?id=userMeun1">Add Users</a></li>
+							<li><a href="?id=userMeun2">Delete Users</a></li>
 							
 						</ul>
 					</li>
@@ -183,6 +183,7 @@ google.maps.event.addDomListener(window, 'load', initialize);
 </body>
 <script type="text/javascript">
 //collapse
+
 	function parse_url(url) {
 	  if (url.lastIndexOf('?') == 0) {
 	    var str = url.substring(url.lastIndexOf('?') + 1, url.length);
@@ -197,30 +198,28 @@ google.maps.event.addDomListener(window, 'load', initialize);
 
 
 	var type = parse_url(location.search);
-	if (type) {
+	//alert(type['id']);
+	if (type['id']=="WindPredict1" || type['id']=="WindPredict2") {
 		var menutype=type['id'];
 		menutype=menutype.substring(0,menutype.length-1);
 		  $('#'+menutype).attr('class','nav nav-list menu-second');
 		  $('#'+type['id']).css('display','block');
 	  	  $('#'+type['id']).css('background-color','#aac3ec');
 	 	  $('#'+type['id']).css('color','#322227');
+	}
 
+	else if(type['id']=="Home")
+	{
+		$('#'+type['id']).css('display','block');
+		$('#'+type['id']).css('background-color','#aac3ec');
+	 	$('#'+type['id']).css('color','#322227');
+	}
+	else if(type['id']=="UploadFiles")
+	{
 
-		/*alert('type['id']');
-	   var type1=type['id'].substring(0,type['id'].Length-1)；
-
-			alert(type1);*/
-	   /* $('#'+type['id']).attr('class','nav nav-list menu-second');*/
-	/*    $('#'+type['id']+'2').css('display','block');
-	   $('#'+type['id']+'2').css('background-color','#dddddd');
-	   
-	    $('#'+type['id']+'2').css('color','#111111');*/
-	  /* alert(type['id']);*/
-	/*  alert(type['id']+'2');*/
-	  /*  $('#'+type['id']+'1').attr('class','sidebar-menu active');*/
-	/*alert('#'+type['id']+'2');*/
-             /*    $('#'+type['id']+'2').attr('class','selected');
-	*/
+		$('#'+type['id']).css('display','block');
+		$('#'+type['id']).css('background-color','#aac3ec');
+	 	$('#'+type['id']).css('color','#322227');
 	}
 </script>
 </html>

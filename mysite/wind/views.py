@@ -8,7 +8,7 @@ from wind import models
 from django.core.context_processors import csrf
 from excel import excel_table
 from DBhelper import DBhelper
-
+import os
 # Create your views here.
 from django.views.generic import TemplateView
 
@@ -38,6 +38,7 @@ class PortalView(CommMixin, TemplateView):
         circle = [[41.675330, 14.102411, 4000], [41.45330, 14.502411, 5000]]
         context['data'] = data
         context['circle'] = circle
+        context['level'] = 1
         return context
 
 
@@ -59,27 +60,91 @@ class LoginView(TemplateView):
 
 
 def speed(request):
+    user = request.user
     list1 = []
     list2 = []
-    list3 = ['aaa', 'bbbb', 'ccccc', 'dddd', 'eeeee', 'fffff']
-    excel = excel_table('wind/excel_file/speed.xls', u'sheet1')
-    list1 = excel.get_list1
-    list2 = excel.get_list2
-
-    print list1
-    print list2
-    return render_to_response('wind/speed.html', {'list1': list1, 'list2': list2, 'list3': list3})
-
+    if_post=0
+    context={}
+    list3=['WindTurbine1','WindTurbine2','WindTurbine3','WindTurbine4','WindTurbine5',
+    'WindTurbine6','WindTurbine7','WindTurbine8','WindTurbine9']
+    if request.method == 'POST':
+        file_date = request.POST.get('date')
+        anim = request.POST.get('anim')
+        a=file_date.split('/')
+        file_name=a[2]+a[0]+a[1]
+        # print a[0]
+        # print a[1]
+        # print a[2]
+        # print a[0]
+        file_path='wind/excel_file/'+'Speed'+anim+file_name+".xls"
+        # file_path='wind/excel_file/'+anim
+        if os.path.exists(file_path):
+            excel = excel_table(file_path, u'sheet1')
+            list1 = excel.get_list1
+            list2 = excel.get_list2
+            print file_date
+            print anim
+            if_post=1
+            context={"if_post":if_post,'list1': list1, 'list2': list2,'list3':list3,'anim':anim,
+            'file_date':file_date,'username':user.username}
+            return render_to_response('wind/power.html', context)
+        else:
+            if_notexist=1
+            context={"if_post":if_post,'if_notexist':if_notexist,'list3':list3,'anim':anim,
+            'file_date':file_date,'username':user.username}
+            return render_to_response('wind/speed.html', context)
+    else:              
+        print list1
+        print list2
+        return render_to_response('wind/speed.html', {'list3':list3})
 
 def power(request):
+    user = request.user
     list1 = []
     list2 = []
-    excel = excel_table('wind/excel_file/power.xls', u'sheet1')
-    list1 = excel.get_list1
-    list2 = excel.get_list2
-    print list1
-    print list2
-    return render_to_response('wind/power.html', {'list1': list1, 'list2': list2})
+    if_post=0
+    context={}
+    list3=['WindTurbine1','WindTurbine2','WindTurbine3','WindTurbine4','WindTurbine5',
+    'WindTurbine6','WindTurbine7','WindTurbine8','WindTurbine9']
+    if request.method == 'POST':
+        file_date = request.POST.get('date')
+        anim = request.POST.get('anim')
+        a=file_date.split('/')
+        file_name=a[2]+a[0]+a[1]
+        # print a[0]
+        # print a[1]
+        # print a[2]
+        # print a[0]
+        file_path='wind/excel_file/'+'Power'+anim+file_name+".xls"
+        # file_path='wind/excel_file/'+anim
+        if os.path.exists(file_path):
+            excel = excel_table(file_path, u'sheet1')
+            list1 = excel.get_list1
+            list2 = excel.get_list2
+            print file_date
+            print anim
+            if_post=1
+            context={"if_post":if_post,'list1': list1, 'list2': list2,'list3':list3,'anim':anim,
+            'file_date':file_date,'username':user.username}
+            return render_to_response('wind/power.html', context)
+        else:
+            if_notexist=1
+            context={"if_post":if_post,'if_notexist':if_notexist,'list3':list3,'anim':anim,
+            'file_date':file_date,'username':user.username}
+            return render_to_response('wind/power.html', context)
+    else:              
+        print list1
+        print list2
+        return render_to_response('wind/power.html', {'list3':list3})
+    # list1 = []
+    # list2 = []
+    # excel = excel_table('wind/excel_file/power.xls', u'sheet1')
+    # list1 = excel.get_list1
+    # list2 = excel.get_list2
+    # print list1
+    # print list2
+    # return render_to_response('wind/power.html', {'list1': list1, 'list2': list2})
+
 
 
 def signup(request):

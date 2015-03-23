@@ -6,9 +6,12 @@
   <!--<h3 class="page-title">
 	Visual Charts <small>visual charts & graphs</small></h3>
 	-->
+  <title>UploadFiles</title>
 	<h3>
-	PortalPage <small>WindPredict & WeatherForcast</small></h3>
+	WindPredictSystem/<small>Upload files</small></h3>
 	<hr>
+  </br>
+  <div class="col-sm-9 col-sm-offset-7 col-md-9 col-md-offset-1 " >
 	<form enctype="multipart/form-data" method="POST" action=""> 
 		{% csrf_token %}
    		<input type="file" name="file" />
@@ -24,6 +27,7 @@
   		 not excel,please upload again
   		 {% endif%}
 	</form>
- 		
- 		 
+  </div>
+
+
 {% endblock content %}
