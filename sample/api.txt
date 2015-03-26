@@ -1,3 +1,7 @@
+
+#backup
+sqlite3 db.sqlite3 .dump >init20150310.sql
+sqlite3 db.sqlite3 “.read xx.sql"
 #create project
 
     $ django-admin.py startproject mysite
