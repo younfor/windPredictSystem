@@ -10,6 +10,9 @@ from django.utils.translation import ugettext, ugettext_lazy as _
 # which acts a bit like a singleton
 from django.contrib.auth import forms
 from django.contrib.admin.util import flatten_fieldsets
+from django.contrib.auth.models import Group
+from django.db.models import F, Q
+from django.utils.functional import curry
 
 
 class ReadOnlyAdmin(admin.ModelAdmin):
@@ -39,6 +42,16 @@ class UserProfileInline(admin.StackedInline):
     model = UserProfile
     can_delete = False
     verbose_name_plural = 'UserProfile'
+    fieldsets = (
+        (None, {
+            'fields': (
+                ('telephone',),
+                ('address',),
+                ('level',),
+                ('father',),
+            ),
+        }),
+    )
 
     def get_fields(self, request, obj=None):
         # readonly for system_user
@@ -53,34 +66,44 @@ class UserProfileInline(admin.StackedInline):
         #   print 'no level'
         return list(form.base_fields) + list(self.get_readonly_fields(request, obj))
 
-# Define a new User admin
+    def get_readonly_fields(self, request, obj=None):
+        if obj is not None:
+            return ['father', 'level']
+        else:
+            return []
+
+    def get_formset(self, request, obj=None, **kwargs):
+        initial = []
+        level = int(request.user.userprofile.level) + 1
+        if level == 1:
+            level = level + 1
+        if request.method == "GET":
+            initial.append({
+                'level': level,
+                'father': request.user.userprofile,
+            })
+        formset = super(UserProfileInline, self).get_formset(
+            request, obj, **kwargs)
+        formset.__init__ = curry(formset.__init__, initial=initial)
+        return formset
 
 
 class UserAdmin(UserAdmin, ReadOnlyAdmin):
     inlines = (UserProfileInline, )
-    list_display = ('username', 'is_staff', 'level')
+    list_display = ('username', 'is_staff', 'level', 'father')
     fieldsets = (
         (None, {'fields': ('username', 'password')}),
         (_('Personal info'), {'fields': ('first_name', 'last_name', 'email')}),
         (_('Permissions'), {'fields': ('is_staff', 'is_superuser',
-                                       'user_permissions')}),
+                                       )}),
         (_('Important dates'), {'fields': ('last_login', 'date_joined')}),
     )
 
+    def father(self, obj):
+        return obj.userprofile.father
+
     def level(self, obj):
         return obj.userprofile.level
-
-    def get_form(self, request, obj=None, **kwargs):
-        # Get form from original UserAdmin.
-        form = super(UserAdmin, self).get_form(request, obj, **kwargs)
-        # here is according to the system
-        '''
-        if 'user_permissions' in form.base_fields:
-            permissions = form.base_fields['user_permissions']
-            permissions.queryset = permissions.queryset.filter(
-                content_type__name='log entry')
-        '''
-        return form
 
     def save_model(self, request, obj, form, change):
         if getattr(obj, 'userprofile', None) is None:
@@ -92,24 +115,45 @@ class UserAdmin(UserAdmin, ReadOnlyAdmin):
             u.save()
             obj.userprofile = u
         print 'save model'
+        print 'add default group'
+        g = Group.objects.get(name='default')
         obj.save()
+        obj.groups.add(g)
 
     def get_queryset(self, request):
         qs = super(UserAdmin, self).get_queryset(request)
         print 'ps:get_queryset'  # If super-user, show all
-        if request.user.is_superuser or (request.user.userprofile.level == '1'):
+        if (request.user.userprofile.level == '0') or (request.user.userprofile.level == '1'):
             return qs
-        return qs.filter(userprofile__father=request.user.userprofile)
+        else:
+            return qs.filter(Q(userprofile__father=request.user.userprofile)
+                             | Q(userprofile=request.user.userprofile))
+
+    def get_readonly_fields(self, request, obj=None):
+        if obj is None:
+            return []
+        if request.user.userprofile.level != '0' and request.user.userprofile.level == obj.userprofile.level:
+            return ['username']
+        else:
+            return []
 
 
 class FactoryAdmin(ReadOnlyAdmin):
-    
 
-    def get_form(self, request, obj=None, **kwargs):
-        form = super(FactoryAdmin, self).get_form(request, obj, **kwargs)
-        form.base_fields['user'].initial = request.user
-        return form
-    
+    def has_add_permission(self, request):
+        # Nobody is allowed to add
+        if request.user.userprofile.level != '0':
+            return False
+        else:
+            return super(ReadOnlyAdmin, self).has_add_permission(request)
+
+    def get_readonly_fields(self, request, obj=None):
+        rs = super(FactoryAdmin, self).get_readonly_fields(request, obj)
+        if request.user.userprofile.level != '0':
+            return ['scope', 'begintime', 'endtime', 'user']
+        else:
+            return []
+
 # Re-register UserAdmin
 admin.site.unregister(User)
 admin.site.register(User, UserAdmin)
