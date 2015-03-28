@@ -13,6 +13,7 @@ from django.contrib.admin.util import flatten_fieldsets
 from django.contrib.auth.models import Group
 from django.db.models import F, Q
 from django.utils.functional import curry
+from django import forms
 
 
 class ReadOnlyAdmin(admin.ModelAdmin):
@@ -96,7 +97,7 @@ class UserAdmin(UserAdmin, ReadOnlyAdmin):
         (_('Personal info'), {'fields': ('first_name', 'last_name', 'email')}),
         (_('Permissions'), {'fields': ('is_staff', 'is_superuser',
                                        )}),
-        (_('Important dates'), {'fields': ('last_login', 'date_joined')}),
+        #(_('Important dates'), {'fields': ('last_login', 'date_joined')}),
     )
 
     def father(self, obj):
@@ -140,6 +141,15 @@ class UserAdmin(UserAdmin, ReadOnlyAdmin):
 
 class FactoryAdmin(ReadOnlyAdmin):
 
+    list_display = ('name', 'user', 'begintime', 'endtime', 'scope')
+
+    def get_queryset(self, request):
+        qs = super(FactoryAdmin, self).get_queryset(request)
+        if (request.user.userprofile.level == '0') or (request.user.userprofile.level == '1'):
+            return qs
+        else:
+            return qs.filter(Q(user=request.user))
+
     def has_add_permission(self, request):
         # Nobody is allowed to add
         if request.user.userprofile.level != '0':
@@ -154,12 +164,46 @@ class FactoryAdmin(ReadOnlyAdmin):
         else:
             return []
 
+
+class PowerAdminForm(forms.ModelForm):
+
+    def __init__(self, *args, **kwargs):
+        super(PowerAdminForm, self).__init__(*args, **kwargs)
+        # access object through self.instance...
+        self.fields['user'].queryset = User.objects.filter(
+            userprofile__level__gt='2')
+
+
+class PowerStationAdmin(ReadOnlyAdmin):
+    form = PowerAdminForm
+
+    def get_form(self, request, obj=None, **kwargs):
+        form = super(PowerStationAdmin, self).get_form(request, obj, **kwargs)
+        factory = models.Factory.objects.get(
+            user=request.user)
+        form.base_fields['factory'].initial = factory
+        form.base_fields['begintime'].initial = factory.begintime
+        form.base_fields['endtime'].initial = factory.endtime
+        return form
+
+
+class TurbineAdmin(ReadOnlyAdmin):
+
+    def get_form(self, request, obj=None, **kwargs):
+        form = super(TurbineAdmin, self).get_form(request, obj, **kwargs)
+        power = models.PowerStation.objects.get(
+            user__userprofile__father=request.user.userprofile)
+        form.base_fields['powerstation'].initial = power
+        form.base_fields['begintime'].initial = power.begintime
+        form.base_fields['endtime'].initial = power.endtime
+        return form
+
+
 # Re-register UserAdmin
 admin.site.unregister(User)
 admin.site.register(User, UserAdmin)
 # register Models
-admin.site.register(models.PowerStation, ReadOnlyAdmin)
+admin.site.register(models.PowerStation, PowerStationAdmin)
 admin.site.register(models.Factory, FactoryAdmin)
-admin.site.register(models.WindTurbine, ReadOnlyAdmin)
+admin.site.register(models.WindTurbine, TurbineAdmin)
 admin.site.register(models.PowerData, ReadOnlyAdmin)
-admin.site.register(models.Location, ReadOnlyAdmin)

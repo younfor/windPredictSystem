@@ -14,16 +14,6 @@ class UserProfile(models.Model):
     def __unicode__(self):
         return self.user.username
 
-
-class Location(models.Model):
-    province = models.CharField(max_length=30)
-    city = models.CharField(max_length=30)
-    country = models.CharField(max_length=30)
-
-    def __unicode__(self):
-        return self.country+self.province+self.city
-
-
 class Factory(models.Model):
     name = models.CharField(max_length=30)
     province = models.CharField(max_length=50)
@@ -35,7 +25,7 @@ class Factory(models.Model):
     email = models.EmailField()
     user = models.ForeignKey(User, unique=True)
     bank_account = models.CharField(max_length=30)
-    location = models.ForeignKey(Location, unique=True)
+    #location = models.ForeignKey(Location)
     begintime = models.DateTimeField(null=True)
     endtime = models.DateTimeField(null=True)
     scope = models.CharField(max_length=80, null=True)
@@ -55,7 +45,7 @@ class PowerStation(models.Model):
     user = models.ForeignKey(User, unique=True)
     bank_account = models.CharField(max_length=30)
     factory = models.ForeignKey(Factory)
-    location = models.ForeignKey(Location, unique=True, null=True)
+    #location = models.ForeignKey(Location, unique=True, null=True)
     begintime = models.DateTimeField(null=True)
     endtime = models.DateTimeField(null=True)
 
@@ -70,9 +60,8 @@ class WindTurbine(models.Model):
     contact = models.CharField(max_length=30)
     telephone = models.CharField(max_length=30)
     email = models.EmailField()
-    user = models.ForeignKey(User, unique=True)
     powerstation = models.ForeignKey(PowerStation)
-    location = models.ForeignKey(Location, unique=True, null=True)
+    #location = models.ForeignKey(Location, unique=True, null=True)
     begintime = models.DateTimeField(null=True)
     endtime = models.DateTimeField(null=True)
 
