@@ -29,6 +29,16 @@ input[type="submit"]
 {
 	font-size: 14px;
 }
+
+a:link{
+	color: #000000;
+	 TEXT-DECORATION: none
+}
+
+a:hover{
+	color: #3eaae5;
+	 TEXT-DECORATION: none
+}
 </style>
 <title>WindSpeed</title></head></head>
 <div class="col-sm-9 col-sm-offset-7 col-md-9 col-md-offset-1 " >
@@ -54,7 +64,9 @@ input[type="submit"]
 		</select>
 		<!-- <button id="btn"><strong>查询</strong></button> -->
 	<input type="submit" value="submit" id="submit" />
+<a  href="{% static 'excel_file/SpeedWindTurbine12015032016.xls' %}">下载excel文件</a>
  </form>
+
  <hr>
  {%if if_post%}
   <h3>{{anim}}___{{file_date}}</h3>
@@ -64,7 +76,7 @@ input[type="submit"]
  {% endif %}
 
  {%if if_post%}
- <div id="main"></div> 
+ <div id="main"></div>
  {% endif %}
 
 
