@@ -68,10 +68,16 @@ def speed(request):
     list3=['WindTurbine1','WindTurbine2','WindTurbine3','WindTurbine4','WindTurbine5',
     'WindTurbine6','WindTurbine7','WindTurbine8','WindTurbine9']
     if request.method == 'POST':
+       #//////////////////////xiugaiwenjian path/////////////////////*/
         file_date = request.POST.get('date')
         anim = request.POST.get('anim')
-        a=file_date.split('/')
-        file_name=a[2]+a[0]+a[1]
+        a=file_date.split(' ')
+        print a 
+        date=a[0].split('/')
+        time=a[1].split(':')
+        print date[0],date[1],date[2],time[0],time[1]
+        file_name=date[0]+date[1]+date[2]+time[0]
+       # //////////////////////xiugaiwenjian path/////////////////////
         # print a[0]
         # print a[1]
         # print a[2]
@@ -87,7 +93,7 @@ def speed(request):
             if_post=1
             context={"if_post":if_post,'list1': list1, 'list2': list2,'list3':list3,'anim':anim,
             'file_date':file_date,'username':user.username}
-            return render_to_response('wind/power.html', context)
+            return render_to_response('wind/speed.html', context)
         else:
             if_notexist=1
             context={"if_post":if_post,'if_notexist':if_notexist,'list3':list3,'anim':anim,
@@ -97,6 +103,7 @@ def speed(request):
         print list1
         print list2
         return render_to_response('wind/speed.html', {'list3':list3})
+
 
 def power(request):
     user = request.user

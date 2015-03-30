@@ -8,16 +8,22 @@
 <link href="{% static 'wind/css/bootstrap.css' %}" rel="stylesheet" type="text/css">
 <link href="{% static 'wind/css/bootstrap-theme.css' %}" rel="stylesheet" type="text/css">
 <link href="{% static 'wind/css/mystyleportal.css' %}" rel="stylesheet" type="text/css"> 
-<link href="{% static 'wind/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
+<!-- <link href="{% static 'wind/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css"> -->
 <link href="{% static 'wind/css/mapstyle.css' %}" rel="stylesheet" type="text/css"/>
-<link rel="stylesheet" href="{% static 'wind/css/jquery-ui.css' %}"/>
+<!-- <link rel="stylesheet" href="{% static 'wind/css/jquery-ui.css' %}"/> -->
+<link rel="stylesheet" href="{% static 'wind/css/jquery.datetimepicker.css' %}"/>
+
 <!--引入脚本是一定要先引入jquery,因为bootstrap.js是基于jquery.js的-->
 <script language="JavaScript" type="text/javascript" src="{% static 'wind/js/jquery-1.10.2.min.js' %}"></script>
 <script language="JavaScript" type="text/javascript" src="{% static 'wind/js/bootstrap.min.js' %}"></script>
 <script language="JavaScript" type="text/javascript" src="{% static 'wind/js/echarts-all.js' %}"></script>
-<script language="JavaScript" type="text/javascript" src="{% static 'wind/js/bootstrap-datetimepicker.fr.js"></script>
-<script language="JavaScript" type="text/javascript" src="{% static 'wind/js/jquery-ui.js' %}"></script>
-<script language="JavaScript" type="text/javascript" src="{% static 'wind/js/bootstrap-datetimepicker.js' %}"></script>
+<!-- <script language="JavaScript" type="text/javascript" src="{% static 'wind/js/bootstrap-datetimepicker.fr.js"></script> -->
+<!-- <script language="JavaScript" type="text/javascript" src="{% static 'wind/js/datetimepicker.js' %}"></script> -->
+<!-- <script language="JavaScript" type="text/javascript" src="{% static 'wind/js/jquery.js' %}"></script> -->
+<!-- <script language="JavaScript" type="text/javascript" src="{% static 'wind/js/jquery-ui.js' %}"></script> -->
+
+
+<!-- <script language="JavaScript" type="text/javascript" src="{% static 'wind/js/bootstrap-datetimepicker.js' %}"> </script>-->
 
 
 
@@ -135,8 +141,8 @@ google.maps.event.addDomListener(window, 'load', initialize);
 		<div class="row">
 			 <div class="col-sm-3 col-md-2 sidebar ">
 			       <ul class="nav nav-sidebar">				
-           		   	 <li><a id="Home" href="{% url 'portal'%}?id=Home">Home</a></li>
-           		   	 <li><a id="UploadFiles" href="{% url 'wind.views.uploadfiles'%}?id=UploadFiles">Upload Files </a></li>
+           		   	 <li><a id="Home" href="{% url 'portal'%}">Home</a></li>
+           		   	 <li><a id="UploadFiles" href="{% url 'wind.views.uploadfiles'%}">Upload Files </a></li>
           		<!-- 	 <li class="sidebar-menu">
 						<a href="#WindPredict" class="nav-header menu-first collapsed" data-toggle="collapse">WindPredict</a>
 						<ul id="WindPredict" class="nav nav-list collapse menu-second">
@@ -149,9 +155,9 @@ google.maps.event.addDomListener(window, 'load', initialize);
 					  <li class="sidebar-menu">
 						<a href="#WindPredict" class="nav-header menu-first collapsed" data-toggle="collapse">WindPredict</a>
 						<ul id="WindPredict" class="nav nav-list collapse  menu-second">
-							<li  ><a id="WindPredict1" href="{% url 'wind.views.speed'%}?id=WindPredict1">WindSpeed</a></li>
+							<li  ><a id="speed" href="{% url 'wind.views.speed'%}">WindSpeed</a></li>
 
-							<li><a id="WindPredict2" href="{% url 'wind.views.power'%}?id=WindPredict2">WindPower</a></li>
+							<li><a id="power" href="{% url 'wind.views.power'%}">WindPower</a></li>
 							<!-- <li><a href="?id=WindPredict2">Dampness</a></li>
 							<li><a href="?id=WindPredict3">Pressure</a></li> -->
 							
@@ -181,9 +187,10 @@ google.maps.event.addDomListener(window, 'load', initialize);
 	
 	
 </body>
+
 <script type="text/javascript">
 //collapse
-
+/*
 	function parse_url(url) {
 	  if (url.lastIndexOf('?') == 0) {
 	    var str = url.substring(url.lastIndexOf('?') + 1, url.length);
@@ -197,9 +204,9 @@ google.maps.event.addDomListener(window, 'load', initialize);
 	}
 
 
-	var type = parse_url(location.search);
+	var type = parse_url(location.search);*/
 	//alert(type['id']);
-	if (type['id']=="WindPredict1" || type['id']=="WindPredict2") {
+/*	if (type['id']=="WindPredict1" || type['id']=="WindPredict2") {
 		var menutype=type['id'];
 		menutype=menutype.substring(0,menutype.length-1);
 		  $('#'+menutype).attr('class','nav nav-list menu-second');
@@ -207,20 +214,20 @@ google.maps.event.addDomListener(window, 'load', initialize);
 	  	  $('#'+type['id']).css('background-color','#aac3ec');
 	 	  $('#'+type['id']).css('color','#322227');
 	}
-
-	else if(type['id']=="Home")
+*/
+/*	else if(type['id']=="Home")
 	{
 		$('#'+type['id']).css('display','block');
 		$('#'+type['id']).css('background-color','#aac3ec');
 	 	$('#'+type['id']).css('color','#322227');
-	}
-	else if(type['id']=="UploadFiles")
+	}*/
+	/*else if(type['id']=="UploadFiles")
 	{
 
 		$('#'+type['id']).css('display','block');
 		$('#'+type['id']).css('background-color','#aac3ec');
 	 	$('#'+type['id']).css('color','#322227');
-	}
+	}*/
 </script>
 </html>
 

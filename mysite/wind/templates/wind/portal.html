@@ -201,15 +201,15 @@ $(document).ready(function(){
 	map.addLayer(newmarkersLayer);
   	for(i=0;i<scope_len;i++)
  	 {
- 	 	alert(i);	
+ 	 	//alert(i);	
  	 	a=parseFloat(scope[i][0])-parseFloat(scope[i][2]/10000);
-  		alert(a);
+  		//alert(a);
   		var b=parseFloat(scope[i][0])+parseFloat(scope[i][2]/10000);
-  		alert(b);
+  		//alert(b);
   		var c=parseFloat(scope[i][1])-parseFloat(scope[i][2]/10000);
-  		alert(c);
+  		//alert(c);
   		var d=parseFloat(scope[i][1])+parseFloat(scope[i][2]/10000);
-  		alert(d);
+  		//alert(d);
  	 	
   		if((latitude>=a)&& (latitude<=b)
   		&& (longtitude>=c) && (longtitude<=d))
@@ -231,14 +231,14 @@ $(document).ready(function(){
 			if(form==true)
 			{	var permission='{{level}}';
   				permission=parseInt(permission);
-  				alert(permission);
+  				//alert(permission);
   				if(permission>=1)
   				{
 				
       	  			window.open("http://127.0.0.1:8000/admin/wind/windturbine/add/");
       	  			/*window.location.href="http://www.baidu.com";   //点击确定,跳转到后台进行加添
      				window.event.returnValue = false;*/
-				alert("OK");
+				//alert("OK");
 				return false;
 				}	
 			}
@@ -264,10 +264,16 @@ $(document).ready(function(){
 	/*var marker = L.marker([41.239190,14.032145]).addTo(map);
 	marker.bindPopup("sdafffffffffff").openPopup();	
 	markersLayer.addLayer(marker); //  like this can add a place*/
- 
+ </script>
 
-</script>
-	
+
+<script type="text/javascript">
+////////////////////////////////////////Home css///////////////////////////////////////////////////////
+	  $('#Home').css('display','block');
+	  $('#Home').css('background-color','#aac3ec');
+	  $('#Home').css('color','#322227');
+////////////////////////////////////////Home css///////////////////////////////////////////////////////
+</script>	
 </body>
 </html>
 {% endblock content %}

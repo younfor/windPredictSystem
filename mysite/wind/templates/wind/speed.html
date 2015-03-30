@@ -1,5 +1,6 @@
 {% extends 'wind/portal_base.html' %}
 {% block content %}
+{% load staticfiles %}
 
 <h3>WindPredictSystem/<small>Wind Speed</small></h3>
 <hr>
@@ -34,7 +35,7 @@ input[type="submit"]
 
 <body>
 <form method="POST" action="" onsubmit="return check();">
-	<label>Date：</label><input type="text" id="datepicker" size="23" name="date" readonly="true" required="required";>
+	<label>Date：</label><input type="text" id="datetimepicker" size="23" name="date" readonly="true" required="required";>
 	<label >Windturbine：</label>
 		<select id="anim" name="anim">
 			{% for value in list3%}
@@ -69,16 +70,26 @@ input[type="submit"]
 
  </div> 
  </body>
+<!-- <script language="JavaScript" type="text/javascript" src="{% static 'wind/js/jquery.js' %}"></script> -->
+<script language="JavaScript" type="text/javascript" src="{% static 'wind/js/datetimepicker.js' %}"></script>
 <script>
-	$(function() {
+	/*$(function() {
 		$( "#datepicker" ).datepicker();
-		/*$( "#datepicker" ).datepicker( "option", "showAnim","Show" );*/	
+		$( "#datepicker" ).datepicker( "option", "showAnim","Show" );	
 		$( "#datepicker" ).datepicker( "option", "showAnim", "show");
 	
+	});*/
+////////////////////////////////////////////////Date////////////////////////////////////////////////////////
+	$('#datetimepicker').datetimepicker({
+	/*mask:'9999/19/39 29:59',*/
+	/*onChangeDateTime:logic,
+	onShow:logic*/
 	});
+////////////////////////////////////////////////Date////////////////////////////////////////////////////////
+
 
 	$("#submit").click(function(){
-   	 if($("#datepicker").val()=="")
+   	 if($("#datetimepicker").val()=="")
   	  {
      	 	  alert("Please input the date！");
      	 	  return false;
@@ -176,5 +187,16 @@ input[type="submit"]
     		return false;
 }
     </script>
+
+
+    <script type="text/javascript">
+    //////////////////////////////////////////////Speed css//////////////////////////////////////////////////////
+     	  $('#WindPredict').attr('class','nav nav-list menu-second');
+		  $('#speed').css('display','block');
+	  	  $('#speed').css('background-color','#aac3ec');
+	 	  $('#speed').css('color','#322227');
+
+    //////////////////////////////////////////////Speed css//////////////////////////////////////////////////////
+     </script>
 
 {% endblock content %}

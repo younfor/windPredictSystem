@@ -1,87 +1,107 @@
 {% extends 'wind/portal_base.html' %}
 {% block content %}
+{% load staticfiles %}
 <style type="text/css">
 #main{
-    height:400px;
-    width:800px;
-    border:1px solid #ccc;
-    padding:10px;
-    }
+	height:400px;
+	width:800px;
+	border:1px solid #ccc;
+	padding:10px;
+	}
+
+#anim{
+	width: 170px;
+	height: 28px;
+}
+#submit{
+
+	width: 90px;
+	height: 28px;
+/*	padding-bottom: 1px;*/
+ 	margin-left: 4px;
+}
+input[type="submit"]
+{
+	font-size: 14px;
+}
 </style>
-<h3>WindPredictSystem/<small>Wind Speed</small></h3>
+<title>WindPower</title>
+<h3>WindPredictSystem/<small>Wind Power</small></h3>
 <hr>
 
 <div class="col-sm-9 col-sm-offset-7 col-md-9 col-md-offset-1 " >
 
-<!--    <link rel="stylesheet" href="//apps.bdimg.com/libs/jqueryui/1.10.4/css/jquery-ui.min.css">
-    <script src="//apps.bdimg.com/libs/jquery/1.10.2/jquery.min.js"></script>
-    <script src="//apps.bdimg.com/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
-    <link rel="stylesheet" href="jqueryui/style.css"> -->
-    <script>
-    $(function() {
-        $( "#datepicker" ).datepicker();
-        $( "#anim" ).change(function() {
-            $( "#datepicker" ).datepicker( "option", "showAnim", $( this ).val() );
-        });
-    });
-    </script>
+<!-- 	<link rel="stylesheet" href="//apps.bdimg.com/libs/jqueryui/1.10.4/css/jquery-ui.min.css">
+	<script src="//apps.bdimg.com/libs/jquery/1.10.2/jquery.min.js"></script>
+	<script src="//apps.bdimg.com/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+	<link rel="stylesheet" href="jqueryui/style.css"> -->
+	
 </head>
 <body>
-<form>
-    <label>Time：</label><input type="text" id="datepicker" size="23">
-    <label>Windturbine：</label>
-        <select id="anim">
-            <option value="show">Show (默认)</option>
-            <option value="slideDown">滑下</option>
-            <option value="fadeIn">淡入</option>
-            <option value="blind">Blind (UI 百叶窗特效)</option>
-            <option value="bounce">Bounce (UI 反弹特效)</option>
-            <option value="clip">Clip (UI 剪辑特效)</option>
-            <option value="drop">Drop (UI 降落特效)</option>
-            <option value="fold">Fold (UI 折叠特效)</option>
-            <option value="slide">Slide (UI 滑动特效)</option>
-            <option value="">无</option>
-        </select>
-    <input type="submit" value="submit"/>
+<!-- <form>
+	<label>Time：</label><input type="text" id="datepicker" size="23">
+	<label>Windturbine：</label>
+		<select id="anim">
+			<option value="show">Show (默认)</option>
+			<option value="slideDown">滑下</option>
+			<option value="fadeIn">淡入</option>
+			<option value="blind">Blind (UI 百叶窗特效)</option>
+			<option value="bounce">Bounce (UI 反弹特效)</option>
+			<option value="clip">Clip (UI 剪辑特效)</option>
+			<option value="drop">Drop (UI 降落特效)</option>
+			<option value="fold">Fold (UI 折叠特效)</option>
+			<option value="slide">Slide (UI 滑动特效)</option>
+			<option value="">无</option>
+		</select>
+	<input type="submit" value="submit" id="submit"/>
+ </form> -->
+ <form method="POST" action="">
+	<label>Date：</label><input type="text" id="datetimepicker" size="23" name="date" readonly="true" >
+	<label >Windturbine：</label>
+		<select id="anim" name="anim">
+			{% for value in list3%}
+			<option value='{{value}}'>{{value}}</option>
+			{%endfor%}
+ 
+		</select>
+		<!-- <button id="btn"><strong>查询</strong></button> -->
+	<input type="submit" value="submit" id="submit" />
  </form>
  <hr>
- <div id="main"></div> 
+ {%if if_post%}
+  <h3>{{anim}}___{{file_date}}</h3>
+ {% endif %}
+ {%if if_notexist%}
+  <h3>Sorry,{{anim}} {{file_date}} is not found!</h3>
+ {% endif %}
 
-<script type="text/javascript">
- $('.form_date').datetimepicker({
-        language:  'fr',
-        weekStart: 1,
-        todayBtn:  1,
-        autoclose: 1,
-        todayHighlight: 1,
-        startView: 2,
-        minView: 2,
-        forceParse: 0
-    });
-</script>
-<hr>
-
+ {%if if_post%}
  <div id="main"></div> 
+ {% endif %}
+ </div> 
+ </body>
+  <script language="JavaScript" type="text/javascript" src="{% static 'wind/js/jquery.js' %}"></script>
+<script language="JavaScript" type="text/javascript" src="{% static 'wind/js/datetimepicker.js' %}"></script>
     <script type="text/javascript">
         // Step:3 echarts & zrender as a Global Interface by the echarts-plain.js.
         // Step:3 echarts和zrender被echarts-plain.js写入为全局接口
-    var myChart = echarts.init(document.getElementById('main'));
-    option={
+	var myChart = echarts.init(document.getElementById('main'));
+	option={
 
-        title:{
-            text:'能量信息'
-        },
-        tooltip : {
-                      trigger: 'axis'
-                    },
-        legend:{
-            //orient:'horizontal',
-            //backgroundColor:'#eee',
-            data:['平均能量']
-            },
+		title:{
+			text:'能量信息'
+		},
+		tooltip : {
+              		  trigger: 'axis'
+            		},
+		legend:{
+			//orient:'horizontal',
+			//backgroundColor:'#eee',
+			data:['平均能量']
+			},
 
-        calculable : true,
-        toolbox: {
+		calculable : true,
+		toolbox: {
                 show : true,
                 feature : {
                     mark : {show: true},
@@ -92,55 +112,91 @@
                 }
             },
 
-        /*xAxis:[
-            {
-            type:'category',
-            data:['{{list1.0}}','周二','周三','周四','周五','周六','周日']
-        
-            }
-        ],*/
-        xAxis:[
-            {
-            type:'category',
-            data:[{% for time in list1 %}'{{time}}',{% endfor %}]
-        
-            }
-        ],
+		/*xAxis:[
+			{
+			type:'category',
+			data:['{{list1.0}}','周二','周三','周四','周五','周六','周日']
+		
+			}
+		],*/
+		xAxis:[
+			{
+			type:'category',
+			data:[{% for time in list1 %}'{{time}}',{% endfor %}]
+		
+			}
+		],
 
-        yAxis:[         
-            {
-            type:'value',
-            axisLabel:{
-                formatter:'{value} KJ'},
-            },
+		yAxis:[			
+			{
+			type:'value',
+			axisLabel:{
+				formatter:'{value} KJ'},
+			},
 
-            
-        ],
-        
-        series:[
-            {
-            name:'平均能量',
-            type:'line',
-            data:[{% for speed in list2 %}{{speed}},{% endfor %}],
-            markPoint : {
-                         data : [
-                                {type : 'max', name: '最大值'},
-                                {type : 'min', name: '最小值'}
-                             ]
-                       },
-             markLine : {
-                          data : [
-                             {type : 'average', name: '平均值'}
-                             ]
-                       }
-            },
-        
+			
+		],
+		
+		series:[
+			{
+			name:'平均能量',
+			type:'line',
+			data:[{% for speed in list2 %}{{speed}},{% endfor %}],
+			markPoint : {
+               			 data : [
+                    			{type : 'max', name: '最大值'},
+                    			{type : 'min', name: '最小值'}
+               				 ]
+          			   },
+			 markLine : {
+              			  data : [
+                   			 {type : 'average', name: '平均值'}
+               				 ]
+         			   }
+			},
+		
 
-        ],
+		],
 };
-    myChart.setOption(option);
+	myChart.setOption(option);
 
     </script>
-     </body> 
+    <script>
+    //////////////////////////////////////////////////Date ////////////////////////////////////////////////////
+	/*$(function() {
+		$( "#datepicker" ).datepicker();
+			$( "#datepicker" ).datepicker( "option", "showAnim", "show");
+	});
+*/
+	$('#datetimepicker').datetimepicker({
+	/*mask:'9999/19/39 29:59',*/
+	/*onChangeDateTime:logic,
+	onShow:logic*/
+	});
+   //////////////////////////////////////////////////Date /////////////////////////////////////////////////////
+
+
+
+
+    //////////////////////////////////////////////////Date Input Box Check!/////////////////////////////////
+	$("#submit").click(function(){
+   	 if($("#datetimepicker").val()=="")
+  	  {
+     	 	  alert("Please input the date！");
+     	 	  return false;
+  	  }
+	});
+    //////////////////////////////////////////////////Date Input Box Check!/////////////////////////////////
+	</script>
+     
+
+     <script type="text/javascript">
+ //////////////////////////////////////////////Speed css//////////////////////////////////////////////////////
+     	  $('#WindPredict').attr('class','nav nav-list menu-second');
+		  $('#power').css('display','block');
+	  	  $('#power').css('background-color','#aac3ec');
+	 	  $('#power').css('color','#322227');
+//////////////////////////////////////////////Speed css//////////////////////////////////////////////////////
+     </script>
 
 {% endblock content %}
