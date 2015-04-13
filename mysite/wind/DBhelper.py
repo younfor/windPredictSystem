@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 from wind import models
 from django.contrib import auth
+import commands
 
 
 class DBhelper:
@@ -28,3 +29,6 @@ class DBhelper:
         for sc in scope:
             s.append(sc.split(','))
         print s
+
+    def exeCommand(args):
+        commands.getoutput(args)
