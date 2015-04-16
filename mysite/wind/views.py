@@ -60,6 +60,13 @@ class LoginView(TemplateView):
 
 
 def speed(request):
+    #test
+    print "test1"
+    DBhelper.getIns().getPlotWindByHeight()
+    print "test2"
+    DBhelper.getIns().getPlotWRF()
+    print "test3"
+    DBhelper.getIns().getExtactWindSpeedByPoint()
     user = request.user
     list1 = []
     list2 = []
