@@ -3,12 +3,18 @@
 {% load staticfiles %}
 <style type="text/css">
 #main{
-	height:400px;
+	height:250px;
+	width:800px;
+	border:1px solid #ccc;
+	padding:0px;
+	}
+
+.frame1{
+	height:300px;
 	width:800px;
 	border:1px solid #ccc;
 	padding:10px;
-	}
-
+}
 #anim{
 	width: 170px;
 	height: 28px;
@@ -76,7 +82,7 @@ a:hover{
 		</select>
 		<!-- <button id="btn"><strong>查询</strong></button> -->
 	<input type="submit" value="submit" id="submit" />
-	<a  href="{% static 'excel_file/PowerWindTurbine12015032016.xls' %}">提取excel文件</a>
+	<a  href="{% static 'excel_file/PowerWindTurbine12015032016.xls' %}">下载excel文件</a>
  </form>
  <hr>
  {%if if_post%}
@@ -88,8 +94,13 @@ a:hover{
 
  {%if if_post%}
  <div id="main"></div> 
+ <hr>
+ <iframe class="frame1" src={{txtpath}} name=iframe1></iframe> 
  {% endif %}
+
+ <!-- <iframe class="frame1" src="/img/power.xls" name=iframe1></iframe> -->
  </div> 
+ 
  </body>
   <script language="JavaScript" type="text/javascript" src="{% static 'wind/js/jquery.js' %}"></script>
 <script language="JavaScript" type="text/javascript" src="{% static 'wind/js/datetimepicker.js' %}"></script>

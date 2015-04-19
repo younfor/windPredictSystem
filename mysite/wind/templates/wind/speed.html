@@ -6,12 +6,18 @@
 <hr>
 <style type="text/css">
 #main{
-	height:400px;
+	height:250px;
+	width:800px;
+	border:1px solid #ccc;
+	padding:0px;
+	}
+	
+.frame1{
+	height:300px;
 	width:800px;
 	border:1px solid #ccc;
 	padding:10px;
-	}
-
+}
 #anim{
 	width: 170px;
 	height: 28px;
@@ -77,6 +83,8 @@ a:hover{
 
  {%if if_post%}
  <div id="main"></div>
+  <hr>
+ <iframe class="frame1" src={{txtpath}} name=iframe1></iframe> 
  {% endif %}
 
 

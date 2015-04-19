@@ -8,5 +8,4 @@ urlpatterns = patterns('wind.views',
                        url(r'^speed', 'speed', name='speed'),
                        url(r'^power', 'power', name='power'),
                        url(r'^uploadfiles', 'uploadfiles', name='uploadfiles'),
-                       url(r'^weather', 'weather', name='weather'),
                        )

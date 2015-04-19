@@ -1,0 +1,144 @@
+{% extends 'wind/portal_base.html' %}
+{% block content %}
+{% load staticfiles %}
+
+<style type="text/css">
+
+#anim{
+	width: 170px;
+	height: 28px;
+}
+
+#submit{
+
+	width: 90px;
+	height: 28px;
+/*	padding-bottom: 1px;*/
+ 	margin-left: 4px;
+}
+
+.weatherdiv{
+	margin-top: 8px;
+	margin-left: 40px;
+	float:left; 
+	position:relative;
+	overflow:hidden;
+	width:600px;
+	height:410px;
+}
+
+.divblock{
+	 border:5px solid #eeeeee;
+
+}
+
+input[type="submit"]
+{
+	font-size: 14px;
+}
+
+a:link{
+	color: #000000;
+	 TEXT-DECORATION: none
+}
+
+a:hover{
+	color: #3eaae5;
+	 TEXT-DECORATION: none
+}
+
+.frame1{
+	height:400px;
+	width:800px;
+	border:1px solid #ccc;
+	padding:10px;
+}
+</style>
+
+<h3>WindPredictSystem/<small>WeatherPredict</small></h3>
+<hr>
+<title>WeatherPredict</title></head></head>
+<div class="col-sm-9 col-sm-offset-7 col-md-9 col-md-offset-1 " >
+
+<body>
+<form method="POST" action="" >
+	<label>Dm：</label><input type="text" id="Dm" size="16" name="Dm"  required="required";>
+	<label>Ht：</label><input type="text" id="Ht" size="16" name="Ht"  required="required";>
+	<label>Nt：</label><input type="text" id="Nt" size="16" name="Nt"  required="required";>
+		<!-- <button id="btn"><strong>查询</strong></button> -->
+	<input type="submit" value="submit" id="submit" />
+ </form>
+ <hr>
+ {%if img%}
+ <div class="weatherdiv" name="pic" >
+ 	{%for val in imgpath%}
+
+	<div class="divblock"><img width="580" height="400" src={{val}}></div>
+	{%endfor%}
+<!-- <div class="divblock"><img width="580" height="400" src="/img/5.jpg" alt="2"/></div>
+<div class="divblock"><img width="580" height="400" src="/img/6.jpg" alt="3"/></div> -->
+</div>
+{%endif%}
+
+
+ </body>
+
+<!-- <script language="JavaScript" type="text/javascript" src="{% static 'wind/js/jquery.js' %}"></script> -->
+<script>
+	/*$(function() {
+		$( "#datepicker" ).datepicker();
+		$( "#datepicker" ).datepicker( "option", "showAnim","Show" );	
+		$( "#datepicker" ).datepicker( "option", "showAnim", "show");
+	
+	});*/
+</script>
+
+
+    <script type="text/javascript">
+    //////////////////////////////////////////////Speed css//////////////////////////////////////////////////////
+     	  $('#WindPredict').attr('class','nav nav-list menu-second');
+		  $('#weather').css('display','block');
+	  	  $('#weather').css('background-color','#aac3ec');
+	 	  $('#weather').css('color','#322227');
+
+    //////////////////////////////////////////////Speed css//////////////////////////////////////////////////////
+  </script>
+  <script type="text/javascript">
+  	$("#submit").click(function(){
+  		var dm=$("#Dm").val();
+  		var ht=$("#Ht").val();
+  		var nt=$("#Nt").val();
+
+   	 if($("#Dm").val()==""||$("#Ht").val()==""||$("#Nt").val()=="")
+  	  {
+     	 	  alert("Please input the parameter！");
+     	 	  return false;
+  	  }
+  	 if(isNaN(dm)||isNaN(ht)||isNaN(nt)){
+   		 alert('Parameter format is wrong, please input again');
+   		 return false;
+	}
+	});
+
+  </script>
+     <script type="text/javascript">
+	var t;
+	var speed = 2;//图片切换速度
+	var nowlan=0;//图片开始时间
+	function changepic() {
+	var imglen = $("div[name='pic']").find("div").length;
+	$("div[name='pic']").find("div").hide();
+	$("div[name='pic']").find("div").eq(nowlan).show();
+	nowlan = nowlan+1 ==imglen ?0:nowlan + 1;
+	t = setTimeout("changepic()", speed * 200);
+	}
+	onload = function () { changepic(); }
+	$(document).ready(function () {
+	//鼠标在图片上悬停让切换暂停
+	$("div[name='pic']").hover(function () { clearInterval(t); });
+	//鼠标离开图片切换继续
+	$("div[name='pic']").mouseleave(function () { changepic(); });
+	});
+    </script>
+
+{% endblock content %}
