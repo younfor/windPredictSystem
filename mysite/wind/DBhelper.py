@@ -31,24 +31,24 @@ class DBhelper:
 
     def getPlotWindByHeight(self,domain=1, height=1000, time=10):
         # out put wind_field-2013-01-03_11:30:00_dm1-1000m.png
-		com0 ="export NCARG_ROOT=/home/dwen/ncl && export PATH=$NCARG_ROOT/bin:$PATH"
-		com1 = "cd /home/dwen/model/output/original/2013_01_30min_gn"
+        com0 ="export NCARG_ROOT=/home/dwen/ncl && export PATH=$NCARG_ROOT/bin:$PATH"
+        com1 = "cd /home/dwen/model/output/original/2013_01_30min_gn"
         com2 = "ncl dm=1 ht=1000 nt=10 extract_plot_wind_field_h.ncl"
         print self.exeCommand(com0+" && "+com1+" && "+com2)
 
     def getExtactWindSpeedByPoint(self,domain=4, height=68.5, lat=25.294600, lon=121.580935):
         # out put extr_dm4_wsp_at_25.29D121.58D68.50M.txt
         #prin self.exeCommand(com1)
-		com0 ="export NCARG_ROOT=/home/dwen/ncl && export PATH=$NCARG_ROOT/bin:$PATH"
-		com1 = "cd /home/dwen/model/output/original/2013_01_30min_gn"
+        com0 ="export NCARG_ROOT=/home/dwen/ncl && export PATH=$NCARG_ROOT/bin:$PATH"
+        com1 = "cd /home/dwen/model/output/original/2013_01_30min_gn"
         com2 = "ncl dm=4 agh=68.5 lat=25.294600 lon=121.580935 extract_point_wind_timeseries.ncl"
         print self.exeCommand(com0+" && "+com1+" && "+com2)
 
     def getPlotWRF(self,domian=1):
         #out put WRF_map_dm1.png
         #print self.exeCommand(com1)
-		com0 ="export NCARG_ROOT=/home/dwen/ncl && export PATH=$NCARG_ROOT/bin:$PATH"
-		com1 = "cd /home/dwen/model/output/original/2013_01_30min_gn"
+        com0 ="export NCARG_ROOT=/home/dwen/ncl && export PATH=$NCARG_ROOT/bin:$PATH"
+        com1 = "cd /home/dwen/model/output/original/2013_01_30min_gn"
         com2 = "ncl dm=1 wrf_map.ncl"
         print self.exeCommand(com0+" && "+com1+" && "+com2)
 
