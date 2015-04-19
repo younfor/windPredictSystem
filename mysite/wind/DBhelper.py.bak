@@ -44,9 +44,10 @@ class DBhelper:
 
     def getPlotWRF(self,domian=1):
         #out put WRF_map_dm1.png
+        com1 = "cd /home/dwen/model/output/original/2013_01_30min_gn"
         #print self.exeCommand(com1)
         com2 = "ncl dm=1 wrf_map.ncl"
-        print self.exeCommand(self.com0+" && "+self.com1+" && "+com2)
+        print self.exeCommand(com1+" && "+com2)
 
     def exeCommand(self,args):
         return commands.getoutput(args)
