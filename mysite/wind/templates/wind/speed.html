@@ -1,9 +1,6 @@
 {% extends 'wind/portal_base.html' %}
 {% block content %}
 {% load staticfiles %}
-
-<h3>WindPredictSystem/<small>Wind Speed</small></h3>
-<hr>
 <style type="text/css">
 #main{
 	height:250px;
@@ -11,18 +8,18 @@
 	border:1px solid #ccc;
 	padding:0px;
 	}
-	
-.frame1{
+
+.tbl{
 	height:300px;
 	width:800px;
 	border:1px solid #ccc;
 	padding:10px;
+	overflow-y:scroll
 }
 #anim{
 	width: 170px;
 	height: 28px;
 }
-
 #submit{
 
 	width: 90px;
@@ -30,10 +27,10 @@
 /*	padding-bottom: 1px;*/
  	margin-left: 4px;
 }
-
 input[type="submit"]
 {
 	font-size: 14px;
+	font-weight: bold;
 }
 
 a:link{
@@ -45,18 +42,50 @@ a:hover{
 	color: #3eaae5;
 	 TEXT-DECORATION: none
 }
+
+.itable{
+	border-collapse:collapse;
+	background-color: #ffffff;
+	font-size: 14px;
+	border:2px solid #69c;
+}
+
+caption{
+	color: #000;
+	text-align: center;
+	font-size: 22px;
+}
+.itable td{
+	border:1px solid #69c;
+	line-height: 19px;
+	text-align:center;
+	width: 130px;
+}
+.ithead {
+	background-color: #dddddd;
+	font-size: 16px;
+	font-weight: bold;
+}
 </style>
-<title>WindSpeed</title></head></head>
+<title>WindPower</title>
+<h3>WindPredictSystem/<small>Wind Power</small></h3>
+<hr width="100%">
+
 <div class="col-sm-9 col-sm-offset-7 col-md-9 col-md-offset-1 " >
 
+<!-- 	<link rel="stylesheet" href="//apps.bdimg.com/libs/jqueryui/1.10.4/css/jquery-ui.min.css">
+	<script src="//apps.bdimg.com/libs/jquery/1.10.2/jquery.min.js"></script>
+	<script src="//apps.bdimg.com/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+	<link rel="stylesheet" href="jqueryui/style.css"> -->
+	
+</head>
 <body>
-<form method="POST" action="" onsubmit="return check();">
-	<label>Date：</label><input type="text" id="datetimepicker" size="23" name="date" readonly="true" required="required";>
-	<label >Windturbine：</label>
-		<select id="anim" name="anim">
-			{% for value in list3%}
-			<option value='{{value}}'>{{value}}</option>
-			<!-- <option value="slideDown">滑下</option>
+<!-- <form>
+	<label>Time：</label><input type="text" id="datepicker" size="23">
+	<label>Windturbine：</label>
+		<select id="anim">
+			<option value="show">Show (默认)</option>
+			<option value="slideDown">滑下</option>
 			<option value="fadeIn">淡入</option>
 			<option value="blind">Blind (UI 百叶窗特效)</option>
 			<option value="bounce">Bounce (UI 反弹特效)</option>
@@ -64,15 +93,24 @@ a:hover{
 			<option value="drop">Drop (UI 降落特效)</option>
 			<option value="fold">Fold (UI 折叠特效)</option>
 			<option value="slide">Slide (UI 滑动特效)</option>
-			<option value="">无</option>-->
+			<option value="">无</option>
+		</select>
+	<input type="submit" value="submit" id="submit"/>
+ </form> -->
+ <form method="POST" action="">
+	<label>Date：</label><input type="text" id="datetimepicker" size="23" name="date" readonly="true" >
+	<label >Windturbine：</label>
+		<select id="anim" name="anim">
+			{% for value in list3%}
+			<option value='{{value}}'>{{value}}</option>
 			{%endfor%}
  
 		</select>
 		<!-- <button id="btn"><strong>查询</strong></button> -->
 	<input type="submit" value="submit" id="submit" />
-<a  href="{% static 'excel_file/SpeedWindTurbine12015032016.xls' %}">下载excel文件</a>
+	<!-- <a  href="{% static 'excel_file/PowerWindTurbine12015032016.xls' %}">下载excel文件</a> -->
+	<a  href="/img/extr_dm4_wsp_at_25.29D121.58D68.50M.txt.tar.gz">下载txt文件</a>
  </form>
-
  <hr>
  {%if if_post%}
   <h3>{{anim}}___{{file_date}}</h3>
@@ -82,42 +120,35 @@ a:hover{
  {% endif %}
 
  {%if if_post%}
- <div id="main"></div>
-  <hr>
- <iframe class="frame1" src={{txtpath}} name=iframe1></iframe> 
+ <div id="main"></div> 
+ <hr>
+ <div class="tbl">
+ <table class="itable">
+ <caption>能量控制具体数据</caption>
+ <tr class="ithead" id="ithead">
+ <td>year</td><td>rrrr</td><td>1eee1</td><td>1www</td><td>ggggr</td><td>1vvvv1</td></tr>
+
+ <tbody>
+ {%for l in txt_list%}
+ <tr>
+  {%for v in l%}
+  <td>{{v}}</td>
+  {%endfor%}
+ </tr>
+ {%endfor%}
+ </tbody>
+ 
+ </table>
+ </div>
  {% endif %}
 
-
+ <!-- <iframe class="frame1" src="/img/power.xls" name=iframe1></iframe> -->
  </div> 
+
  </body>
-<!-- <script language="JavaScript" type="text/javascript" src="{% static 'wind/js/jquery.js' %}"></script> -->
+  <script language="JavaScript" type="text/javascript" src="{% static 'wind/js/jquery.js' %}"></script>
 <script language="JavaScript" type="text/javascript" src="{% static 'wind/js/datetimepicker.js' %}"></script>
-<script>
-	/*$(function() {
-		$( "#datepicker" ).datepicker();
-		$( "#datepicker" ).datepicker( "option", "showAnim","Show" );	
-		$( "#datepicker" ).datepicker( "option", "showAnim", "show");
-	
-	});*/
-////////////////////////////////////////////////Date////////////////////////////////////////////////////////
-	$('#datetimepicker').datetimepicker({
-	/*mask:'9999/19/39 29:59',*/
-	/*onChangeDateTime:logic,
-	onShow:logic*/
-	});
-////////////////////////////////////////////////Date////////////////////////////////////////////////////////
-
-
-	$("#submit").click(function(){
-   	 if($("#datetimepicker").val()=="")
-  	  {
-     	 	  alert("Please input the date！");
-     	 	  return false;
-  	  }
-	});
-	
-</script>
-    <script type="text/javascript">
+   <script type="text/javascript">
         // Step:3 echarts & zrender as a Global Interface by the echarts-plain.js.
         // Step:3 echarts和zrender被echarts-plain.js写入为全局接口
 	var myChart = echarts.init(document.getElementById('main'));
@@ -198,25 +229,68 @@ a:hover{
 
     </script>
     
+    <script>
+    //////////////////////////////////////////////////Date ////////////////////////////////////////////////////
+	/*$(function() {
+		$( "#datepicker" ).datepicker();
+			$( "#datepicker" ).datepicker( "option", "showAnim", "show");
+	});
+*/
+	$('#datetimepicker').datetimepicker({
+	/*mask:'9999/19/39 29:59',*/
+	/*onChangeDateTime:logic,
+	onShow:logic*/
+	});
+   //////////////////////////////////////////////////Date /////////////////////////////////////////////////////
 
-    <script type="text/javascript">
-	function check(){
-		var date = document.getElementById("datepicker");
-		if(date == ""){
-    		alert("名字不可为空");
-    		return false;
-}
-    </script>
 
 
-    <script type="text/javascript">
-    //////////////////////////////////////////////Speed css//////////////////////////////////////////////////////
+
+    //////////////////////////////////////////////////Date Input Box Check!/////////////////////////////////
+	$("#submit").click(function(){
+   	 if($("#datetimepicker").val()=="")
+  	  {
+     	 	  alert("Please input the date！");
+     	 	  return false;
+  	  }
+	});
+    //////////////////////////////////////////////////Date Input Box Check!/////////////////////////////////
+	</script>
+     
+
+     <script type="text/javascript">
+ //////////////////////////////////////////////Speed css//////////////////////////////////////////////////////
      	  $('#WindPredict').attr('class','nav nav-list menu-second');
 		  $('#speed').css('display','block');
 	  	  $('#speed').css('background-color','#aac3ec');
 	 	  $('#speed').css('color','#322227');
-
-    //////////////////////////////////////////////Speed css//////////////////////////////////////////////////////
+//////////////////////////////////////////////Speed css//////////////////////////////////////////////////////
      </script>
+     <script type="text/javascript">
+/*var pre_scrollTop=0;//滚动条事件之前文档滚动高度
+var pre_scrollLeft=0;//滚动条事件之前文档滚动宽度
+var obj_th;
+ 
+window.onload =function () {
+    pre_scrollTop=(document.documentElement.scrollTop || document.body.scrollTop);
+    pre_scrollLeft=(document.documentElement.scrollLeft || document.body.scrollTop);
+    obj_th=document.getElementsByName("ithead");
+/*    alert(obj_th);*/
+};
+
+/*window.onscroll = function(){
+    if(pre_scrollTop != (document.documentElement.scrollTop || document.body.scrollTop)){
+        //滚动了竖直滚动条
+        pre_scrollTop=(document.documentElement.scrollTop || document.body.scrollTop);
+        if(obj_th){
+            obj_th.style.top=(document.documentElement.scrollTop || document.body.scrollTop)+"px";
+        }
+    }
+    else if(pre_scrollLeft != (document.documentElement.scrollLeft || document.body.scrollLeft)){
+        //滚动了水平滚动条
+        pre_scrollLeft=(document.documentElement.scrollLeft || document.body.scrollLeft);
+    }
+};*/
+</script>
 
 {% endblock content %}

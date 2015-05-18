@@ -158,12 +158,22 @@ google.maps.event.addDomListener(window, 'load', initialize);
 							<li  ><a id="speed" href="{% url 'wind.views.speed'%}">WindSpeed</a></li>
 
 							<li><a id="power" href="{% url 'wind.views.power'%}">WindPower</a></li>
+							
 							<!-- <li><a href="?id=WindPredict2">Dampness</a></li>
 							<li><a href="?id=WindPredict3">Pressure</a></li> -->
 							
 						</ul>
 					</li>
-					
+					<!--  <li  ><a id="weather" href="{% url 'wind.views.weather'%}">WeatherPredict</a></li> -->
+					 <li class="sidebar-menu">
+						<a href="#WeatherPredict" class="nav-header menu-first collapsed" data-toggle="collapse">WeatherPredict</a>
+						<ul id="WeatherPredict" class="nav nav-list collapse  menu-second">
+							<li  ><a id="weather" href="{% url 'wind.views.weather'%}">WeatherPredict1</a></li>
+							<!-- <li><a href="?id=WindPredict2">Dampness</a></li>
+							<li><a href="?id=WindPredict3">Pressure</a></li> -->
+							<li  ><a id="weather2" href="{% url 'wind.views.weather'%}">WeatherPredict2</a></li>
+						</ul>
+					</li>
 					 <li class="sidebar-menu" id="userMeun1">
 						<a href="#userMeun" class="nav-header menu-first collapsed" data-toggle="collapse">UserManagement</a>
 						<ul id="userMeun" class="nav nav-list collapse menu-second">

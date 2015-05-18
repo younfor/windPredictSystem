@@ -9,6 +9,10 @@ from django.core.context_processors import csrf
 from excel import excel_table
 from DBhelper import DBhelper
 import os
+from txtNotAll import txtNotAll
+from txttoexcel import txt_file
+from csvToFile import csvToFile
+
 # Create your views here.
 from django.views.generic import TemplateView
 
@@ -60,59 +64,62 @@ class LoginView(TemplateView):
 
 
 def speed(request):
-    print "test1"
-    DBhelper.getIns().getPlotWindByHeight()
-    print "test2"
-    DBhelper.getIns().getPlotWRF()
-    print "test3"
-    DBhelper.getIns().getExtactWindSpeedByPoint()
-    user = request.user
-    list1 = []
-    list2 = []
-    if_post=0
-    context={}
-    list3=['WindTurbine1','WindTurbine2','WindTurbine3','WindTurbine4','WindTurbine5',
-    'WindTurbine6','WindTurbine7','WindTurbine8','WindTurbine9']
-    if request.method == 'POST':
-       #//////////////////////xiugaiwenjian path/////////////////////*/
-        file_date = request.POST.get('date')
-        anim = request.POST.get('anim')
-        a=file_date.split(' ')
-        print a 
-        date=a[0].split('/')
-        time=a[1].split(':')
-        print date[0],date[1],date[2],time[0],time[1]
-        file_name=date[0]+date[1]+date[2]+time[0]
-       # //////////////////////xiugaiwenjian path/////////////////////
-        # print a[0]
-        # print a[1]
-        # print a[2]
-        # print a[0]
-        txtpath="/img/extr_dm4_wsp_at_25.29D121.58D68.50M.txt"
-        file_path='wind/excel_file/'+'Speed'+anim+file_name+".xls"
-        # file_path='wind/excel_file/'+anim
-        if os.path.exists(file_path):
-            excel = excel_table(file_path, u'sheet1')
-            list1 = excel.get_list1
-            list2 = excel.get_list2
-            print file_date
-            print anim
-            if_post=1
-            context={"if_post":if_post,'list1': list1, 'list2': list2,'list3':list3,'anim':anim,
-            'file_date':file_date,'username':user.username,"txtpath":txtpath}
-            return render_to_response('wind/speed.html', context)
-        else:
-            if_notexist=1
-            context={"if_post":if_post,'if_notexist':if_notexist,'list3':list3,'anim':anim,
-            'file_date':file_date,'username':user.username}
-            return render_to_response('wind/speed.html', context)
-    else:              
-        print list1
-        print list2
-        return render_to_response('wind/speed.html', {'list3':list3})
-
-
-def power(request):
+    # print "test1"
+    # DBhelper.getIns().getPlotWindByHeight()
+    # print "test2"
+    # DBhelper.getIns().getPlotWRF()
+    # print "test3"
+    # DBhelper.getIns().getExtactWindSpeedByPoint()
+    # user = request.user
+    # list1 = []
+    # list2 = []
+    # if_post=0
+    # context={}
+    # list3=['WindTurbine1','WindTurbine2','WindTurbine3','WindTurbine4','WindTurbine5',
+    # 'WindTurbine6','WindTurbine7','WindTurbine8','WindTurbine9']
+    # if request.method == 'POST':
+    #    #//////////////////////xiugaiwenjian path/////////////////////*/
+    #     file_date = request.POST.get('date')
+    #     anim = request.POST.get('anim')
+    #     a=file_date.split(' ')
+    #     print a 
+    #     date=a[0].split('/')
+    #     time=a[1].split(':')
+    #     #print date[0],date[1],date[2],time[0],time[1]
+    #     file_name=date[0]+date[1]+date[2]+time[0]
+    #    # //////////////////////xiugaiwenjian path/////////////////////
+    #     txtpath="/img/extr_dm4_wsp_at_25.29D121.58D68.50M.txt"
+    #     file_path='wind/excel_file/'+'Speed'+anim+file_name+".xls"
+    #     # file_path='wind/excel_file/'+anim
+    #     if os.path.exists(file_path):
+    #         excel = excel_table(file_path, u'sheet1')
+    #         list1 = excel.get_list1
+    #         list2 = excel.get_list2
+    #         print file_date
+    #         print anim
+    #         if_post=1
+    #         context={"if_post":if_post,'list1': list1, 'list2': list2,'list3':list3,'anim':anim,
+    #         'file_date':file_date,'username':user.username,"txtpath":txtpath}
+    #         return render_to_response('wind/speed.html', context)
+    #     else:
+    #         if_notexist=1
+    #         context={"if_post":if_post,'if_notexist':if_notexist,'list3':list3,'anim':anim,
+    #         'file_date':file_date,'username':user.username}
+    #         return render_to_response('wind/speed.html', context)
+    # else:              
+    #     print list1
+    #     print list2
+    #     return render_to_response('wind/speed.html', {'list3':list3})
+     fileddd="/home/youtingting/model/output/original/2013_01_30min_gn/extr_dm4_wsp_at_25.29D121.58D68.50M.txt"
+     # fileddd="wind/excel_file/q.txt"
+     txt=txt_file(fileddd,6)
+     txt_list=txt.get_list()
+     print txt_list
+     dd=txt.get_chartlist(5)
+     print dd
+     # txtd=txt.get_chartlist(4)
+     # print txtd
+     # print txt_list[0]
      print "test1"
      DBhelper.getIns().getPlotWindByHeight()
      print "test2"
@@ -125,9 +132,9 @@ def power(request):
      if_post=0
      context={}
      list3=['WindTurbine1','WindTurbine2','WindTurbine3','WindTurbine4','WindTurbine5',
-    'WindTurbine6','WindTurbine7','WindTurbine8','WindTurbine9']
+     'WindTurbine6','WindTurbine7','WindTurbine8','WindTurbine9']
      if request.method == 'POST':
-       #//////////////////////xiugaiwenjian path/////////////////////
+       #//////////////////////xiugaiwenjian path/////////////////////////
          file_date = request.POST.get('date')
          anim = request.POST.get('anim')
          a=file_date.split(' ')
@@ -141,7 +148,7 @@ def power(request):
         # print a[1]
         # print a[2]
         # print a[0]
-         txtpath="/img/extr_dm4_wsp_at_25.29D121.58D68.50M.txt"
+         # txtpath="/img/extr_dm4_wsp_at_25.29D121.58D68.50M.txt"
          file_path='wind/excel_file/'+'Power'+anim+file_name+".xls"
         # file_path='wind/excel_file/'+anim
          if os.path.exists(file_path):
@@ -152,7 +159,95 @@ def power(request):
             print anim
             if_post=1
             context={"if_post":if_post,'list1': list1, 'list2': list2,'list3':list3,'anim':anim,
-            'file_date':file_date,'username':user.username,"txtpath":txtpath}
+            'file_date':file_date,'username':user.username,"txt_list":txt_list}
+            return render_to_response('wind/speed.html', context)
+         else:
+            if_notexist=1
+            context={"if_post":if_post,'if_notexist':if_notexist,'list3':list3,'anim':anim,
+            'file_date':file_date,'username':user.username}
+            return render_to_response('wind/speed.html', context)
+     else:              
+        print list1
+        print list2
+        return render_to_response('wind/speed.html', {'list3':list3})
+
+def power(request):
+     fileave="wind/csvFile/wind prediction_out_weight ave.csv"
+     filelow="wind/csvFile/wind prediction_out_weight ave low.csv"
+     filehigh="wind/csvFile/wind prediction_out_weight ave high.csv"
+     fileExp="wind/csvFile/T6 power.txt"
+     # fileddd="wind/excel_file/q.txt"
+     if os.path.exists(fileave) and os.path.exists(filelow) and os.path.exists(filehigh) and os.path.exists(fileExp):
+        csv=csvToFile(fileave)
+        csv_list_ave=csv.get_list()
+        print len(csv_list_ave)
+        list1=csv_list_ave
+        print list
+        csv=csvToFile(filelow)
+        csv_list_low=csv.get_list()
+        print len(csv_list_low)
+        csv=csvToFile(filehigh)
+        csv_list_high=csv.get_list()
+        print len(csv_list_high)
+        txtExp=txtNotAll(fileExp,240,384)
+        list_exp=txtExp.get_list()
+        print list_exp
+        for a in list_exp:
+            print a 
+     # dd=txt.get_chartlist(5)
+     # print dd
+     # txtd=txt.get_chartlist(4)
+     # print txtd
+     # print txt_list[0]
+     print "test1"
+     DBhelper.getIns().getPlotWindByHeight()
+     print "test2"
+     DBhelper.getIns().getPlotWRF()
+     print "test3"
+     DBhelper.getIns().getExtactWindSpeedByPoint()
+     user = request.user
+     if_post=0
+     context={}
+     list3=['WindTurbine1','WindTurbine2','WindTurbine3','WindTurbine4','WindTurbine5',
+    'WindTurbine6','WindTurbine7','WindTurbine8','WindTurbine9']
+     if request.method == 'POST':
+       #//////////////////////xiugaiwenjian path/////////////////////////
+         file_date = request.POST.get('date')
+         anim = request.POST.get('anim')
+         # a=file_date.split(' ')
+         # print a 
+         # date=a[0].split('/')
+         # time=a[1].split(':')
+         # print date[0],date[1],date[2],time[0],time[1]
+         # file_name=date[0]+date[1]+date[2]+time[0]
+       # //////////////////////xiugaiwenjian path/////////////////////
+        # print a[0]
+        # print a[1]
+        # print a[2]
+        # print a[0]
+         # txtpath="/img/extr_dm4_wsp_at_25.29D121.58D68.50M.txt"
+         #file_path='wind/excel_file/'+'Power'+anim+file_name+".xls"
+        # file_path='wind/excel_file/'+anim
+         if os.path.exists(fileave) and os.path.exists(filelow) and os.path.exists(filehigh) and os.path.exists(fileExp):
+            csv=csvToFile(fileave)
+            csv_list_ave=csv.get_list()
+            print len(csv_list_ave)
+            list1=csv_list_ave
+            print list
+            csv=csvToFile(filelow)
+            csv_list_low=csv.get_list()
+            print len(csv_list_low)
+            csv=csvToFile(filehigh)
+            csv_list_high=csv.get_list()
+            print len(csv_list_high)
+            txtExp=txtNotAll(fileExp,240,384)
+            list_exp=txtExp.get_list()
+            print list_exp
+            for a in list_exp:
+                print a
+            if_post=1
+            context={"if_post":if_post,'list1': list1, 'list2_ave': csv_list_ave,'list2_low':csv_list_low,'list2_high':csv_list_high,
+            "list2_exp":list_exp,'list3':list3,'anim':anim,'file_date':file_date,'username':user.username}
             return render_to_response('wind/power.html', context)
          else:
             if_notexist=1
@@ -229,15 +324,21 @@ def uploadfiles(request):
 
 
 def weather(request):
+    list3=['WindTurbine1','WindTurbine2','WindTurbine3','WindTurbine4','WindTurbine5',
+    'WindTurbine6','WindTurbine7','WindTurbine8','WindTurbine9']
     if request.method == 'POST':
         Dm = request.POST.get('Dm')
         Ht = request.POST.get('Ht')
         Nt = request.POST.get('Nt')
         img=1
+        
         print Dm,Ht,Nt
-        imgpath=["/img/extr_dm1_wsp_at_25.29D121.58D68.50M.png","/img/extr_dm4_wsp_at_25.29D121.58D68.50M.png","/img/wind_field-2013-01-03_11:30:00_dm1-1000m.png"]
+        imgpath=["/img/extr_dm1_wsp_at_25.29D121.58D68.50M.png",
+        "/img/extr_dm4_wsp_at_25.29D121.58D68.50M.png",
+        "/img/wind_field-2013-01-03_11:30:00_dm1-1000m.png"]
         print imgpath  
-        return render_to_response('wind/weather.html',{"img":img,"imgpath":imgpath})
+        return render_to_response('wind/weather.html',{"img":img,"imgpath":imgpath,"list3":list3})
         # return render(request, 'wind/weather.html')
     else:
-        return render(request, 'wind/weather.html')
+        return render_to_response('wind/weather.html',{"list3":list3})
+        # return render(request, 'wind/weather.html')

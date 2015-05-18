@@ -1,8 +1,24 @@
 {% extends 'wind/portal_base.html' %}
 {% block content %}
 {% load staticfiles %}
-
+<link href="{% static 'wind/css/jquery-ui.css' %}" rel="stylesheet" type="text/css">
+<script language="JavaScript" type="text/javascript" src="{% static 'wind/js/jquery-ui.js' %}"></script>
+<!-- <script language="JavaScript" type="text/javascript" src="{% static 'wind/js/jquery.js' %}"></script> -->
+<script language="JavaScript" type="text/javascript" src="{% static 'wind/js/datetimepicker.js' %}"></script>
 <style type="text/css">
+#slider{
+   	position: absolute;
+	top: 5px;
+	border-radius: 6px;
+	width:530px;
+	height:12px;	
+	float:left;
+	display: inline;
+}
+/*body {
+	font-family: "Trebuchet MS", "Helvetica", "Arial",  "Verdana", "sans-serif";
+	font-size: 62.5%;
+}*/
 
 #anim{
 	width: 170px;
@@ -11,14 +27,14 @@
 
 #submit{
 
-	width: 90px;
+	width: 65px;
 	height: 28px;
 /*	padding-bottom: 1px;*/
  	margin-left: 4px;
 }
 
 .weatherdiv{
-	margin-top: 8px;
+	margin-top: 2px;
 	margin-left: 40px;
 	float:left; 
 	position:relative;
@@ -27,6 +43,15 @@
 	height:410px;
 }
 
+.slidediv{
+	margin-bottom: 8px;
+	margin-left: 40px;
+	position:relative;
+	margin-top: -4px;
+	overflow:hidden;
+	width:600px;
+	height:30px;
+}
 .divblock{
 	 border:5px solid #eeeeee;
 
@@ -35,6 +60,7 @@
 input[type="submit"]
 {
 	font-size: 14px;
+	font-weight: bold;
 }
 
 a:link{
@@ -46,13 +72,24 @@ a:hover{
 	color: #3eaae5;
 	 TEXT-DECORATION: none
 }
-
-.frame1{
+.speeddiv{
+	display:inline;
+	height:12px;
+	margin-right: 10px;
+	top:0px;
+	font-size: 14px;
+	font-weight:bold;
+}
+#anim{
+	width: 115px;
+	height: 28px;
+}
+/*.frame1{
 	height:400px;
 	width:800px;
 	border:1px solid #ccc;
 	padding:10px;
-}
+}*/
 </style>
 
 <h3>WindPredictSystem/<small>WeatherPredict</small></h3>
@@ -61,50 +98,84 @@ a:hover{
 <div class="col-sm-9 col-sm-offset-7 col-md-9 col-md-offset-1 " >
 
 <body>
-<form method="POST" action="" >
+<!-- <form method="POST" action="" >
 	<label>Dm：</label><input type="text" id="Dm" size="16" name="Dm"  required="required";>
 	<label>Ht：</label><input type="text" id="Ht" size="16" name="Ht"  required="required";>
 	<label>Nt：</label><input type="text" id="Nt" size="16" name="Nt"  required="required";>
-		<!-- <button id="btn"><strong>查询</strong></button> -->
 	<input type="submit" value="submit" id="submit" />
- </form>
+ </form> -->
+<form method="POST" action="">
+	<label>From：</label><input type="text" id="datetimepicker1" size="13" name="date" readonly="true" >
+	<label>To：</label><input type="text" id="datetimepicker2" size="13" name="date" readonly="true" >
+	<label>Ht：  </label><input type="text" id="Ht" size="10" name="Ht"  required="required">
+	<label >Windturbine：</label>
+		<select id="anim" name="anim">
+			{% for value in list3%}
+			<option value='{{value}}'>{{value}}</option>
+			{%endfor%}
+ 
+		</select>
+		
+	<input type="submit" value="submit" id="submit" />
+ </form> 
  <hr>
  {%if img%}
+ 
+ <div class="slidediv">
+<div class="speeddiv">Speed:</div>
+ <div id="slider"></div>
+ </div>
  <div class="weatherdiv" name="pic" >
  	{%for val in imgpath%}
 
 	<div class="divblock"><img width="580" height="400" src={{val}}></div>
 	{%endfor%}
-<!-- <div class="divblock"><img width="580" height="400" src="/img/5.jpg" alt="2"/></div>
-<div class="divblock"><img width="580" height="400" src="/img/6.jpg" alt="3"/></div> -->
 </div>
 {%endif%}
 
 
  </body>
-
-<!-- <script language="JavaScript" type="text/javascript" src="{% static 'wind/js/jquery.js' %}"></script> -->
-<script>
-	/*$(function() {
-		$( "#datepicker" ).datepicker();
-		$( "#datepicker" ).datepicker( "option", "showAnim","Show" );	
-		$( "#datepicker" ).datepicker( "option", "showAnim", "show");
-	
-	});*/
+ <script>
+    //////////////////////////////////////////////////Date ////////////////////////////////////////////////////
+	$('#datetimepicker1').datetimepicker({
+	/*mask:'9999/19/39 29:59',*/
+	/*onChangeDateTime:logic,
+	onShow:logic*/
+	});
+	$('#datetimepicker2').datetimepicker({
+	});
+	$("#submit").click(function(){
+   	 if($("#datetimepicker1").val()=="" ||$("#datetimepicker2").val()=="")
+  	  {
+     	 	  alert("Please input the height！");
+     	 	  return false;
+  	  }
+  	  var ht=$("#Ht").val();
+  	 if(ht=="")
+  	  {
+     	 	  alert("Please input the height！");
+     	 	  return false;
+  	  }
+  	   if(isNaN(ht)){
+   		 alert('height format is wrong, please input again');
+   		 return false;
+	}
+	});
 </script>
-
 
     <script type="text/javascript">
     //////////////////////////////////////////////Speed css//////////////////////////////////////////////////////
-     	  $('#WindPredict').attr('class','nav nav-list menu-second');
+     	  $('#WeatherPredict').attr('class','nav nav-list menu-second');
 		  $('#weather').css('display','block');
 	  	  $('#weather').css('background-color','#aac3ec');
 	 	  $('#weather').css('color','#322227');
 
     //////////////////////////////////////////////Speed css//////////////////////////////////////////////////////
+
+    ////////////////////////////////////////input alert//////////////////////////////////////////////////
   </script>
   <script type="text/javascript">
-  	$("#submit").click(function(){
+  	/*$("#submit").click(function(){
   		var dm=$("#Dm").val();
   		var ht=$("#Ht").val();
   		var nt=$("#Nt").val();
@@ -118,27 +189,52 @@ a:hover{
    		 alert('Parameter format is wrong, please input again');
    		 return false;
 	}
-	});
-
+	});*/
+////////////////////////////////////////input alert//////////////////////////////////////////////////
   </script>
+
+
+
      <script type="text/javascript">
-	var t;
-	var speed = 2;//图片切换速度
-	var nowlan=0;//图片开始时间
+
+ ////////////////////////////////////////speedchange//////////////////////////////////////////////////
+
+	 var t;
+ 	 var speed = 6;//图片切换速度
+ 	 var nowlan=0;//图片开始时间
+ 	 var mul=50;
+
+  	 $(function() {
+   	 $( "#slider").slider({
+      	   orientation: "horizontal",
+       	 range:"min",
+        	 value: 50,
+     	// slide: changespeed,
+      	  change: changespeed
+     	 });
+    	  $( "#slider" ).slider( "value", 50 );
+ 	 });
+
+	function changespeed(){
+ 	 mul=100-$( "#slider" ).slider( "value" )*0.8;
+	}
+
 	function changepic() {
 	var imglen = $("div[name='pic']").find("div").length;
 	$("div[name='pic']").find("div").hide();
 	$("div[name='pic']").find("div").eq(nowlan).show();
 	nowlan = nowlan+1 ==imglen ?0:nowlan + 1;
-	t = setTimeout("changepic()", speed * 200);
+	t = setTimeout("changepic()", speed*mul);
 	}
-	onload = function () { changepic(); }
-	$(document).ready(function () {
-	//鼠标在图片上悬停让切换暂停
-	$("div[name='pic']").hover(function () { clearInterval(t); });
-	//鼠标离开图片切换继续
-	$("div[name='pic']").mouseleave(function () { changepic(); });
-	});
+$(document).ready(function () {
+//鼠标在图片上悬停让切换暂停
+$("div[name='pic']").hover(function () { clearInterval(t); });
+//鼠标离开图片切换继续
+$("div[name='pic']").mouseleave(function () { changepic(); });
+changepic();
+});
+
+ ////////////////////////////////////////speedchange//////////////////////////////////////////////////
     </script>
 
 {% endblock content %}
