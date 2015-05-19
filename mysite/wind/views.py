@@ -172,11 +172,17 @@ def speed(request):
         return render_to_response('wind/speed.html', {'list3':list3})
 
 def power(request):
-     fileave="wind/csvFile/wind prediction_out_weight ave.csv"
-     filelow="wind/csvFile/wind prediction_out_weight ave low.csv"
-     filehigh="wind/csvFile/wind prediction_out_weight ave high.csv"
-     fileExp="wind/csvFile/T6 power.txt"
+     filebase="/home/chris/WATCFD_software/pyper_wind_power_nnet/"
+     #fileave="wind/csvFile/wind prediction_out_weight ave.csv"
+     #filelow="wind/csvFile/wind prediction_out_weight ave low.csv"
+     #filehigh="wind/csvFile/wind prediction_out_weight ave high.csv"
+     #fileExp="wind/csvFile/T6 power.txt"
      # fileddd="wind/excel_file/q.txt"
+     fileave=filebase+"wind prediction_out_weight ave.csv"
+     filelow=filebase+"wind prediction_out_weight ave low.csv"
+     filehigh=filebase+"wind prediction_out_weight ave high.csv"
+     fileExp=filebase+"T6 power.txt"
+     print fileave,filelow,filehigh,fileExp
      if os.path.exists(fileave) and os.path.exists(filelow) and os.path.exists(filehigh) and os.path.exists(fileExp):
         csv=csvToFile(fileave)
         csv_list_ave=csv.get_list()
@@ -199,12 +205,12 @@ def power(request):
      # txtd=txt.get_chartlist(4)
      # print txtd
      # print txt_list[0]
-     print "test1"
-     DBhelper.getIns().getPlotWindByHeight()
-     print "test2"
-     DBhelper.getIns().getPlotWRF()
-     print "test3"
-     DBhelper.getIns().getExtactWindSpeedByPoint()
+     #print "test1"
+     #DBhelper.getIns().getPlotWindByHeight()
+     #print "test2"
+     #DBhelper.getIns().getPlotWRF()
+     #print "test3"
+     #DBhelper.getIns().getExtactWindSpeedByPoint()
      user = request.user
      if_post=0
      context={}
@@ -256,7 +262,7 @@ def power(request):
             return render_to_response('wind/power.html', context)
      else:              
         print list1
-        print list2
+        #print list2
         return render_to_response('wind/power.html', {'list3':list3})
 
 
