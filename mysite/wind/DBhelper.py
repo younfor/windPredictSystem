@@ -1,9 +1,15 @@
 from django.contrib.auth.models import User
 from wind import models
 from django.contrib import auth
-import commands
+import commands,thread
 
-
+def exeCommand(args):
+        return commands.getoutput(args)
+def runPower():
+    com1 = "cd /home/younfor/windPredictSystem/mysite/wind/WATCFD_software/pyper_wind_power_nnet"
+    com2 = "./power.sh"
+    print "start train"
+    print exeCommand(com1+" && "+com2)
 class DBhelper:
 
     ins = None
@@ -49,6 +55,6 @@ class DBhelper:
         #print self.exeCommand(com1)
         com2 = "ncl dm=1 wrf_map.ncl"
         print self.exeCommand(com1+" && "+com2)
-
-    def exeCommand(self,args):
-        return commands.getoutput(args)
+    def getPredictPower(self):
+        thread.start_new_thread(runPower, ())  
+    
