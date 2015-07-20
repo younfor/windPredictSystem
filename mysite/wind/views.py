@@ -334,9 +334,9 @@ def weather(request):
         img=1
         
         print Dm,Ht,Nt
-        imgpath=["/img/extr_dm1_wsp_at_25.29D121.58D68.50M.png",
-        "/img/extr_dm4_wsp_at_25.29D121.58D68.50M.png",
-        "/img/wind_field-2013-01-03_11:30:00_dm1-1000m.png"]
+        imgpath=["/img/windfield2013-02-04_12:30:00_dm1-200.5m.png",
+        "/img/windspeed_dm1lat25.29lon121.58h68.50m2013-02-04_12:30:00-2013-02-07_01:00:00.png",
+        "/img/WRF_map_dm1.png"]
         print imgpath  
         return render_to_response('wind/weather.html',{"img":img,"imgpath":imgpath,"list3":list3})
         # return render(request, 'wind/weather.html')
