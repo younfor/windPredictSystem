@@ -21,7 +21,7 @@
 }*/
 
 #anim{
-	width: 170px;
+	width: 120px;
 	height: 28px;
 }
 
@@ -95,7 +95,8 @@ a:hover{
 <h3>WindPredictSystem/<small>WeatherPredict</small></h3>
 <hr>
 <title>WeatherPredict</title></head></head>
-<div class="col-sm-9 col-sm-offset-7 col-md-9 col-md-offset-1 " >
+<!-- <div class="col-sm-11  col-md-11 " > -->
+<div class="col-sm-9 col-sm-offset-1 col-md-9 col-md-offset-1" >
 
 <body>
 <!-- <form method="POST" action="" >
@@ -105,9 +106,9 @@ a:hover{
 	<input type="submit" value="submit" id="submit" />
  </form> -->
 <form method="POST" action="">
-	<label>From：</label><input type="text" id="datetimepicker1" size="13" name="date" readonly="true" >
-	<label>To：</label><input type="text" id="datetimepicker2" size="13" name="date" readonly="true" >
-	<label>Ht：  </label><input type="text" id="Ht" size="10" name="Ht"  required="required">
+	<label>From：</label><input type="text" id="datetimepicker1" size="10" name="date" readonly="true" >
+	<label>To：</label><input type="text" id="datetimepicker2" size="10" name="date" readonly="true" >
+	<label>Ht：  </label><input type="text" id="Ht" size="4" name="Ht"  required="required">
 	<label >Windturbine：</label>
 		<select id="anim" name="anim">
 			{% for value in list3%}

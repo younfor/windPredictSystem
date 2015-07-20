@@ -3,8 +3,8 @@
 {% load staticfiles %}
 <style type="text/css">
 #main{
-	height:400px;
-	width:800px;
+	height:380px;
+	width:700px;
 	border:1px solid #ccc;
 	padding:0px;
 	}
@@ -17,12 +17,12 @@
 	overflow-y:scroll
 }
 #anim{
-	width: 170px;
+	width: 140px;
 	height: 28px;
 }
 #submit{
 
-	width: 90px;
+	width: 80px;
 	height: 28px;
 /*	padding-bottom: 1px;*/
  	margin-left: 4px;
@@ -91,7 +91,8 @@ table thead tr{
 <h3>WindPredictSystem/<small>Wind Power</small></h3>
 <hr width="100%">
 
-<div class="col-sm-9 col-sm-offset-7 col-md-9 col-md-offset-1 " >
+<!-- <div class="col-sm-11  col-md-11 " > -->
+<div class="col-sm-9 col-sm-offset-1 col-md-9 col-md-offset-1" >
 
 <!-- 	<link rel="stylesheet" href="//apps.bdimg.com/libs/jqueryui/1.10.4/css/jquery-ui.min.css">
 	<script src="//apps.bdimg.com/libs/jquery/1.10.2/jquery.min.js"></script>
@@ -118,7 +119,7 @@ table thead tr{
 	<input type="submit" value="submit" id="submit"/>
  </form> -->
  <form method="POST" action="">
-	<label>Date：</label><input type="text" id="datetimepicker" size="23" name="date" readonly="true" >
+	<label>Date：</label><input type="text" id="datetimepicker" size="14" name="date" readonly="true" >
 	<label >Windturbine：</label>
 		<select id="anim" name="anim">
 			{% for value in list3%}
@@ -139,7 +140,6 @@ table thead tr{
  {% endif %}
  {%if if_notexist%}
   <h3>Sorry,{{anim}} {{file_date}} is not found!</h3>
-    <h3>Read to train</h3>
  {% endif %}
 
  {%if if_post%}
@@ -212,7 +212,8 @@ table thead tr{
 			{
 			type:'category',
 			/*boundaryGap : false,*/
-			data:[{% for time in list1 %}'{{time}}',{% endfor %}]
+			data:[{% for time in date_time %}'{{time}}',{% endfor %}]
+
 		
 			}
 		],
@@ -239,7 +240,7 @@ table thead tr{
                     					}
                 				},
            				 },
-			data:[{% for speed in list2_ave %}{{speed}},{% endfor %}],
+			data:[{% for speed in ave %}{{speed}},{% endfor %}],
 			/*markPoint : {
                			 data : [
                     			{type : 'max', name: '最大值'},
@@ -266,7 +267,7 @@ table thead tr{
                     					}
                 				},
            				 },
-			data:[{% for speed in list2_exp %}{{speed}},{% endfor %}],
+			data:[{% for speed in obs %}{{speed}},{% endfor %}],
 			/*markPoint : {
                			 data : [
                     			{type : 'max', name: '最大值'},
@@ -296,7 +297,7 @@ table thead tr{
                     					}
                 				},
            				 },
-			data:[{% for speed in list2_low %}{{speed}},{% endfor %}],
+			data:[{% for speed in low %}{{speed}},{% endfor %}],
 			/*markPoint : {
                			 data : [
                     			{type : 'max', name: '最大值'},
@@ -323,7 +324,7 @@ table thead tr{
                     					}
                 				},
            				 },
-			data:[{% for speed in list2_high %}{{speed}},{% endfor %}],
+			data:[{% for speed in high %}{{speed}},{% endfor %}],
 			/*markPoint : {
                			 data : [
                     			{type : 'max', name: '最大值'},

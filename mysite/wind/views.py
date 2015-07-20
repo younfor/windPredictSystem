@@ -12,6 +12,7 @@ import os
 from txtNotAll import txtNotAll
 from txttoexcel import txt_file
 from csvToFile import csvToFile
+from csvToFile2 import csvToFile2
 
 # Create your views here.
 from django.views.generic import TemplateView
@@ -110,7 +111,7 @@ def speed(request):
     #     print list1
     #     print list2
     #     return render_to_response('wind/speed.html', {'list3':list3})
-     fileddd="/home/youtingting/model/output/original/2013_01_30min_gn/extr_dm4_wsp_at_25.29D121.58D68.50M.txt"
+     fileddd="/home/shinneyou/model/output/original/2013_01_30min_gn/extr_dm4_wsp_at_25.29D121.58D68.50M.txt"
      # fileddd="wind/excel_file/q.txt"
      txt=txt_file(fileddd,6)
      txt_list=txt.get_list()
@@ -172,41 +173,40 @@ def speed(request):
         return render_to_response('wind/speed.html', {'list3':list3})
 
 def power(request):
-     #filebase="wind/WATCFD_software/pyper_wind_power_nnet/"
+     fileave="wind/csvFile/wind prediction_out_weight ave.csv"
+     filelow="wind/csvFile/wind prediction_out_weight ave low.csv"
+     filehigh="wind/csvFile/wind prediction_out_weight ave high.csv"
+     fileExp="wind/csvFile/T6 power.txt"
+     filesum="wind/csvFile/BMMnnet_output_in-sample_t6_2013-01-03-06-30:00.csv"
      # fileddd="wind/excel_file/q.txt"
-     fileave="wind/WATCFD_software/pyper_wind_power_nnet/wind prediction_out_weight ave.csv"
-     filelow="wind/WATCFD_software/pyper_wind_power_nnet/wind prediction_out_weight ave low.csv"
-     filehigh="wind/WATCFD_software/pyper_wind_power_nnet/wind prediction_out_weight ave high.csv"
-     fileExp="wind/WATCFD_software/pyper_wind_power_nnet/T6 power.txt"
-     print fileave,filelow,filehigh,fileExp
-     if os.path.exists(fileave) and os.path.exists(filelow) and os.path.exists(filehigh) and os.path.exists(fileExp):
-        csv=csvToFile(fileave)
-        csv_list_ave=csv.get_list()
-        #print len(csv_list_ave)
-        list1=csv_list_ave
-        #print list
-        csv=csvToFile(filelow)
-        csv_list_low=csv.get_list()
-        #print len(csv_list_low)
-        csv=csvToFile(filehigh)
-        csv_list_high=csv.get_list()
-        #print len(csv_list_high)
-        txtExp=txtNotAll(fileExp,240,384)
-        list_exp=txtExp.get_list()
+     #if os.path.exists(fileave) and os.path.exists(filelow) and os.path.exists(filehigh) and os.path.exists(fileExp):
+        # csv=csvToFile(fileave)
+        # csv_list_ave=csv.get_list()
+        # #print len(csv_list_ave)
+        # list1=csv_list_ave
+        # print list1[1]
+        # csv=csvToFile(filelow)
+        # csv_list_low=csv.get_list()
+        # #print len(csv_list_low)
+        # csv=csvToFile(filehigh)
+        # csv_list_high=csv.get_list()
+        # #print len(csv_list_high)
+        # txtExp=txtNotAll(fileExp,240,384)
+        # list_exp=txtExp.get_list()
         #print list_exp
         #for a in list_exp:
-            #print a 
+           # print a 
      # dd=txt.get_chartlist(5)
      # print dd
      # txtd=txt.get_chartlist(4)
      # print txtd
      # print txt_list[0]
      #print "test1"
-     #DBhelper.getIns().getPlotWindByHeight()
+     DBhelper.getIns().getPlotWindByHeight()
      #print "test2"
-     #DBhelper.getIns().getPlotWRF()
+     DBhelper.getIns().getPlotWRF()
      #print "test3"
-     #DBhelper.getIns().getExtactWindSpeedByPoint()
+     DBhelper.getIns().getExtactWindSpeedByPoint()
      user = request.user
      if_post=0
      context={}
@@ -230,29 +230,27 @@ def power(request):
          # txtpath="/img/extr_dm4_wsp_at_25.29D121.58D68.50M.txt"
          #file_path='wind/excel_file/'+'Power'+anim+file_name+".xls"
         # file_path='wind/excel_file/'+anim
-         if os.path.exists(fileave) and os.path.exists(filelow) and os.path.exists(filehigh) and os.path.exists(fileExp):
-            csv=csvToFile(fileave)
-            csv_list_ave=csv.get_list()
-            #print len(csv_list_ave)
-            list1=csv_list_ave
-            #print list
-            csv=csvToFile(filelow)
-            csv_list_low=csv.get_list()
-            #print len(csv_list_low)
-            csv=csvToFile(filehigh)
-            csv_list_high=csv.get_list()
-            #print len(csv_list_high)
-            txtExp=txtNotAll(fileExp,240,384)
-            list_exp=txtExp.get_list()
+         if os.path.exists(filesum):
+            csv=csvToFile2(filesum)
+            obs=csv.get_list(5)
+            ave=csv.get_list(8)
+            high=csv.get_list(10)
+            low=csv.get_list(9)
+            year=csv.get_list(0)
+            month=csv.get_list(1)
+            day=csv.get_list(2)
+            hour=csv.get_list(3)
+            minute=csv.get_list(4)
+            date_time=csv.get_date(year,month,day,hour,minute)
             #print list_exp
             #for a in list_exp:
-            #    print a
+                #print a
             if_post=1
-            context={"if_post":if_post,'list1': list1, 'list2_ave': csv_list_ave,'list2_low':csv_list_low,'list2_high':csv_list_high,
-            "list2_exp":list_exp,'list3':list3,'anim':anim,'file_date':file_date,'username':user.username}
+            list1=obs
+            context={"if_post":if_post,'date_time':date_time,'ave': ave,'low':low,'high':high,
+            "obs":obs,'list3':list3,'anim':anim,'file_date':file_date,'username':user.username}
             return render_to_response('wind/power.html', context)
          else:
-            DBhelper.getIns().getPredictPower()
             if_notexist=1
             context={"if_post":if_post,'if_notexist':if_notexist,'list3':list3,'anim':anim,
             'file_date':file_date,'username':user.username}

@@ -1,2 +1,0 @@
-#!/usr/bin/env bash
-nohup python wind_powe_nnet.py &
