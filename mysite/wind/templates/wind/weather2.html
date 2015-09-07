@@ -63,6 +63,15 @@ input[type="submit"]
 	font-weight: bold;
 }
 
+input[type="text"]
+{
+	width:60px;
+}
+
+#submit{
+	width:80px;
+}
+
 a:link{
 	color: #000000;
 	 TEXT-DECORATION: none
@@ -84,8 +93,15 @@ a:hover{
 	width: 115px;
 	height: 28px;
 }
+
 #datetimepicker1,#datetimepicker2{
-	width:125px;
+	width: 135px;
+}
+
+#picDiv1,#picDiv2,#picDiv3{
+	width: 400px;
+	height: 400px;
+	margin-top: 30px;
 }
 /*.frame1{
 	height:400px;
@@ -97,32 +113,122 @@ a:hover{
 
 <h3>WindPredictSystem/<small>WeatherPredict</small></h3>
 <hr>
-<title>WeatherPredict</title></head></head>
+<title>WeatherPredict</title></head>
+ 
+</head>
 <!-- <div class="col-sm-11  col-md-11 " > -->
 <div class="col-sm-9 col-sm-offset-1 col-md-9 col-md-offset-1" >
 
 <body>
-<!-- <form method="POST" action="" >
+ <script>
+var imgFirst = "<img src= " + "'" ;
+var imgLast =   "'"+ "/>";
+function div1Click(){
+     var Dm = $("#Dm").val();
+     var Ht= $("#Ht").val();
+     var Dt= $("#datetimepicker1").val();
+     alert(Dm);
+     alert(Ht);
+     alert(Dt);
+      $.get("/wind/weatherDiv1", {'Dm':Dm,'Ht':Ht,'Dt':Dt}, function(ret){
+       	alert(ret);  
+      	var pic1 = document.getElementById("picDiv1");
+      	alert(pic1); 
+      	var img = imgFirst + ret + imgLast
+      	alert(img);
+      	pic1.innerHTML = img;
+            });
+}
+</script>
+
+ <div>
+ <ul class="nav nav-tabs" style="margin-left: 20px;">
+                        <li class="active"><a href="#tab_1" id="mouth_health_indicators"
+                            data-toggle="tab">DIV1</a></li>
+                        <li><a class="" href="#tab_2" data-toggle="tab" 
+                            id="carddiovascular_risk_assessment">DIV2</a></li>
+                        <li><a class="" href="#tab_3" data-toggle="tab" 
+                            id="exercise_care">DIV3</a></li>
+                </ul> 
+
+<div id="myTabContent" class="tab-content" style="margin-top:50px;">
+<div id="tab_1" class="tab-pane active" >
+<form method="GET">
 	<label>Dm：</label><input type="text" id="Dm" size="16" name="Dm"  required="required";>
 	<label>Ht：</label><input type="text" id="Ht" size="16" name="Ht"  required="required";>
-	<label>Nt：</label><input type="text" id="Nt" size="16" name="Nt"  required="required";>
-	<input type="submit" value="submit" id="submit" />
- </form> -->
-<form method="POST" action="">
-	<label>From：</label><input type="text" id="datetimepicker1" size="10" name="date" readonly="true" >
-	<label>To：</label><input type="text" id="datetimepicker2" size="10" name="date" readonly="true" >
-	<label>Ht：  </label><input type="text" id="Ht" size="4" name="Ht"  required="required">
-	<label >Windturbine：</label>
-		<select id="anim" name="anim">
-			{% for value in list3%}
-			<option value='{{value}}'>{{value}}</option>
-			{%endfor%}
- 
-		</select>
-		
-	<input type="submit" value="submit" id="submit" />
+	<label>Dt：</label><input type="text" id="datetimepicker1" size="10" readonly="true" name="datetimepicker1" >
+	<input type="button" value="submit" id="submit1"  onclick="div1Click()" />	
  </form> 
- <hr>
+ 	<div id="picDiv1"></div>
+ </div> 
+
+
+
+
+
+<div id="tab_2" class="tab-pane " style="margin-top:50px;">
+	<form id="fff" method="GET">
+	<label>Dm：</label><input type="text" id="Dm2" size="16" name="Dm"  required="required";>
+	<label>Lat：</label><input type="text" id="Lat" size="16" name="Ht2"  required="required";>
+	<label>Lon：</label><input type="text" id="Lon" size="16" name="Ht2"  required="required";>
+	<label>St：</label><input type="text" id="datetimepicker2" size="10" readonly="true" name="datetimepicker2" >
+	<label>Et：</label><input type="text" id="datetimepicker3" size="10" readonly="true" name="datetimepicker3" >
+	<input type="button" value="submit" id="submit2"  onclick="div2Click()" />
+ </form> 
+ <div id="picDiv2"></div>
+</div>
+<script>
+function div2Click(){
+	alert("fff");
+     var Dm = $("#Dm2").val();
+     var Lat= $("#Lat").val();
+     var Lon= $("#Lon").val();
+     var St= $("#datetimepicker2").val();
+     var Et= $("#datetimepicker3").val();
+     alert(Dm);
+     alert(Lat);
+     alert(Lon);
+     alert(St);
+     alert(Et);
+     var imgFirst = "<img src= " + "'" 
+     var imgLast =   "'"+ "/>";
+      $.get("/wind/weatherDiv2", {'Dm':Dm,'Lat':Lat,'Lon':Lon,'St':St,'Et':Et}, function(ret){
+      	 alert(ret);  
+        var pic2 = document.getElementById("picDiv2");
+        alert(pic2); 
+        var img = imgFirst + ret + imgLast
+        alert(img);
+        pic2.innerHTML = img;
+            });
+}
+ </script>
+
+
+<div id="tab_3" class="tab-pane " style="margin-top:50px;">
+<form method="GET">
+	<label>Dm：</label><input type="text" id="Dm3" size="16" name="Dm3"  required="required";>	
+	<input type="button" value="submit" id="submit1"  onclick="div3Click()" />
+ </form> 
+ <div id="picDiv3"></div>
+ </div>
+ <script>
+function div3Click(){
+	alert("fff");
+     var Dm = $("#Dm3").val();
+     alert(Dm);
+      $.get("/wind/weatherDiv3", {'Dm':Dm}, function(ret){
+      alert(ret);  
+        var pic3 = document.getElementById("picDiv3");
+        alert(pic3); 
+        var img = imgFirst + ret + imgLast
+        alert(img);
+        pic3.innerHTML = img;
+            });
+}
+ </script>
+</div>
+</div>
+ 
  {%if img%}
  
  <div class="slidediv">
@@ -142,21 +248,42 @@ a:hover{
  <script>
     //////////////////////////////////////////////////Date ////////////////////////////////////////////////////
 	$('#datetimepicker1').datetimepicker({
-		step:10
 	/*mask:'9999/19/39 29:59',*/
 	/*onChangeDateTime:logic,
 	onShow:logic*/
+	step:10
 	});
 	$('#datetimepicker2').datetimepicker({
 		step:10
 	});
+	$('#datetimepicker3').datetimepicker({
+		step:10
+	});
 	$("#submit").click(function(){
-   	 if($("#datetimepicker1").val()=="" ||$("#datetimepicker2").val()=="")
+   	
+  	  var dm=$("#Dm").val();
+  	  var ht=$("#Ht").val();
+  	  var agh=$("#Agh").val();
+
+	 if(dm=="")
   	  {
-     	 	  alert("Please input the height！");
+     	 	  alert("Please input the Dm！");
      	 	  return false;
   	  }
-  	  var ht=$("#Ht").val();
+  	   if(isNaN(dm)){
+   		 alert('Dm format is wrong, please input again');
+   		 return false;
+	}
+
+	if(agh=="")
+  	  {
+     	 	  alert("Please input the agh！");
+     	 	  return false;
+  	  }
+  	   if(isNaN(agh)){
+   		 alert('Agh format is wrong, please input again');
+   		 return false;
+	}
   	 if(ht=="")
   	  {
      	 	  alert("Please input the height！");
@@ -166,15 +293,22 @@ a:hover{
    		 alert('height format is wrong, please input again');
    		 return false;
 	}
+	 if($("#datetimepicker1").val()=="" ||$("#datetimepicker2").val()=="")
+  	  {
+     	 	  alert("Please input the date！");
+     	 	  return false;
+  	  }
+ 	
+	
 	});
 </script>
 
     <script type="text/javascript">
     //////////////////////////////////////////////Speed css//////////////////////////////////////////////////////
      	  $('#WeatherPredict').attr('class','nav nav-list menu-second');
-		  $('#weather').css('display','block');
-	  	  $('#weather').css('background-color','#aac3ec');
-	 	  $('#weather').css('color','#322227');
+		  $('#seweather').css('display','block');
+	  	  $('#seweather').css('background-color','#aac3ec');
+	 	  $('#seweather').css('color','#322227');
 
     //////////////////////////////////////////////Speed css//////////////////////////////////////////////////////
 
@@ -244,3 +378,4 @@ changepic();
     </script>
 
 {% endblock content %}
+
