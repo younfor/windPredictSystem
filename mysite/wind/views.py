@@ -389,7 +389,7 @@ def seweather(request):
 
 def weatherDiv1(request):
     print "11FFFFFFFF"
-    COMMPATH = "/E/dwen/model/output/original/china_lat-5.01lon81.43_lat33.23lon174.14-2013-feb/"
+    COMMPATH = "/E/dwen/model/output/original/"
     Dm = request.GET.get('Dm')
     Ht = request.GET.get('Ht')
     Dt= request.GET.get('Dt')
@@ -398,7 +398,7 @@ def weatherDiv1(request):
     cmd.execCmd(0,Dm,Ht,Dt)
     #here is imgPath , please focus on it !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     #just like /E/dwen/model/output/original/china_lat-5.01lon81.43_lat33.23lon174.14-2013-feb/windfield2013-02-04_12:30:00_dm1-200.5m.png
-    imgPath= "/img/"+'wind_field-'+Dt+'_dm'+Dm+'-'+Ht+'m.png'
+    imgPath= "/img/"+'wind_field-'+getDate(Dt)+'_dm'+Dm+'-'+Ht+'m.png'
     print imgPath
     #imgPath = "/img/4.jpg"
     return HttpResponse(
@@ -408,7 +408,7 @@ def weatherDiv1(request):
 
 
 def weatherDiv2(request):
-    COMMPATH = "/E/dwen/model/output/original/china_lat-5.01lon81.43_lat33.23lon174.14-2013-feb/"
+    COMMPATH = "/E/dwen/model/output/original/"
     Dm = request.GET.get('Dm')
     agh=68.5
     Lat = request.GET.get('Lat')
@@ -428,7 +428,7 @@ def weatherDiv2(request):
         content_type='application/json')
 
 def weatherDiv3(request):
-    COMMPATH = "/E/dwen/model/output/original/china_lat-5.01lon81.43_lat33.23lon174.14-2013-feb/"
+    COMMPATH = "/E/dwen/model/output/original/"
     print "33FFFFFF"
     Dm = request.GET.get('Dm') 
     print Dm
