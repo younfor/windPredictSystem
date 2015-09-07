@@ -398,7 +398,7 @@ def weatherDiv1(request):
     cmd.execCmd(0,Dm,Ht,Dt)
     #here is imgPath , please focus on it !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     #just like /E/dwen/model/output/original/china_lat-5.01lon81.43_lat33.23lon174.14-2013-feb/windfield2013-02-04_12:30:00_dm1-200.5m.png
-    imgPath= "/img/"+'wind_field-'+getDate(Dt)+'_dm'+Dm+'-'+Ht+'m.png'
+    imgPath= "/img/"+'wind_field'+getDate(Dt)+'_dm'+Dm+'-'+Ht+'m.png'
     print imgPath
     #imgPath = "/img/4.jpg"
     return HttpResponse(
