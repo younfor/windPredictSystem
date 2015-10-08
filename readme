@@ -1,0 +1,8 @@
+登陆后
+cd /E/chenqi/windPredictSystem/mysite/
+sudo su
+./run.sh
+
+然后在浏览器输入网址
+http://cfdpc50.uwaterloo.ca:8000/wind/seweather
+就可以了
