@@ -118,8 +118,8 @@ table thead tr{
 		</select>
 	<input type="submit" value="submit" id="submit"/>
  </form> -->
- <form method="POST" action="">
-	<label>Date：</label><input type="text" id="datetimepicker" size="14" name="date" readonly="true" >
+ <form id="form1" method="POST" action="">
+	<label>Date：</label><input type="text" id="datetimepicker" size="14" name="datetimepicker" readonly="true" >
 	<label >Windturbine：</label>
 		<select id="anim" name="anim">
 			{% for value in list3%}
@@ -134,13 +134,12 @@ table thead tr{
 	<a  href="/img/extr_dm4_wsp_at_25.29D121.58D68.50M.txt.tar.gz">下载文件</a>
 	{% endif %}
  </form>
- <br>  March 20  16:00
  <hr>
  {%if if_post%}
-  <h3>{{anim}}___{{file_date}}</h3>
+  <h3>{{anim}}</h3>
  {% endif %}
  {%if if_notexist%}
-  <h3>Sorry,{{anim}} {{file_date}} is not found!</h3>
+  <h3>Sorry,{{anim}}is not found!</h3>
  {% endif %}
 
  {%if if_post%}
@@ -170,9 +169,9 @@ table thead tr{
  </div> 
 
  </body>
-  <script language="JavaScript" type="text/javascript" src="{% static 'wind/js/jquery.js' %}"></script>
 <script language="JavaScript" type="text/javascript" src="{% static 'wind/js/datetimepicker.js' %}"></script>
-    <script type="text/javascript">
+   
+   <script type="text/javascript">
         // Step:3 echarts & zrender as a Global Interface by the echarts-plain.js.
         // Step:3 echarts和zrender被echarts-plain.js写入为全局接口
 	var myChart = echarts.init(document.getElementById('main'));
@@ -352,7 +351,7 @@ table thead tr{
 	});
 */
 	$('#datetimepicker').datetimepicker({
-		step:10
+		step:30
 	/*mask:'9999/19/39 29:59',*/
 	/*onChangeDateTime:logic,
 	onShow:logic*/
@@ -360,15 +359,20 @@ table thead tr{
    //////////////////////////////////////////////////Date /////////////////////////////////////////////////////
 
 
-
-
     //////////////////////////////////////////////////Date Input Box Check!/////////////////////////////////
 	$("#submit").click(function(){
-   	 if($("#datetimepicker").val()=="")
-  	  {
-     	 	  alert("Please input the date！");
-     	 	  return false;
-  	  }
+   	$("#form1").validate({
+	  rules:{
+	  datetimepicker:"required",
+	},
+	messages:{
+	  datetimepicker: "",
+	}
+	});  //表单验证
+	if(!$("#form1").valid()){
+	alert("请正确填写表单！");
+	return false;
+	}
 	});
     //////////////////////////////////////////////////Date Input Box Check!/////////////////////////////////
 	</script>

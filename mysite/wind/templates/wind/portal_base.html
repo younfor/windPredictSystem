@@ -12,11 +12,14 @@
 <link href="{% static 'wind/css/mapstyle.css' %}" rel="stylesheet" type="text/css"/>
 <!-- <link rel="stylesheet" href="{% static 'wind/css/jquery-ui.css' %}"/> -->
 <link rel="stylesheet" href="{% static 'wind/css/jquery.datetimepicker.css' %}"/>
+<link rel="stylesheet" href="{% static 'wind/css/validate_input.css' %}"/>
 
 <!--引入脚本是一定要先引入jquery,因为bootstrap.js是基于jquery.js的-->
 <script language="JavaScript" type="text/javascript" src="{% static 'wind/js/jquery-1.10.2.min.js' %}"></script>
 <script language="JavaScript" type="text/javascript" src="{% static 'wind/js/bootstrap.min.js' %}"></script>
 <script language="JavaScript" type="text/javascript" src="{% static 'wind/js/echarts-all.js' %}"></script>
+<script language="JavaScript" type="text/javascript" src="{% static 'wind/js/jquery.validate.min.js' %}"></script>
+<script language="JavaScript" type="text/javascript" src="{% static 'wind/js/jquery.metadata.js' %}"></script>
 <!-- <script language="JavaScript" type="text/javascript" src="{% static 'wind/js/bootstrap-datetimepicker.fr.js"></script> -->
 <!-- <script language="JavaScript" type="text/javascript" src="{% static 'wind/js/datetimepicker.js' %}"></script> -->
 <!-- <script language="JavaScript" type="text/javascript" src="{% static 'wind/js/jquery.js' %}"></script> -->
@@ -153,7 +156,7 @@ google.maps.event.addDomListener(window, 'load', initialize);
 					 </li> -->
 					 
 					  <li class="sidebar-menu">
-						<a href="#WindPredict" class="nav-header menu-first collapsed" data-toggle="collapse">WindPredict</a>
+						<a href="#WindPredict" class="nav-header menu-first collapsed" data-toggle="collapse">Statistical model prediction</a>
 						<ul id="WindPredict" class="nav nav-list collapse  menu-second">
 							<li  ><a id="speed" href="{% url 'wind.views.speed'%}">WindSpeed</a></li>
 
@@ -166,9 +169,9 @@ google.maps.event.addDomListener(window, 'load', initialize);
 					</li>
 					<!--  <li  ><a id="weather" href="{% url 'wind.views.weather'%}">WeatherPredict</a></li> -->
 					 <li class="sidebar-menu">
-						<a href="#WeatherPredict" class="nav-header menu-first collapsed" data-toggle="collapse">WeatherPredict</a>
+						<a href="#WeatherPredict" class="nav-header menu-first collapsed" data-toggle="collapse">Physical model prediction</a>
 						<ul id="WeatherPredict" class="nav nav-list collapse  menu-second">
-							<li  ><a id="weather" href="{% url 'wind.views.weather'%}">WeatherPredict1</a></li>
+							<li  ><a id="weather" href="{% url 'wind.views.weather'%}">Wind field animation</a></li>
 							<!-- <li><a href="?id=WindPredict2">Dampness</a></li>
 							<li><a href="?id=WindPredict3">Pressure</a></li> -->
 							<li  ><a id="seweather" href="{% url 'wind.views.seweather'%}">WeatherPredict2</a></li>

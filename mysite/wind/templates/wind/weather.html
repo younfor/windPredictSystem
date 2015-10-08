@@ -108,18 +108,11 @@ a:hover{
 	<label>Nt：</label><input type="text" id="Nt" size="16" name="Nt"  required="required";>
 	<input type="submit" value="submit" id="submit" />
  </form> -->
-<form method="POST" action="">
-	<label>From：</label><input type="text" id="datetimepicker1" size="10" name="date" readonly="true" >
-	<label>To：</label><input type="text" id="datetimepicker2" size="10" name="date" readonly="true" >
+<form id= "form1"method="POST" action="">
+	<label>Domain：</label><input type="text" id="domain" size="6" name="domain" required="required" >
+	<label>From：</label><input type="text" id="datetimepicker1" size="10" name="datetimepicker1" readonly="true" >
+	<label>To：</label><input type="text" id="datetimepicker2" size="10" name="datetimepicker2" readonly="true" >
 	<label>Ht：  </label><input type="text" id="Ht" size="4" name="Ht"  required="required">
-	<label >Windturbine：</label>
-		<select id="anim" name="anim">
-			{% for value in list3%}
-			<option value='{{value}}'>{{value}}</option>
-			{%endfor%}
- 
-		</select>
-		
 	<input type="submit" value="submit" id="submit" />
  </form> 
  <hr>
@@ -142,30 +135,33 @@ a:hover{
  <script>
     //////////////////////////////////////////////////Date ////////////////////////////////////////////////////
 	$('#datetimepicker1').datetimepicker({
-		step:10
+		step:30
 	/*mask:'9999/19/39 29:59',*/
 	/*onChangeDateTime:logic,
 	onShow:logic*/
 	});
 	$('#datetimepicker2').datetimepicker({
-		step:10
+		step:30
 	});
 	$("#submit").click(function(){
-   	 if($("#datetimepicker1").val()=="" ||$("#datetimepicker2").val()=="")
-  	  {
-     	 	  alert("Please input the height！");
-     	 	  return false;
-  	  }
-  	  var ht=$("#Ht").val();
-  	 if(ht=="")
-  	  {
-     	 	  alert("Please input the height！");
-     	 	  return false;
-  	  }
-  	   if(isNaN(ht)){
-   		 alert('height format is wrong, please input again');
-   		 return false;
+   	$("#form1").validate({
+	  rules:{
+	  domain: "required",
+	  datetimepicker1:"required",
+	  datetimepicker2:"required",
+	  Ht:"required",
+	},
+	messages:{
+	   domain: "",
+	  datetimepicker1:"",
+	  datetimepicker2:"",
+	  Ht:"",
 	}
+});  //表单验证
+if(!$("#form1").valid()){
+alert("请正确填写表单！");
+return false;
+}
 	});
 </script>
 
@@ -180,33 +176,12 @@ a:hover{
 
     ////////////////////////////////////////input alert//////////////////////////////////////////////////
   </script>
-  <script type="text/javascript">
-  	/*$("#submit").click(function(){
-  		var dm=$("#Dm").val();
-  		var ht=$("#Ht").val();
-  		var nt=$("#Nt").val();
-
-   	 if($("#Dm").val()==""||$("#Ht").val()==""||$("#Nt").val()=="")
-  	  {
-     	 	  alert("Please input the parameter！");
-     	 	  return false;
-  	  }
-  	 if(isNaN(dm)||isNaN(ht)||isNaN(nt)){
-   		 alert('Parameter format is wrong, please input again');
-   		 return false;
-	}
-	});*/
-////////////////////////////////////////input alert//////////////////////////////////////////////////
-  </script>
-
-
-
      <script type="text/javascript">
 
  ////////////////////////////////////////speedchange//////////////////////////////////////////////////
 
 	 var t;
- 	 var speed = 6;//图片切换速度
+ 	 var speed = 3;//图片切换速度  the faster,the bigger
  	 var nowlan=0;//图片开始时间
  	 var mul=50;
 

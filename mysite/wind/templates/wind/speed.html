@@ -3,7 +3,7 @@
 {% load staticfiles %}
 <style type="text/css">
 #main{
-	height:250px;
+	height:380px;
 	width:700px;
 	border:1px solid #ccc;
 	padding:0px;
@@ -11,7 +11,7 @@
 
 .tbl{
 	height:300px;
-	width:700px;
+	width:800px;
 	border:1px solid #ccc;
 	padding:10px;
 	overflow-y:scroll
@@ -59,16 +59,36 @@ caption{
 	border:1px solid #69c;
 	line-height: 19px;
 	text-align:center;
-	width: 110px;
+	width: 130px;
 }
 .ithead {
 	background-color: #dddddd;
 	font-size: 16px;
 	font-weight: bold;
 }
+/*table .ithead th{
+	border:3px solid #69c;
+	line-height: 19px;
+	text-align:center;
+	width: 130px;
+	font-size: 16px;
+}
+table thead tr{
+	border:1px solid #69c;
+}
+.ithead{
+	border:1px solid #69c;
+}
+.ithead{
+	background-color:#dddddd;
+	position:relative;	
+}*/
+
+
+
 </style>
-<title>WindPower</title>
-<h3>WindPredictSystem/<small>Wind Power</small></h3>
+<title>WindSpeed</title>
+<h3>WindPredictSystem/<small>Wind Speed</small></h3>
 <hr width="100%">
 
 <!-- <div class="col-sm-11  col-md-11 " > -->
@@ -98,8 +118,8 @@ caption{
 		</select>
 	<input type="submit" value="submit" id="submit"/>
  </form> -->
- <form method="POST" action="">
-	<label>Date：</label><input type="text" id="datetimepicker" size="14" name="date" readonly="true" >
+ <form id="form1" method="POST" action="">
+	<label>Date：</label><input type="text" id="datetimepicker" size="14" name="datetimepicker" readonly="true" >
 	<label >Windturbine：</label>
 		<select id="anim" name="anim">
 			{% for value in list3%}
@@ -114,22 +134,21 @@ caption{
 	<a  href="/img/extr_dm4_wsp_at_25.29D121.58D68.50M.txt.tar.gz">下载文件</a>
 	{% endif %}
  </form>
- <br>March 20  16:00
  <hr>
  {%if if_post%}
-  <h3>{{anim}}___{{file_date}}</h3>
+  <h3>{{anim}}</h3>
  {% endif %}
  {%if if_notexist%}
-  <h3>Sorry,{{anim}} {{file_date}} is not found!</h3>
+  <h3>Sorry,{{anim}}is not found!</h3>
  {% endif %}
 
  {%if if_post%}
  <div id="main"></div> 
  <hr>
- <div class="tbl">
+ <!-- <div class="tbl">
  <table class="itable">
  <caption>能量控制具体数据</caption>
- <tr class="ithead" id="ithead">
+ <tr class="ithead">
  <td>year</td><td>rrrr</td><td>1eee1</td><td>1www</td><td>ggggr</td><td>1vvvv1</td></tr>
 
  <tbody>
@@ -143,15 +162,15 @@ caption{
  </tbody>
  
  </table>
- </div>
+ </div> -->
  {% endif %}
 
  <!-- <iframe class="frame1" src="/img/power.xls" name=iframe1></iframe> -->
  </div> 
 
  </body>
-  <script language="JavaScript" type="text/javascript" src="{% static 'wind/js/jquery.js' %}"></script>
 <script language="JavaScript" type="text/javascript" src="{% static 'wind/js/datetimepicker.js' %}"></script>
+   
    <script type="text/javascript">
         // Step:3 echarts & zrender as a Global Interface by the echarts-plain.js.
         // Step:3 echarts和zrender被echarts-plain.js写入为全局接口
@@ -159,7 +178,7 @@ caption{
 	option={
 
 		title:{
-			text:'风速信息'
+			text:'风功率'
 		},
 		tooltip : {
               		  trigger: 'axis'
@@ -167,32 +186,34 @@ caption{
 		legend:{
 			//orient:'horizontal',
 			//backgroundColor:'#eee',
-			data:['平均风速']
+			data:['Average','EXP','low','high']
 			},
 
-		calculable : true,
-		toolbox: {
+	calculable : true,
+	toolbox: {
                 show : true,
                 feature : {
-                    mark : {show: true},
-                    dataView : {show: true, readOnly: false},
+                  /*  mark : {show: true},*/
+                    dataZoom:{show:true},
+                 /*   dataView : {show: true, readOnly: false},*/
                     magicType : {show: true, type: ['line', 'bar']},
                     restore : {show: true},
                     saveAsImage : {show: true}
                 }
             },
 
-		/*xAxis:[
-			{
-			type:'category',
-			data:['{{list1.0}}','周二','周三','周四','周五','周六','周日']
-		
-			}
-		],*/
+        	 dataZoom : {
+       		 show : true,
+       		 realtime: true,
+       		 start : 0,
+       		 end : 100
+   		 },
 		xAxis:[
 			{
 			type:'category',
-			data:[{% for time in list1 %}'{{time}}',{% endfor %}]
+			/*boundaryGap : false,*/
+			data:[{% for time in date_time %}'{{time}}',{% endfor %}]
+
 		
 			}
 		],
@@ -201,38 +222,127 @@ caption{
 			{
 			type:'value',
 			axisLabel:{
-				formatter:'{value} 米/秒'},
-			},
-
-			
+				formatter:'{value} KJ'},
+			},			
 		],
 		
 		series:[
 			{
-			name:'平均风速',
+			name:'Average',
 			type:'line',
-			data:[{% for speed in list2 %}{{speed}},{% endfor %}],
-			markPoint : {
+			symbol:'none',
+			itemStyle: {
+               			normal: {
+                   		 		color: 'red',
+                   					 lineStyle: {        // 系列级个性化折线样式
+                      					 width: 1,
+                      					 type: 'solid'
+                    					}
+                				},
+           				 },
+			data:[{% for speed in ave %}{{speed}},{% endfor %}],
+			/*markPoint : {
                			 data : [
                     			{type : 'max', name: '最大值'},
                     			{type : 'min', name: '最小值'}
                				 ]
-          			   },
-			 markLine : {
+          			   },*/
+			/* markLine : {
               			  data : [
                    			 {type : 'average', name: '平均值'}
                				 ]
-         			   }
+         			   }*/
 			},
-		
 
+			{
+			name:'EXP',
+			type:'line',
+			symbol:'none',
+			itemStyle: {
+               			normal: {
+                   		 		color: 'blue',
+                   					 lineStyle: {        // 系列级个性化折线样式
+                      					 width: 1,
+                      					 type: 'solid'
+                    					}
+                				},
+           				 },
+			data:[{% for speed in obs %}{{speed}},{% endfor %}],
+			/*markPoint : {
+               			 data : [
+                    			{type : 'max', name: '最大值'},
+                    			{type : 'min', name: '最小值'}
+               				 ]
+          			   },*/
+			/* markLine : {
+              			  data : [
+                   			 {type : 'average', name: '平均值'}
+               				 ]
+         			   }*/
+			},
+
+			
+
+
+			{
+			name:'low',
+			type:'line',
+			symbol:'none',
+			itemStyle: {
+               			normal: {
+                   		 		color: 'purple',
+                   					 lineStyle: {        // 系列级个性化折线样式
+                      					 width: 1,
+                      					 type: 'dashed'
+                    					}
+                				},
+           				 },
+			data:[{% for speed in low %}{{speed}},{% endfor %}],
+			/*markPoint : {
+               			 data : [
+                    			{type : 'max', name: '最大值'},
+                    			{type : 'min', name: '最小值'}
+               				 ]
+          			   },*/
+			/* markLine : {
+              			  data : [
+                   			 {type : 'average', name: '平均值'}
+               				 ]
+         			   }*/
+			},
+
+			{
+			name:'high',
+			type:'line',
+			symbol:'none',
+			itemStyle: {
+               			normal: {
+                   		 		color: 'green',
+                   					 lineStyle: {        // 系列级个性化折线样式
+                      					 width: 1,
+                      					 type: 'dashed'
+                    					}
+                				},
+           				 },
+			data:[{% for speed in high %}{{speed}},{% endfor %}],
+			/*markPoint : {
+               			 data : [
+                    			{type : 'max', name: '最大值'},
+                    			{type : 'min', name: '最小值'}
+               				 ]
+          			   },*/
+			/* markLine : {
+              			  data : [
+                   			 {type : 'average', name: '平均值'}
+               				 ]
+         			   }*/
+			},
 		],
 };
-
 	myChart.setOption(option);
+	
 
     </script>
-    
     <script>
     //////////////////////////////////////////////////Date ////////////////////////////////////////////////////
 	/*$(function() {
@@ -241,7 +351,7 @@ caption{
 	});
 */
 	$('#datetimepicker').datetimepicker({
-		step:10
+		step:30
 	/*mask:'9999/19/39 29:59',*/
 	/*onChangeDateTime:logic,
 	onShow:logic*/
@@ -249,15 +359,20 @@ caption{
    //////////////////////////////////////////////////Date /////////////////////////////////////////////////////
 
 
-
-
     //////////////////////////////////////////////////Date Input Box Check!/////////////////////////////////
 	$("#submit").click(function(){
-   	 if($("#datetimepicker").val()=="")
-  	  {
-     	 	  alert("Please input the date！");
-     	 	  return false;
-  	  }
+   	$("#form1").validate({
+	  rules:{
+	  datetimepicker:"required",
+	},
+	messages:{
+	  datetimepicker: "",
+	}
+	});  //表单验证
+	if(!$("#form1").valid()){
+	alert("请正确填写表单！");
+	return false;
+	}
 	});
     //////////////////////////////////////////////////Date Input Box Check!/////////////////////////////////
 	</script>
@@ -266,36 +381,10 @@ caption{
      <script type="text/javascript">
  //////////////////////////////////////////////Speed css//////////////////////////////////////////////////////
      	  $('#WindPredict').attr('class','nav nav-list menu-second');
-		  $('#speed').css('display','block');
-	  	  $('#speed').css('background-color','#aac3ec');
-	 	  $('#speed').css('color','#322227');
+		  $('#power').css('display','block');
+	  	  $('#power').css('background-color','#aac3ec');
+	 	  $('#power').css('color','#322227');
 //////////////////////////////////////////////Speed css//////////////////////////////////////////////////////
      </script>
-     <script type="text/javascript">
-/*var pre_scrollTop=0;//滚动条事件之前文档滚动高度
-var pre_scrollLeft=0;//滚动条事件之前文档滚动宽度
-var obj_th;
- 
-window.onload =function () {
-    pre_scrollTop=(document.documentElement.scrollTop || document.body.scrollTop);
-    pre_scrollLeft=(document.documentElement.scrollLeft || document.body.scrollTop);
-    obj_th=document.getElementsByName("ithead");
-/*    alert(obj_th);*/
-};
-
-/*window.onscroll = function(){
-    if(pre_scrollTop != (document.documentElement.scrollTop || document.body.scrollTop)){
-        //滚动了竖直滚动条
-        pre_scrollTop=(document.documentElement.scrollTop || document.body.scrollTop);
-        if(obj_th){
-            obj_th.style.top=(document.documentElement.scrollTop || document.body.scrollTop)+"px";
-        }
-    }
-    else if(pre_scrollLeft != (document.documentElement.scrollLeft || document.body.scrollLeft)){
-        //滚动了水平滚动条
-        pre_scrollLeft=(document.documentElement.scrollLeft || document.body.scrollLeft);
-    }
-};*/
-</script>
 
 {% endblock content %}
