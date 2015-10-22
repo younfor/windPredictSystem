@@ -16,8 +16,10 @@ from csvToFile import csvToFile
 from csvToFile2 import csvToFile2
 from CmdExec import getDate
 from CmdExec import CmdExec
+from colunmTxt import colunmTxt
 # Create your views here.
 from django.views.generic import TemplateView
+import time
 
 
 class CommMixin(object):
@@ -211,7 +213,8 @@ def power(request):
         # print a[0]
          # txtpath="/img/extr_dm4_wsp_at_25.29D121.58D68.50M.txt"
          #file_path='wind/excel_file/'+'Power'+anim+file_name+".xls"
-        # file_path='wind/excel_file/'+anim
+         # file_path='wind/excel_file/'+anim
+         
          if os.path.exists(filesum):
             csv=csvToFile2(filesum)
             obs=csv.get_list(5)
@@ -320,9 +323,8 @@ def weather(request):
         print Dm,Ht,Fr,To
         imgpath=["/img/extract_point_wind_timeseries.ncl.png",
         "/img/extract_wind_stream_field_h.ncl.png",
-        "/img/windfield2013-02-04_12:30:00_dm1-200.5m.png",
-        "/img/windspeed_dm1lat25.29lon121.58h.png",
-        "/img/wrf_map.ncl.png"]
+        "/img/extract_temperature_contour_h.ncl.png",
+        "/img/extract_humidity_contour_h.ncl.png"]
         print imgpath  
         return render_to_response('wind/weather.html',{"img":img,"imgpath":imgpath})
         # return render(request, 'wind/weather.html')
@@ -370,6 +372,10 @@ def seweather(request):
         # return render(request, 'wind/weather.html')
 
 def weatherDiv1(request):
+    i = 0;
+    while (i<=100000):
+        print i
+        i=i+1
     print "11FFFFFFFF"
     COMMPATH = "/E/dwen/model/output/original/"
     Dm = request.GET.get('Dm')
@@ -390,6 +396,10 @@ def weatherDiv1(request):
 
 
 def weatherDiv2(request):
+    # i = 0;
+    # while (i<=100000):
+    #     print i
+    #     i=i+1
     COMMPATH = "/E/dwen/model/output/original/"
     Dm = request.GET.get('Dm')
     agh=68.5
@@ -403,14 +413,39 @@ def weatherDiv2(request):
     lonfloat=float(Lon)
     cmd=CmdExec.getIns()
     cmd.execCmd(1,Dm,agh,Lat,Lon,St,Et)
+    #filePre = '/E/dwen/model/output/original'    
+    filePre ='/home/shinneyou/model/output/original/2013_01_30min_gn'
     imgPath="/img/"+'windspeed_dm'+Dm+'lat'+("%.2f" % latfloat)+'lon'+("%.2f" % lonfloat)+'h68.50m'+getDate(St)+'-'+getDate(Et)+'.png'
-    #imgPath = "/img/4.jpg"
-    print imgPath
+    txtPath="/"+'windspeed_dm'+Dm+'lat'+("%.2f" % latfloat)+'lon'+("%.2f" % lonfloat)+'h68.50m'+getDate(St)+'-'+getDate(Et)+'.txt'
+    print "a"
+    b=filePre + txtPath
+    print b
+    txtResult = colunmTxt(filePre + txtPath)
+    Ydata = txtResult.getColunm(5)
+    year = txtResult.getColunm(0)
+    month = txtResult.getColunm(1)
+    day = txtResult.getColunm(2)
+    hour = txtResult.getColunm(3)
+    minute = txtResult.getColunm(4)
+    Xdata = txtResult.get_date(year,month,day,hour,minute)
+    l = len(Ydata)
+    a=[ [ ] ] * 2
+    a[0]=Xdata
+    a[1]=Ydata
+    arrayString = map(str,a)
+    print arrayString
+    #b = json.dumps(a)
+    #print b
+    imgPath = "/img/4.jpg"
     return HttpResponse(
-        json.dumps(imgPath),
+        json.dumps(arrayString),
         content_type='application/json')
 
 def weatherDiv3(request):
+    i = 0;
+    while (i<=100000):
+        print i
+        i=i+1
     COMMPATH = "/E/dwen/model/output/original/"
     print "33FFFFFF"
     Dm = request.GET.get('Dm') 
@@ -418,6 +453,7 @@ def weatherDiv3(request):
     cmd=CmdExec.getIns()
     cmd.execCmd(2,Dm)
     imgPath="/img/"+'WRF_map_dm'+Dm+'.png'
+    #imgPath= "/img/extract_point_wind_timeseries.ncl.png"
     print imgPath
     return HttpResponse(
         json.dumps(imgPath),

@@ -5,6 +5,7 @@
 <script language="JavaScript" type="text/javascript" src="{% static 'wind/js/jquery-ui.js' %}"></script>
 <!-- <script language="JavaScript" type="text/javascript" src="{% static 'wind/js/jquery.js' %}"></script> -->
 <script language="JavaScript" type="text/javascript" src="{% static 'wind/js/datetimepicker.js' %}"></script>
+<script language="JavaScript" type="text/javascript" src="{% static 'wind/js/myJs/weather2.js' %}"></script>
 <style type="text/css">
 #slider{
    	position: absolute;
@@ -98,12 +99,31 @@ a:hover{
 	width: 135px;
 }
 
-#picDiv1,#picDiv2,#picDiv3{
+#picDiv1,#picDiv3{
 	width: 400px;
 	height: 400px;
 	margin-top: 30px;
 }
+#picDiv2{
+	width: 800px;
+	height: 400px;
+	margin-top: 30px;
+	padding:0px;
+}
 
+.thumbImage img{ 
+MAX-WIDTH: 240%!important;HEIGHT: auto!important;width:expression(this.width > 600 ? "600px" : this.width)!important;
+} 
+.thumbImage {WIDTH: 600px;} 
+*html.thumbImage img{ 
+width:expression(this.width>600&&this.width>this.height?450:auto); 
+height:expresion(this.height>450?450:auto); 
+}
+
+.strongZ{
+    font-size: 14px;
+    font-weight: bold;
+}
 
 
 /*.frame1{
@@ -113,7 +133,6 @@ a:hover{
 	padding:10px;
 }*/
 </style>
-
 <h3>WindPredictSystem/<small>WeatherPredict</small></h3>
 <hr>
 <title>WeatherPredict</title></head>
@@ -123,166 +142,50 @@ a:hover{
 <div class="col-sm-9 col-sm-offset-1 col-md-9 col-md-offset-1" >
 
 <body>
-
-
  <div>
  <ul class="nav nav-tabs" style="margin-left: 20px;">
-                        <li class="active"><a href="#tab_1" id="mouth_health_indicators"
+                        <li class="active strongZ"><a href="#tab_1"
                             data-toggle="tab">Wind field prediction</a></li>
-                        <li><a class="" href="#tab_2" data-toggle="tab" 
-                            id="carddiovascular_risk_assessment">Wind speed time series prediction</a></li>
-                        <li><a class="" href="#tab_3" data-toggle="tab" 
-                            id="exercise_care">Domain information</a></li>
+                        <li><a class="strongZ" href="#tab_2" class="strongZ" data-toggle="tab" 
+                           >Wind speed time series prediction</a></li>
+                        <li><a class="strongZ" href="#tab_3" class="strongZ" data-toggle="tab" >
+                        Domain information</a></li>
                 </ul> 
+                <hr>
+           
 
-<div id="myTabContent" class="tab-content" style="margin-top:50px;">
+<div id="myTabContent" class="tab-content" style="margin-top:30px;">
 <div id="tab_1" class="tab-pane active" >
 <form id="div1" method="GET">
-	<label>Domain：</label><input type="text" id="Dm" size="16" name="Dm"  required="required";>
-	<label>Above ground height(m)：</label><input type="text" id="Ht" size="16" name="Ht"  required="required";>
-	<label>Starting time：</label><input type="text" id="datetimepicker1" size="10" readonly="true" name="datetimepicker1" >
+	<label>Domain：</label><input type="text" id="Dm" value='1' size="16" name="Dm"  required="required";>
+	<label>Above ground height(m)：</label><input type="text" value='100' id="Ht" size="16" name="Ht"  required="required";>
+	<label>Starting time：</label><input type="text" id="datetimepicker1" value='2013/02/06 12:00' size="10" readonly="true" name="datetimepicker1" >
 	<input type="button" value="submit" id="submit1"  onclick="div1Click()" />	
  </form> 
- 	<div id="picDiv1"></div>
+ 	<div id="picDiv1" class="thumbImage"></div>
  </div> 
 
-  <script>
-var imgFirst = "<img src= " + "'" ;
-var imgLast =   "'"+ "/>";
-function div1Click(){
-     $("#div1").validate({
-    rules:{
-   Dm: "required",
-   Ht: "required",
-   datetimepicker1: "required",
-  },
-messages:{
-  Dm: "",
-   Ht: "",
-  datetimepicker1: "",
-}
-});  //表单验证
-if(!$("#div1").valid()){
-alert("请正确填写表单！");
-return false;
-}
-     var Dm = $("#Dm").val();
-     var Ht= $("#Ht").val();
-     var Dt= $("#datetimepicker1").val();
-     alert(Dm);
-     alert(Ht);
-     alert(Dt);
-      $.get("/wind/weatherDiv1", {'Dm':Dm,'Ht':Ht,'Dt':Dt}, function(ret){
-        alert(ret);  
-        var pic1 = document.getElementById("picDiv1");
-        alert(pic1); 
-        var img = imgFirst + ret + imgLast
-        alert(img);
-        pic1.innerHTML = img;
-            });
-}
-</script>
 
-
-
-
-
-<div id="tab_2" class="tab-pane " style="margin-top:50px;">
+<div id="tab_2" class="tab-pane " style="margin-top:30px;">
 	<form id="div2" method="GET">
-	<label>Domain：</label><input type="text" id="Dm2" size="16" name="Dm2"  required="required";>
-	<label>Latitude(°)：</label><input type="text" id="Lat" size="16" name="Lat"  required="required";>
-	<label>Longitude(°)：</label><input type="text" id="Lon" size="16" name="Lon"  required="required";>
-      <label>Above ground height(m)：</label><input type="text" id="Agh" size="16" name="Agh"  required="required";><br>
-	<label>Sartingtime：</label><input type="text" id="datetimepicker2" size="10" readonly="true" name="datetimepicker2" >
-	<label>Endtime：</label><input type="text" id="datetimepicker3" size="10" readonly="true" name="datetimepicker3" >
+	<label>Domain：</label><input type="text" id="Dm2" value='1' size="16" name="Dm2"  required="required";>
+	<label>Latitude(°)：</label><input type="text" id="Lat" value="25.00" size="16" name="Lat"  required="required";>
+	<label>Longitude(°)：</label><input type="text" id="Lon" value="120.00" size="16" name="Lon"  required="required";>
+      <label>Above ground height(m)：</label><input type="text" value='68.5' id="Agh" size="16" name="Agh"  required="required";><br><br>
+	<label>Startingtime：</label><input type="text" id="datetimepicker2" value="2013/02/06 01:00" size="10" readonly="true" name="datetimepicker2" >
+	<label>Endtime：</label><input type="text" id="datetimepicker3" value="2013/02/08 01:00" size="10" readonly="true" name="datetimepicker3" >
 	<input type="button" value="submit" id="submit2"  onclick="div2Click()" />
  </form> 
- <div id="picDiv2"></div>
+ 	<div id="picDiv2" class="thumbImage"></div>
 </div>
-<script>
-function div2Click(){
-     $("#div2").validate({
-    rules:{
-   Dm2: "required",
-   Lat: "required",
-   Lon:"required",
-   Agh: "required",
-   datetimepicker2: "required",
-   datetimepicker3: "required",
-  },
-messages:{
-  Dm2: "",
-   Dm2: "",
-   Lat: "",
-   Lon:"",
-   Agh: "",
-   datetimepicker2: "",
-   datetimepicker3: "",
-}
-});  //表单验证
-if(!$("#div2").valid()){
-alert("请正确填写表单！");
-return false;
-}
-     var Dm = $("#Dm2").val();
-     var Lat= $("#Lat").val();
-     var Lon= $("#Lon").val();
-     var Agh = $("#Agh").val();
-     var St= $("#datetimepicker2").val();
-     var Et= $("#datetimepicker3").val();
-     alert(Dm);
-     alert(Lat);
-     alert(Lon);
-     alert(St);
-     alert(Et);
-     var imgFirst = "<img src= " + "'" 
-     var imgLast =   "'"+ "/>";
-      $.get("/wind/weatherDiv2", {'Dm':Dm,'Lat':Lat,'Lon':Lon,'Agh':Agh,'St':St,'Et':Et}, function(ret){
-      	 alert(ret);  
-        var pic2 = document.getElementById("picDiv2");
-        alert(pic2); 
-        var img = imgFirst + ret + imgLast
-        alert(img);
-        pic2.innerHTML = img;
-            });
-}
- </script>
-
-
-<div id="tab_3" class="tab-pane " style="margin-top:50px;">
+<div id="tab_3" class="tab-pane " style="margin-top:30px;">
 <form id = "div3" method="GET" action="">
-	<label>Domain：</label><input type="text" id="Dm3" size="16" name="Dm3" />	
+	<label>Domain：</label><input type="text" id="Dm3" value='1' size="16" name="Dm3" />	
 	<input type="button" value="submit" id="submit3"  onclick="div3Click()"  />
  </form> 
- <div id="picDiv3"></div>
+ <div id="picDiv3" class="thumbImage">
  </div>
- <script>
-
-function div3Click(){
-$("#div3").validate({
-  rules:{
-  Dm3: "required",
-},
-messages:{
-  Dm3: "",
-}
-});  //表单验证
-if(!$("#div3").valid()){
-alert("请正确填写表单！");
-return false;
-}
-     var Dm = $("#Dm3").val();
- //    alert(Dm);
-      $.get("/wind/weatherDiv3", {'Dm':Dm}, function(ret){
-//      alert(ret);  
-        var pic3 = document.getElementById("picDiv3");
-//        alert(pic3); 
-        var img = imgFirst + ret + imgLast
-//        alert(img);
-        pic3.innerHTML = img;
-            });
-}
- </script>
+ </div>
 </div>
 </div>
  
@@ -299,22 +202,22 @@ return false;
 	{%endfor%}
 </div>
 {%endif%}
-
-
- </body>
- <script>
+<script>
     //////////////////////////////////////////////////Date ////////////////////////////////////////////////////
-	$('#datetimepicker1').datetimepicker({
-	step:30
-	});
-	$('#datetimepicker2').datetimepicker({
-		step:30
-	});
-	$('#datetimepicker3').datetimepicker({
-		step:30
-	});
+  $('#datetimepicker1').datetimepicker({
+  step:30
+  });
+  $('#datetimepicker2').datetimepicker({
+    step:30
+  });
+  $('#datetimepicker3').datetimepicker({
+    step:30
+  });
+//////////////////////////////////////////////////Date ////////////////////////////////////////////////////
+
 </script>
 
+ </body>
     <script type="text/javascript">
     //////////////////////////////////////////////Speed css//////////////////////////////////////////////////////
      	  $('#WeatherPredict').attr('class','nav nav-list menu-second');
@@ -326,68 +229,5 @@ return false;
 
     ////////////////////////////////////////input alert//////////////////////////////////////////////////
   </script>
-  <script type="text/javascript">
-  	/*$("#submit").click(function(){
-  		var dm=$("#Dm").val();
-  		var ht=$("#Ht").val();
-  		var nt=$("#Nt").val();
-
-   	 if($("#Dm").val()==""||$("#Ht").val()==""||$("#Nt").val()=="")
-  	  {
-     	 	  alert("Please input the parameter！");
-     	 	  return false;
-  	  }
-  	 if(isNaN(dm)||isNaN(ht)||isNaN(nt)){
-   		 alert('Parameter format is wrong, please input again');
-   		 return false;
-	}
-	});*/
-////////////////////////////////////////input alert//////////////////////////////////////////////////
-  </script>
-
-
-
-     <script type="text/javascript">
-
- ////////////////////////////////////////speedchange//////////////////////////////////////////////////
-
-	 var t;
- 	 var speed = 6;//图片切换速度
- 	 var nowlan=0;//图片开始时间
- 	 var mul=50;
-
-  	 $(function() {
-   	 $( "#slider").slider({
-      	   orientation: "horizontal",
-       	 range:"min",
-        	 value: 50,
-     	// slide: changespeed,
-      	  change: changespeed
-     	 });
-    	  $( "#slider" ).slider( "value", 50 );
- 	 });
-
-	function changespeed(){
- 	 mul=100-$( "#slider" ).slider( "value" )*0.8;
-	}
-
-	function changepic() {
-	var imglen = $("div[name='pic']").find("div").length;
-	$("div[name='pic']").find("div").hide();
-	$("div[name='pic']").find("div").eq(nowlan).show();
-	nowlan = nowlan+1 ==imglen ?0:nowlan + 1;
-	t = setTimeout("changepic()", speed*mul);
-	}
-$(document).ready(function () {
-//鼠标在图片上悬停让切换暂停
-$("div[name='pic']").hover(function () { clearInterval(t); });
-//鼠标离开图片切换继续
-$("div[name='pic']").mouseleave(function () { changepic(); });
-changepic();
-});
-
- ////////////////////////////////////////speedchange//////////////////////////////////////////////////
-    </script>
-
 {% endblock content %}
 

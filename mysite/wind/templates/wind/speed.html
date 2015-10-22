@@ -119,7 +119,7 @@ table thead tr{
 	<input type="submit" value="submit" id="submit"/>
  </form> -->
  <form id="form1" method="POST" action="">
-	<label>Date：</label><input type="text" id="datetimepicker" size="14" name="datetimepicker" readonly="true" >
+	<label>Date：</label><input type="text" id="datetimepicker" value="2013/01/03 06:30" size="14" name="datetimepicker" readonly="true" >
 	<label >Windturbine：</label>
 		<select id="anim" name="anim">
 			{% for value in list3%}
@@ -164,12 +164,13 @@ table thead tr{
  </table>
  </div> -->
  {% endif %}
-
  <!-- <iframe class="frame1" src="/img/power.xls" name=iframe1></iframe> -->
  </div> 
 
  </body>
 <script language="JavaScript" type="text/javascript" src="{% static 'wind/js/datetimepicker.js' %}"></script>
+<script language="JavaScript" type="text/javascript" src="{% static 'wind/js/myJs/speed.js' %}">
+</script>
    
    <script type="text/javascript">
         // Step:3 echarts & zrender as a Global Interface by the echarts-plain.js.
@@ -357,33 +358,15 @@ table thead tr{
 	onShow:logic*/
 	});
    //////////////////////////////////////////////////Date /////////////////////////////////////////////////////
-
-
-    //////////////////////////////////////////////////Date Input Box Check!/////////////////////////////////
-	$("#submit").click(function(){
-   	$("#form1").validate({
-	  rules:{
-	  datetimepicker:"required",
-	},
-	messages:{
-	  datetimepicker: "",
-	}
-	});  //表单验证
-	if(!$("#form1").valid()){
-	alert("请正确填写表单！");
-	return false;
-	}
-	});
-    //////////////////////////////////////////////////Date Input Box Check!/////////////////////////////////
 	</script>
      
 
      <script type="text/javascript">
  //////////////////////////////////////////////Speed css//////////////////////////////////////////////////////
      	  $('#WindPredict').attr('class','nav nav-list menu-second');
-		  $('#power').css('display','block');
-	  	  $('#power').css('background-color','#aac3ec');
-	 	  $('#power').css('color','#322227');
+		  $('#speed').css('display','block');
+	  	  $('#speed').css('background-color','#aac3ec');
+	 	  $('#speed').css('color','#322227');
 //////////////////////////////////////////////Speed css//////////////////////////////////////////////////////
      </script>
 

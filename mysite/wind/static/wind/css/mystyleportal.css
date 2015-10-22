@@ -32,6 +32,9 @@ body {
 .sidebar {
   display: none;
 }
+
+
+/*   淇敼sidebar鐨勫竷灞�*/
 @media (min-width: 768px) {
   .sidebar {
     position: fixed;
@@ -40,7 +43,7 @@ body {
     left: 0;
     z-index: 1000;
     display: block;
-    padding: 11px;
+    padding: 10px;
     overflow-x: hidden;
     overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
     background-color: #d1d1d1;
@@ -119,11 +122,11 @@ body {
   border-radius: 50%;
 }
 
-/*左侧菜单*/
+/*脳贸虏脿虏脣碌楼*/
 		.sidebar-menu{
 			border-right: 1px solid #dddddd;
 		}
-		/*一级菜单*/
+		/*脪禄录露虏脣碌楼*/
 	/*	.menu-first{
 			height:45px;
 			line-height:45px;
@@ -135,14 +138,14 @@ body {
 			font-weight: normal;
 			text-align: center;
 		}*/
-		/*一级菜单鼠标划过状态*/
+		/*脪禄录露虏脣碌楼脢贸卤锚禄庐鹿媒脳麓脤卢*/
 	/*	.menu-first:hover{
 			text-decoration: none;
 			background-color: #d6d4d5;
 			border-top: 1px solid #b7b7b7;
 			border-bottom: 1px solid #acacac;
 		}*/
-		/*二级菜单*/
+		/*露镁录露虏脣碌楼*/
 		.menu-second li a{
 			background-color: #eaeaea;
 			height:31px;
@@ -156,7 +159,7 @@ body {
 		}
 		
 
-		/*二级菜单鼠标划过样式*/
+		/*露镁录露虏脣碌楼脢贸卤锚禄庐鹿媒脩霉脢陆*/
 		.menu-second li a:hover {
 			text-decoration: none;
 			background-color: #aac3ec;
@@ -166,14 +169,14 @@ body {
 			border-left: 3px solid #f8f8fc;
 		}
 
-			/*二级菜单选中状态*/
+			/*露镁录露虏脣碌楼脩隆脰脨脳麓脤卢*/
 		.menu-second li a.selected{
 			display: block;
 			background-color: #dddddd;
 			color: #111111;
 			
 		}
-		/*二级菜单选中状态*/
+		/*露镁录露虏脣碌楼脩隆脰脨脳麓脤卢*/
 		.menu-second-selected {
 			background-color: #66c3ec;
 			height:31px;
@@ -184,7 +187,7 @@ body {
 			border-left: 3px solid #66c3ec;
 			text-align:center;
 		}
-		/*覆盖bootstrap的样式*/
+		/*赂虏赂脟bootstrap碌脛脩霉脢陆*/
 		.nav-list,.nav-list li a{
 			padding: 0px;
 			margin: 0px;
