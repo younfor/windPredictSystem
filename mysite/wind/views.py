@@ -73,7 +73,7 @@ def speed(request):
      filelow="wind/csvFile/wind prediction_out_weight ave low.csv"
      filehigh="wind/csvFile/wind prediction_out_weight ave high.csv"
      fileExp="wind/csvFile/T6 power.txt"
-     filesum="wind/csvFile/BMMnnet_output_in-sample_t6_2013-01-03-06-30:00.csv"
+     filesum="wind/csvFile/speed/BMMnnet_output_out-sample_t6_2013-01-03-06-30:00.csv"
      # fileddd="wind/excel_file/q.txt"
      #if os.path.exists(fileave) and os.path.exists(filelow) and os.path.exists(filehigh) and os.path.exists(fileExp):
         # csv=csvToFile(fileave)
@@ -147,6 +147,7 @@ def speed(request):
             "obs":obs,'list3':list3,'anim':anim,'username':user.username}
             return render_to_response('wind/speed.html', context)
          else:
+            print "HHHHHHHHHHHHHHHHHH"
             if_notexist=1
             context={"if_post":if_post,'if_notexist':if_notexist,'list3':list3,'anim':anim,
             'username':user.username}
@@ -161,7 +162,7 @@ def power(request):
      filelow="wind/csvFile/wind prediction_out_weight ave low.csv"
      filehigh="wind/csvFile/wind prediction_out_weight ave high.csv"
      fileExp="wind/csvFile/T6 power.txt"
-     filesum="wind/csvFile/BMMnnet_output_in-sample_t6_2013-01-03-06-30:00.csv"
+     filesum="wind/csvFile/power/BMMnnet_output_out-sample_t6_2013-01-03-06-30:00.csv"
      # fileddd="wind/excel_file/q.txt"
      #if os.path.exists(fileave) and os.path.exists(filelow) and os.path.exists(filehigh) and os.path.exists(fileExp):
         # csv=csvToFile(fileave)
@@ -236,6 +237,7 @@ def power(request):
             "obs":obs,'list3':list3,'anim':anim,'username':user.username}
             return render_to_response('wind/power.html', context)
          else:
+
             if_notexist=1
             context={"if_post":if_post,'if_notexist':if_notexist,'list3':list3,'anim':anim,
             'username':user.username}
@@ -321,10 +323,10 @@ def weather(request):
         img=1
         
         print Dm,Ht,Fr,To
-        imgpath=["/img/extract_point_wind_timeseries.ncl.png",
-        "/img/extract_wind_stream_field_h.ncl.png",
-        "/img/extract_temperature_contour_h.ncl.png",
-        "/img/extract_humidity_contour_h.ncl.png"]
+        imgpath=["/img/extract_point_wind_timeseries.ncl",
+        "/img/extract_wind_stream_field_h.ncl",
+        "/img/extract_temperature_contour_h.ncl",
+        "/img/extract_humidity_contour_h.ncl"]
         print imgpath  
         return render_to_response('wind/weather.html',{"img":img,"imgpath":imgpath})
         # return render(request, 'wind/weather.html')
@@ -372,10 +374,10 @@ def seweather(request):
         # return render(request, 'wind/weather.html')
 
 def weatherDiv1(request):
-    i = 0;
-    while (i<=100000):
-        print i
-        i=i+1
+    # i = 0;
+    # while (i<=100000):
+    #     print i
+    #     i=i+1
     print "11FFFFFFFF"
     COMMPATH = "/E/dwen/model/output/original/"
     Dm = request.GET.get('Dm')
@@ -413,14 +415,14 @@ def weatherDiv2(request):
     lonfloat=float(Lon)
     cmd=CmdExec.getIns()
     cmd.execCmd(1,Dm,agh,Lat,Lon,St,Et)
-    #filePre = '/E/dwen/model/output/original'    
+    #filePre = '/E/dwen/model/output/original/'    
     filePre ='/home/shinneyou/model/output/original/2013_01_30min_gn'
     imgPath="/img/"+'windspeed_dm'+Dm+'lat'+("%.2f" % latfloat)+'lon'+("%.2f" % lonfloat)+'h68.50m'+getDate(St)+'-'+getDate(Et)+'.png'
-    txtPath="/"+'windspeed_dm'+Dm+'lat'+("%.2f" % latfloat)+'lon'+("%.2f" % lonfloat)+'h68.50m'+getDate(St)+'-'+getDate(Et)+'.txt'
+    txtPath='windspeed_dm'+Dm+'lat'+("%.2f" % latfloat)+'lon'+("%.2f" % lonfloat)+'h68.50m'+getDate(St)+'-'+getDate(Et)+'.txt'
     print "a"
     b=filePre + txtPath
     print b
-    txtResult = colunmTxt(filePre + txtPath)
+    txtResult = colunmTxt(b)
     Ydata = txtResult.getColunm(5)
     year = txtResult.getColunm(0)
     month = txtResult.getColunm(1)
@@ -436,20 +438,18 @@ def weatherDiv2(request):
     print arrayString
     #b = json.dumps(a)
     #print b
-    imgPath = "/img/4.jpg"
     return HttpResponse(
         json.dumps(arrayString),
         content_type='application/json')
 
 def weatherDiv3(request):
-    i = 0;
-    while (i<=100000):
-        print i
-        i=i+1
+    # i = 0;
+    # while (i<=100000):
+    #     print i
+    #     i=i+1
     COMMPATH = "/E/dwen/model/output/original/"
     print "33FFFFFF"
     Dm = request.GET.get('Dm') 
-    print Dm
     cmd=CmdExec.getIns()
     cmd.execCmd(2,Dm)
     imgPath="/img/"+'WRF_map_dm'+Dm+'.png'

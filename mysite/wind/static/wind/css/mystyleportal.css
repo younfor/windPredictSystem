@@ -55,7 +55,7 @@ body {
 .nav-sidebar {
   margin-right: -21px; /* 20px padding + 1px border */
   margin-bottom: 20px;
-  margin-left: -20px;
+  margin-left: -28px;
   text-align:left;
 }
 
@@ -75,7 +75,7 @@ body {
 			background-color:#b3b3b3;
 			border-top: 1px solid #b7b7b7;
 			border-bottom: 1px solid #acacac;
-			border-right: 3px solid #555555;
+			border-right: 1px solid #555555;
 		}
 .nav-sidebar > .active > a,
 .nav-sidebar > .active > a:hover,
