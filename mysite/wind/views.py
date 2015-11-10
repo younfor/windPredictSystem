@@ -415,8 +415,8 @@ def weatherDiv2(request):
     lonfloat=float(Lon)
     cmd=CmdExec.getIns()
     cmd.execCmd(1,Dm,agh,Lat,Lon,St,Et)
-    #filePre = '/E/dwen/model/output/original/'    
-    filePre ='/home/shinneyou/model/output/original/2013_01_30min_gn'
+    filePre = '/E/dwen/model/output/original/'    
+    #filePre ='/home/shinneyou/model/output/original/2013_01_30min_gn'
     imgPath="/img/"+'windspeed_dm'+Dm+'lat'+("%.2f" % latfloat)+'lon'+("%.2f" % lonfloat)+'h68.50m'+getDate(St)+'-'+getDate(Et)+'.png'
     txtPath='windspeed_dm'+Dm+'lat'+("%.2f" % latfloat)+'lon'+("%.2f" % lonfloat)+'h68.50m'+getDate(St)+'-'+getDate(Et)+'.txt'
     print "a"
