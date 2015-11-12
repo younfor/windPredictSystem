@@ -67,6 +67,24 @@ def getPlotWRF(dm=1):
     print 'cmd is :', com
     print commands.getoutput(PATH + " && " + com)
     print 'finish getPlotWRF'
+
+def getWeatherAnim(dm=1,ht=200.5,st='2013-02-04_12:30:00',et='2013-02-07_01:00:00'):
+    # out put anim_wind*.png
+    global COMMPATH
+    global PATH
+    print 'start extact'
+    st = getDate(st)
+    et = getDate(et)
+    print st
+    print et
+    com = '''ncl ht=200.5 dm=''' + dm + ''' 'dir="''' + COMMPATH + \
+        '''"' 'st="''' + st + \
+        '''"' 'et="''' + et + '''"' extract_wind_stream_field_anim.ncl'''
+    # com = '''ncl dm=''' + dm + '''   lat=''' + lat + ''' lon=''' + lon + ''' 'st="''' + st + \
+    #     '''"' 'et="''' + et + '''"' extract_point_wind_timeseries.ncl'''
+    print 'cmd is :', com
+    print commands.getoutput(PATH + " && " + com)
+    print 'finish getWeatherAnim'
 # class provide data for ncl
 
 
@@ -83,8 +101,11 @@ class CmdExec:
 
     def execCmd(self, tag, *data):
         print 'tag:', tag, data
+        if tag == -1:
+            # fengliudongtu,weather  hanshu  diaoyong
+            getWeatherAnim(data[0],data[1],data[2],data[3])
         if tag == 0:
-           # thread.start_new_thread(
+            # thread.start_new_thread(
             getPlotWindByHeight(data[0], data[1], data[2])  # )
         if tag == 1:
             getExtactWindSpeedByPoint(

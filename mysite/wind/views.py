@@ -73,7 +73,9 @@ def speed(request):
      filelow="wind/csvFile/wind prediction_out_weight ave low.csv"
      filehigh="wind/csvFile/wind prediction_out_weight ave high.csv"
      fileExp="wind/csvFile/T6 power.txt"
-     filesum="wind/csvFile/speed/BMMnnet_output_out-sample_t6_2013-01-03-06-30:00.csv"
+     #filesum="wind/csvFile/speed/BMMnnet_output_out-sample_t6_2013-01-03-06-30:00.csv"
+     filesum="/E/dwen/chris_test/Run_Chris_codes/WATCFD_software/pyper_wind_speed_nnet/BMMnnet_output_out-sample_t6_2013-01-03-06-30:00.csv"
+     
      # fileddd="wind/excel_file/q.txt"
      #if os.path.exists(fileave) and os.path.exists(filelow) and os.path.exists(filehigh) and os.path.exists(fileExp):
         # csv=csvToFile(fileave)
@@ -162,30 +164,8 @@ def power(request):
      filelow="wind/csvFile/wind prediction_out_weight ave low.csv"
      filehigh="wind/csvFile/wind prediction_out_weight ave high.csv"
      fileExp="wind/csvFile/T6 power.txt"
-     filesum="wind/csvFile/power/BMMnnet_output_out-sample_t6_2013-01-03-06-30:00.csv"
-     # fileddd="wind/excel_file/q.txt"
-     #if os.path.exists(fileave) and os.path.exists(filelow) and os.path.exists(filehigh) and os.path.exists(fileExp):
-        # csv=csvToFile(fileave)
-        # csv_list_ave=csv.get_list()
-        # #print len(csv_list_ave)
-        # list1=csv_list_ave
-        # print list1[1]
-        # csv=csvToFile(filelow)
-        # csv_list_low=csv.get_list()
-        # #print len(csv_list_low)
-        # csv=csvToFile(filehigh)
-        # csv_list_high=csv.get_list()
-        # #print len(csv_list_high)
-        # txtExp=txtNotAll(fileExp,240,384)
-        # list_exp=txtExp.get_list()
-        #print list_exp
-        #for a in list_exp:
-           # print a 
-     # dd=txt.get_chartlist(5)
-     # print dd
-     # txtd=txt.get_chartlist(4)
-     # print txtd
-     # print txt_list[0]
+     #filesum="wind/csvFile/power/BMMnnet_output_out-sample_t6_2013-01-03-06-30:00.csv"
+     filesum="/E/dwen/chris_test/Run_Chris_codes/WATCFD_software/pyper_wind_power_nnet/BMMnnet_output_out-sample_t6_2013-01-03-06-30:00.csv"
      #print "test1"
      DBhelper.getIns().getPlotWindByHeight()
      #print "test2"
@@ -320,14 +300,21 @@ def weather(request):
         Fr= request.POST.get('datetimepicker1')
         To = request.POST.get('datetimepicker2')
 
-        img=1
-        
-        print Dm,Ht,Fr,To
-        imgpath=["/img/extract_point_wind_timeseries.ncl",
-        "/img/extract_wind_stream_field_h.ncl",
-        "/img/extract_temperature_contour_h.ncl",
-        "/img/extract_humidity_contour_h.ncl"]
-        print imgpath  
+        cmd=CmdExec.getIns()
+        cmd.execCmd(-1,Dm,Ht,Fr,To)
+
+        #shengchengtupian dizhi
+        imgpath=[]
+        for i in range(0,18):
+            img="/img/anim_wind00"
+            img1 = "/img/anim_wind0"
+            if i<10:
+                img = img + '%d'%i + ".png"
+                imgpath.append(img)    
+            else:
+                img1 = img1 + '%d'%i + ".png"
+                imgpath.append(img1)
+        print imgpath
         return render_to_response('wind/weather.html',{"img":img,"imgpath":imgpath})
         # return render(request, 'wind/weather.html')
     else:
