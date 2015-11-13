@@ -49,8 +49,8 @@ def getExtactWindSpeedByPoint(dm=1, agh=68.5, lat=25.294600, lon=121.580935, st=
     et = getDate(et)
     print st
     print et
-    com = '''ncl dm=1 'dir="''' + COMMPATH + \
-        '''"' agh=68.5 lat=''' + lat + ''' lon=''' + lon + ''' 'st="''' + st + \
+    com = '''ncl dm=''' + dm + ''' 'dir="''' + COMMPATH + \
+        '''"' agh=''' + agh + ''' lat=''' + lat + ''' lon=''' + lon + ''' 'st="''' + st + \
         '''"' 'et="''' + et + '''"' extract_point_wind_timeseries.ncl'''
     # com = '''ncl dm=''' + dm + '''   lat=''' + lat + ''' lon=''' + lon + ''' 'st="''' + st + \
     #     '''"' 'et="''' + et + '''"' extract_point_wind_timeseries.ncl'''
@@ -77,7 +77,7 @@ def getWeatherAnim(dm=1,ht=200.5,st='2013-02-04_12:30:00',et='2013-02-07_01:00:0
     et = getDate(et)
     print st
     print et
-    com = '''ncl ht=200.5 dm=''' + dm + ''' 'dir="''' + COMMPATH + \
+    com = '''ncl ht=''' + ht + ''' dm=''' + dm + ''' 'dir="''' + COMMPATH + \
         '''"' 'st="''' + st + \
         '''"' 'et="''' + et + '''"' extract_wind_stream_field_anim.ncl'''
     # com = '''ncl dm=''' + dm + '''   lat=''' + lat + ''' lon=''' + lon + ''' 'st="''' + st + \

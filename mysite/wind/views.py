@@ -69,13 +69,12 @@ class LoginView(TemplateView):
 
 
 def speed(request):
-     fileave="wind/csvFile/wind prediction_out_weight ave.csv"
-     filelow="wind/csvFile/wind prediction_out_weight ave low.csv"
-     filehigh="wind/csvFile/wind prediction_out_weight ave high.csv"
-     fileExp="wind/csvFile/T6 power.txt"
+     # fileave="wind/csvFile/wind prediction_out_weight ave.csv"
+     # filelow="wind/csvFile/wind prediction_out_weight ave low.csv"
+     # filehigh="wind/csvFile/wind prediction_out_weight ave high.csv"
+     # fileExp="wind/csvFile/T6 power.txt"
      #filesum="wind/csvFile/speed/BMMnnet_output_out-sample_t6_2013-01-03-06-30:00.csv"
      filesum="/E/dwen/chris_test/Run_Chris_codes/WATCFD_software/pyper_wind_speed_nnet/BMMnnet_output_out-sample_t6_2013-01-03-06-30:00.csv"
-     
      # fileddd="wind/excel_file/q.txt"
      #if os.path.exists(fileave) and os.path.exists(filelow) and os.path.exists(filehigh) and os.path.exists(fileExp):
         # csv=csvToFile(fileave)
@@ -130,7 +129,7 @@ def speed(request):
         # file_path='wind/excel_file/'+anim
          if os.path.exists(filesum):
             csv=csvToFile2(filesum)
-            obs=csv.get_list(5)
+            obs=csv.get_list(6)
             ave=csv.get_list(8)
             high=csv.get_list(10)
             low=csv.get_list(9)
@@ -160,10 +159,10 @@ def speed(request):
         return render_to_response('wind/speed.html', {'list3':list3})
 
 def power(request):
-     fileave="wind/csvFile/wind prediction_out_weight ave.csv"
-     filelow="wind/csvFile/wind prediction_out_weight ave low.csv"
-     filehigh="wind/csvFile/wind prediction_out_weight ave high.csv"
-     fileExp="wind/csvFile/T6 power.txt"
+     # fileave="wind/csvFile/wind prediction_out_weight ave.csv"
+     # filelow="wind/csvFile/wind prediction_out_weight ave low.csv"
+     # filehigh="wind/csvFile/wind prediction_out_weight ave high.csv"
+     # fileExp="wind/csvFile/T6 power.txt"
      #filesum="wind/csvFile/power/BMMnnet_output_out-sample_t6_2013-01-03-06-30:00.csv"
      filesum="/E/dwen/chris_test/Run_Chris_codes/WATCFD_software/pyper_wind_power_nnet/BMMnnet_output_out-sample_t6_2013-01-03-06-30:00.csv"
      #print "test1"
@@ -181,20 +180,6 @@ def power(request):
        #//////////////////////xiugaiwenjian path/////////////////////////
          file_date = request.POST.get('datetimepicker')
          anim = request.POST.get('anim')
-         # a=file_date.split(' ')
-         # print a 
-         # date=a[0].split('/')
-         # time=a[1].split(':')
-         # print date[0],date[1],date[2],time[0],time[1]
-         # file_name=date[0]+date[1]+date[2]+time[0]
-       # //////////////////////xiugaiwenjian path/////////////////////
-        # print a[0]
-        # print a[1]
-        # print a[2]
-        # print a[0]
-         # txtpath="/img/extr_dm4_wsp_at_25.29D121.58D68.50M.txt"
-         #file_path='wind/excel_file/'+'Power'+anim+file_name+".xls"
-         # file_path='wind/excel_file/'+anim
          
          if os.path.exists(filesum):
             csv=csvToFile2(filesum)
@@ -208,9 +193,7 @@ def power(request):
             hour=csv.get_list(3)
             minute=csv.get_list(4)
             date_time=csv.get_date(year,month,day,hour,minute)
-            #print list_exp
-            #for a in list_exp:
-                #print a
+
             if_post=1
             list1=obs
             context={"if_post":if_post,'date_time':date_time,'ave': ave,'low':low,'high':high,
@@ -223,8 +206,7 @@ def power(request):
             'username':user.username}
             return render_to_response('wind/power.html', context)
      else:              
-        #print list1
-        #print list2
+
         return render_to_response('wind/power.html', {'list3':list3})
 
 
@@ -238,10 +220,7 @@ def signup(request):
         user.is_staff = True
         user.save()
         print "%s,%s,%d" % (user.username, user.password, user.is_staff)
-        # if form.is_valid():
-        #  f=form.cleaned_data
-        # info=f['username']
-        # print info
+ 
         return HttpResponse('sucessful signup')
     return render(request, 'wind/signup.html')
 
@@ -254,7 +233,6 @@ def uploadfiles(request):
             files = request.FILES['file']
             fname = files.name
             suffix = fname.find('.')
-            # print files.name
             print suffix
             fstyle = fname[suffix:]      # to know if xls
             if fstyle == '.xls':
@@ -401,7 +379,7 @@ def weatherDiv2(request):
     latfloat=float(Lat)
     lonfloat=float(Lon)
     cmd=CmdExec.getIns()
-    cmd.execCmd(1,Dm,agh,Lat,Lon,St,Et)
+    cmd.execCmd(1,Dm,Agh,Lat,Lon,St,Et)
     filePre = '/E/dwen/model/output/original/'    
     #filePre ='/home/shinneyou/model/output/original/2013_01_30min_gn'
     imgPath="/img/"+'windspeed_dm'+Dm+'lat'+("%.2f" % latfloat)+'lon'+("%.2f" % lonfloat)+'h68.50m'+getDate(St)+'-'+getDate(Et)+'.png'

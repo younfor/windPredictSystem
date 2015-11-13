@@ -39,8 +39,8 @@
 	float:left; 
 	position:relative;
 	overflow:hidden;
-	width:600px;
-	height:410px;
+	width:730px;
+	height:450px;
 }
 
 .slidediv{
@@ -57,20 +57,21 @@
 
 }
 
-input[type="submit"]
+input[type="submit"],input[type="button"]
 {
 	font-size: 14px;
 	font-weight: bold;
+	border-radius: 4px;
 }
 
 a:link{
 	color: #000000;
-	 TEXT-DECORATION: none
+	 text-decoration: none
 }
 
 a:hover{
 	color: #3eaae5;
-	 TEXT-DECORATION: none
+	text-decoration: none
 }
 .speeddiv{
 	display:inline;
@@ -86,6 +87,22 @@ a:hover{
 }
 #datetimepicker1,#datetimepicker2{
 	width:125px;
+}
+
+#tab_1{
+	margin-top: -20px;
+	width: 100%;
+}
+
+.strongZ{
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.imgList{
+    width: 100%;
+    height: 450px;
+    border: 2px solid #979693;
 }
 /*.frame1{
 	height:400px;
@@ -118,15 +135,81 @@ a:hover{
  <hr>
  {%if img%}
  
- <div class="slidediv">
-<div class="speeddiv">Speed:</div>
- <div id="slider"></div>
- </div>
- <div class="weatherdiv" name="pic" >
- 	{%for val in imgpath%}
+  <div>
+ <ul class="nav nav-tabs" style="">
+                        <li class="active strongZ"><a href="#tab_1"
+                            data-toggle="tab">Picture</a></li>
+                        <li><a class="strongZ" href="#tab_2" class="strongZ" data-toggle="tab" 
+                           >Animation</a></li>
+                </ul> 
+           
 
-	<div class="divblock"><img width="580" height="400" src={{val}}></div>
-	{%endfor%}
+<div id="myTabContent" class="tab-content" style="margin-top:30px;">
+<div id="tab_1" class="tab-pane active" >
+	<div id="myCarousel" class="carousel slide" data-ride="carousel" style="width: 100%">
+  <div class="carousel-inner" role="listbox">
+<!-- <div class="item next left">
+      <img   src= "img/anim_wind000.png" data-holder-rendered="true">
+    </div>  -->
+    {%for val in imgpath%}
+    <div name = "imgAnimation" class="item">
+	<img  class="imgList" src={{val}}  data-holder-rendered="true">
+    </div>
+    {%endfor%}
+   
+   <!-- <div class="item active left">
+      <img   src="img/anim_wind000.png" data-holder-rendered="true">
+    </div>  -->
+  </div>
+</div>
+ <input type="button" class=" prev-slide" style="float:left;margin-top:10px;"value="Previous Slide">
+ <input type="button" class=" next-slide" style="float:right;margin-top:10px;" value="Next Slide">
+  </div> 
+<script>
+
+////////////////////////////////////////////////////////////lunbo
+    function animationStart(){
+    
+     var a= document.getElementsByName("imgAnimation")
+     a[0].setAttribute("class","item next left");
+     a[17].setAttribute("class","item active left");
+     //无法在最开始停止轮播
+     $("#myCarousel").carousel('pause');
+
+    }
+    animationStart();
+
+    //停止轮播
+   
+   $(function(){
+      // 循环轮播到上一个项目
+      $(".prev-slide").click(function(){
+         $("#myCarousel").carousel('prev');
+         $("#myCarousel").carousel('pause');
+      });
+      // 循环轮播到下一个项目
+      $(".next-slide").click(function(){
+         $("#myCarousel").carousel('next');
+         $("#myCarousel").carousel('pause');
+      });
+   });
+
+   ////////////////////////////////////////////////////////////lunbo
+</script>
+
+<div id="tab_2" class="tab-pane " style="margin-top:30px;">
+	<div class="slidediv">
+		<div class="speeddiv">Speed:</div>
+		 <div id="slider"></div>
+	 </div>
+	 <div class="weatherdiv" name="pic" >
+	 	{%for val in imgpath%}
+
+		<div class="divblock"><img width="720" height="440" src={{val}}></div>
+		{%endfor%}
+	</div> 
+        </div>
+    </div>
 </div>
 {%endif%}
 
